@@ -1,17 +1,50 @@
 
-23.3.2017	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                23.3.2017 - Projekt Files: KW 13
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 •	wayPointPause: von DINT in REAL geändert, jetzt lässt sich die Pause in 0.2 Sekunden Schritten einstellen. 0.2 ist Mindestzeit. 0.0 entspricht deaktivierter/keiner Pause
 •	die letzten 5 Waypoints sind für die aktualisierenden Greifpunkte aus den Laserscannerdaten reserviert
     o	der allerletzte 255 muss immer 0 bleiben, damit das Ende der Schleife erkannt wird
-    o	also bleiben 249  254 für die Greifwaypoints
+    o	also bleiben 249 -> 254 für die Greifwaypoints
     o	249 wie 251 nur Hub * liftRatioDown und Schaufel offen
     o	250 wird direkt vom Telegramm übernommen, Schaufel offen
-    o	251 wird direkt vom Telegramm übernommen, Schaufel zu
+    o	251 wird direkt vom Telegramm übernommen, Schaufel schließen
     o	252 Schaufel schließen, Zylinderlänge ist gleich tatsächlich erreichter Zylinderlänge aus 251 * liftRatioUp
-    o	253 Schaufel schließen, Ausschub auf 450, Hub 0 grad (entspricht wieviel cm Zylinderlänge?)
-    o	254 Schaufel geschlossen, Ausschub auf 350, Hub 0 grad (entspricht wieviel cm Zylinderlänge?), Drehung 0°
+    o	253 Schaufel schließen, Ausschub auf 450, Hub 1460 mm Zylinderlänge 
+    o	254 Schaufel geschlossen, Ausschub auf 350, Hub 1460 mm Zylinderlänge, Drehung 0°
     o	255 muss 0 sein, damit entweder fertig oder neuer Cycle 
 •	Bibliotheken für COM und StringAufbereitung ins Projekt hinzugefügt
 •	Achse 5 und 6 sind für den Test belegt.
     o	Achse 5 = sensNeigungBasis
     o	Achse 6 = sensNeigungVorne
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                20.4.2017 - Projekt Files: KW 17
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Achse 5 und 6 sind wieder freigegeben/nicht mehr an Neigungssensoren angebunden
+////
+die letzten 7 Waypoints sind für die aktualisierenden Greifpunkte aus den Laserscannerdaten reserviert
+    o	der allerletzte 255 muss immer 0 bleiben, damit das Ende der Schleife erkannt wird
+    o	also bleiben 247 -> 254 für die Greifwaypoints
+    o	247 wie 251 nur Hub entspricht "hubHighestPoint", Ausschub = 370, Drehung 0° und Schaufel offen
+    o	248 wie 251 nur Hub entspricht "hubHighestPoint", Ausschub = 370 und Schaufel offen
+    o	249 wie 251 nur Hub entspricht "hubHighestPoint" und Schaufel offen
+    o	250 wird direkt vom Telegramm übernommen, Hub * liftRatioDown und Schaufel offen
+    o	251 wird direkt vom Telegramm übernommen, Hub * liftRatioDown und Schaufel schließen
+    o	252 Schaufel schließen, Zylinderlänge ist gleich tatsächlich erreichter Zylinderlänge aus 251 * liftRatioUp
+    o	253 Schaufel schließen, Ausschub auf 450, Hub entspricht "hubHighestPoint" 
+    o	254 Schaufel geschlossen, Ausschub auf 370, Hub entspricht "hubHighestPoint", Drehung 0°
+    o	255 muss 0 sein, damit entweder fertig oder neuer Cycle 
+////
+hys[i] wird gespeichert in oldHys[i] bei waypoint 250
+hys[0] und hys[2] werden für die Greifwaypoints 250, 251 und 252 vergößert
+hys[i] wird zurückgesetzt zu oldHys[i] bei waypoint 253
+////
+liftRatioDown von 0.9 auf 1.1 geändert, weil Zylinderlänge muss ja länger sein um weiter runter zu kommen
+////
+ACHTUNG: Greifpunkt über hubHighestPoint beim Hub ist nicht sinnvoll, führt wahrscheinlich zu Kollision mit Haufen
+////
+
+
+
+
