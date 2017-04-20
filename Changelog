@@ -1,0 +1,17 @@
+
+23.3.2017	
+•	wayPointPause: von DINT in REAL geändert, jetzt lässt sich die Pause in 0.2 Sekunden Schritten einstellen. 0.2 ist Mindestzeit. 0.0 entspricht deaktivierter/keiner Pause
+•	die letzten 5 Waypoints sind für die aktualisierenden Greifpunkte aus den Laserscannerdaten reserviert
+    o	der allerletzte 255 muss immer 0 bleiben, damit das Ende der Schleife erkannt wird
+    o	also bleiben 249  254 für die Greifwaypoints
+    o	249 wie 251 nur Hub * liftRatioDown und Schaufel offen
+    o	250 wird direkt vom Telegramm übernommen, Schaufel offen
+    o	251 wird direkt vom Telegramm übernommen, Schaufel zu
+    o	252 Schaufel schließen, Zylinderlänge ist gleich tatsächlich erreichter Zylinderlänge aus 251 * liftRatioUp
+    o	253 Schaufel schließen, Ausschub auf 450, Hub 0 grad (entspricht wieviel cm Zylinderlänge?)
+    o	254 Schaufel geschlossen, Ausschub auf 350, Hub 0 grad (entspricht wieviel cm Zylinderlänge?), Drehung 0°
+    o	255 muss 0 sein, damit entweder fertig oder neuer Cycle 
+•	Bibliotheken für COM und StringAufbereitung ins Projekt hinzugefügt
+•	Achse 5 und 6 sind für den Test belegt.
+    o	Achse 5 = sensNeigungBasis
+    o	Achse 6 = sensNeigungVorne
