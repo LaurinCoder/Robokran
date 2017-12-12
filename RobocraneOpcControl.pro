@@ -3,7 +3,7 @@
 # Project created by QtCreator 2017-02-01T12:47:20
 #
 #-------------------------------------------------
-
+##hier ist ein GIthubtest
 QT       += core gui
 QT      += serialport
 QT       += network \
