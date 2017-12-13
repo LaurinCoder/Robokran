@@ -1,0 +1,30 @@
+1. github installieren 
+	sudo apt-get update
+	sudo apt-get install git
+	sudo apt install gitk #GUI von GIT
+2. Alle Dateien Online auf github.com hochladen
+3. im Terminal in repository Verzeichnis wechseln (irgendein Ordner)
+	git init #legt repository an
+	git clone https://github.com/LaurinCoder/Robokran.git #kopiert online repo zur lokalen repo
+4. zweite Development Branch erstellen (nicht in der Master arbeiten)
+5. Dann ist der Ablauf bei
+
+
+gute Anleitungen für Basic Anwendungen:
+https://rogerdudler.github.io/git-guide/index.de.html 
+HowTo user Branches
+https://www.digitalocean.com/community/tutorials/how-to-use-git-branches
+.ignore Liste erstellen
+https://help.github.com/articles/ignoring-files/
+
+
+Über Konsole funktionierts im Moment, es ist immer folgender Ablauf:
+
+A) Änderungen machen
+B) Änderungen vormerken mit "git add -- file"
+C) Änderungen commiten mit "git commit -m "Kommentar welche Änderungen""
+D) Änderungen hochladen mit "git push"
+
+
+
+
