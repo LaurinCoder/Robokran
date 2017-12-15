@@ -514,6 +514,7 @@ GripPoint::GripPoint(QObject *parent, bool Gedreht, long ScannerUeberBoden, doub
 
     if (showDia)
     {
+        qDebug() << data_X << data_Y << data_Z;
         Diagramm* Dia_00 = new Diagramm;
         (*Dia_00)(Uebergabe_00, data_X, data_Y, data_Z);
 
@@ -1257,3 +1258,5 @@ GripPoint::~GripPoint()
     data_Z.clear();
     //    delete ui;
 }
+
+
