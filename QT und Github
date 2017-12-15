@@ -26,5 +26,15 @@ C) Änderungen commiten mit "git commit -m "Kommentar welche Änderungen""
 D) Änderungen hochladen mit "git push"
 
 
+Falls es nicht funktioniert
+10:56 Running in /home/iltuser/Schreibtisch/QT_Sources/GitRepo/Robokran: /usr/bin/git push origin
+error: cannot run ssh-askpass: Datei oder Verzeichnis nicht gefunden
+fatal: could not read Username for 'https://github.com': Kein passendes Gerät bzw. keine passende Adresse gefunden
+Das Kommando "/usr/bin/git" wurde beendet, Rückgabewert 128.
+
+Der passende Link zur Problemlösung
+https://discourse.imad.hasura.io/t/git-push-error-could-not-read-username-for-https-github-com-no-error/16686
+
+
 
 
