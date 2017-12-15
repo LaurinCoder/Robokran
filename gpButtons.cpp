@@ -156,13 +156,6 @@ void MainWindow::on_enUserSettings_toggled(bool checked)
    ui->enPoendorf->setChecked(false);
    ui->enPoendorf->setDisabled(checked);
 
-   std::string Uebergabe_01 ="../data_Zr.png";
-   cv::imwrite(Uebergabe_01, inputImage_01);
-
-
-//   // öffne Diagramm
-//   Diagramm* Dia_00 = new Diagramm;
-//       (*Dia_00)(Uebergabe_00, data_X, data_Y, data_Z);
 
 
 }
