@@ -245,6 +245,8 @@ private slots:
 
    void on_enUserSettings_toggled(bool checked);
 
+   void on_showSurface_2_clicked();
+
 signals:
 
 

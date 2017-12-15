@@ -120,6 +120,8 @@ public:
     QCheckBox *enSopas;
     QLineEdit *xGp;
     QLabel *label_2;
+    QWidget *tab;
+    QPushButton *showSurface_2;
     QWidget *tab_6;
     QLineEdit *zGp_2;
     QLabel *label_10;
@@ -589,6 +591,12 @@ public:
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(180, 600, 80, 20));
         tabWidget->addTab(tab_5, QString());
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        showSurface_2 = new QPushButton(tab);
+        showSurface_2->setObjectName(QStringLiteral("showSurface_2"));
+        showSurface_2->setGeometry(QRect(100, 110, 231, 29));
+        tabWidget->addTab(tab, QString());
         tab_6 = new QWidget();
         tab_6->setObjectName(QStringLiteral("tab_6"));
         tab_6->setEnabled(true);
@@ -1101,7 +1109,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1156,6 +1164,8 @@ public:
         enSopas->setText(QApplication::translate("MainWindow", "Sopas Scan (Standard: QT Scan)", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "Y", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_5), QApplication::translate("MainWindow", "Greifpunkt berechnen", Q_NULLPTR));
+        showSurface_2->setText(QApplication::translate("MainWindow", "Oberfl\303\244chenprofil anzeigen", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "SurfaceAnzeigen", Q_NULLPTR));
         label_10->setText(QApplication::translate("MainWindow", "Z", Q_NULLPTR));
         label_23->setText(QApplication::translate("MainWindow", "berechnete Soll Position ", Q_NULLPTR));
         label_24->setText(QApplication::translate("MainWindow", "L\303\244ngsfahrt", Q_NULLPTR));

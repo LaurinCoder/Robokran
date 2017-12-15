@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-//#include "grippoint.h"
+#include "diagramm.h"
 
 
 void MainWindow::on_selectData_clicked()
@@ -156,6 +156,13 @@ void MainWindow::on_enUserSettings_toggled(bool checked)
    ui->enPoendorf->setChecked(false);
    ui->enPoendorf->setDisabled(checked);
 
+}
 
+void MainWindow::on_showSurface_2_clicked()
+{
+// HIER IST UNKLAR, WAS data_X, data_Y, und data_Z ist, was sagt dieser Vektor aus?
+//Uebergabe_00 ist ein String zum Höhen PNG das ist klar.
 
+//        Diagramm* Dia_00 = new Diagramm;
+//        (*Dia_00)(Uebergabe_00, data_X, data_Y, data_Z);
 }
