@@ -16,28 +16,39 @@ void MainWindow::on_calculateGP_clicked()
 {
     if (!fileName.isEmpty()) {
         //START added for Grippoint
+        //übernehme Parameter benutzerdefiniert, Pöndorf oder Labor
+        if (ui->enUserSettings->isChecked()) {
 
-            bool Gedreht                   = true;
-            long ScannerUeberBoden = 6800;
-            double InkrementSize     = 40;
-            unsigned int leftAngle         =  45 + 45; //36;
-            unsigned int rightAngle        = 315 - 45; //38;
-            long leftBorder                 = -8500;
-            long rightBorder                =  12000; //11700;
-            unsigned int VRatio                    = 10;
-
-        if(!ui->enPoendorf->isChecked()){
-            Gedreht           = true;
-            ScannerUeberBoden = 2880;
-            InkrementSize     = 300.0 / 1024.0;
+            gedreht           = ui->turned->text().toInt();
+            scannerUeberBoden = ui->groundDist->text().toInt();
+            inkrementSize     = ui->inkrSize->text().toInt();
+            leftAngle         = ui->leftAngle->text().toInt();
+            rightAngle        = ui->rightAngle->text().toInt();
+            leftBorder        = ui->leftBorder->text().toInt();
+            rightBorder       = ui->rightBorder->text().toInt();
+            vRatio            = ui->vRatio->text().toInt();
+        }
+        else if (ui->enPoendorf->isChecked()) {
+            gedreht           = true;
+            scannerUeberBoden = 6800;
+            inkrementSize     = 40;
+            leftAngle         = 45 + 45; //36;
+            rightAngle        = 315 - 45; //38;
+            leftBorder        = -8500;
+            rightBorder       = 12000; //11700;
+            vRatio            = 10;
+        } else {
+            gedreht           = true;
+            scannerUeberBoden = 2880;
+            inkrementSize     = 300.0 / 1024.0;
             leftAngle         =  45 + 90; //36;
             rightAngle        = 315 - 90; //38;
             leftBorder        = -1000;
             rightBorder       =  1000; //11700;
-            VRatio            = 10;
+            vRatio            = 10;
         }
 
-        gripPoint = new GripPoint(nullptr, Gedreht, ScannerUeberBoden, InkrementSize, leftAngle, rightAngle, leftBorder, rightBorder, VRatio, fileName, ui->showHist->isChecked(), ui->showSurface->isChecked(), ui->enSopas->isChecked());
+        gripPoint = new GripPoint(nullptr, gedreht, scannerUeberBoden, inkrementSize, leftAngle, rightAngle, leftBorder, rightBorder, vRatio, fileName, ui->showHist->isChecked(), ui->showSurface->isChecked(), ui->enSopas->isChecked());
         xGp = gripPoint->xGp;
         yGp = gripPoint->yGp;
         zGp = gripPoint->zGp;
@@ -94,4 +105,64 @@ void MainWindow::on_copySollPos_clicked()
         sendSollAusschub();
     }
     else ui->statusBar->showMessage(tr("Automodus ist deaktiviert, Übernahme nicht möglich."),5000);
+}
+
+
+void MainWindow::on_enUserSettings_toggled(bool checked)
+{   // Eingabefelder werden aktiviert
+    ui->turned->setEnabled(checked); ui->groundDist->setEnabled(checked); ui->inkrSize->setEnabled(checked);
+    ui->leftAngle->setEnabled(checked); ui->rightAngle->setEnabled(checked); ui->leftBorder->setEnabled(checked);
+    ui->rightBorder->setEnabled(checked); ui->vRatio->setEnabled(checked);
+
+    //übernehme Pöndorf Parameter
+    if (checked) {
+        if(ui->enPoendorf->isChecked()){
+            gedreht           = true;
+            scannerUeberBoden = 6800;
+            inkrementSize     = 40;
+            leftAngle         = 45 + 45; //36;
+            rightAngle        = 315 - 45; //38;
+            leftBorder        = -8500;
+            rightBorder       = 12000; //11700;
+            vRatio            = 10;
+        }
+    //übernehme Pöndorf Parameter
+        if(!ui->enPoendorf->isChecked()){
+            gedreht           = true;
+            scannerUeberBoden = 2880;
+            inkrementSize     = 300.0 / 1024.0;
+            leftAngle         =  45 + 90; //36;
+            rightAngle        = 315 - 90; //38;
+            leftBorder        = -1000;
+            rightBorder       =  1000; //11700;
+            vRatio            = 10;
+        }
+
+   //wenn KEIN Feld verändert wurde, übernehme aktuelle Parameter (je nachdem ob enPoendorf checked, welche sie IFs darüber)
+        if (!ui->turned->isModified() && !ui->groundDist->isModified() && !ui->inkrSize->isModified()
+                && !ui->leftAngle->isModified() && !ui->rightAngle->isModified() && !ui->leftBorder->isModified()
+                && !ui->rightBorder->isModified() && !ui->vRatio->isModified()) {
+        ui->turned->setText(QString::number(gedreht));
+        ui->groundDist->setText(QString::number(scannerUeberBoden));
+        ui->inkrSize->setText(QString::number(inkrementSize));
+        ui->leftAngle->setText(QString::number(leftAngle));
+        ui->rightAngle->setText(QString::number(rightAngle));
+        ui->leftBorder->setText(QString::number(leftBorder));
+        ui->rightBorder->setText(QString::number(rightBorder));
+        ui->vRatio->setText(QString::number(vRatio));
+        }
+    }
+   //deaktiviere Pöndorf Scan und setzte es unchecked
+   ui->enPoendorf->setChecked(false);
+   ui->enPoendorf->setDisabled(checked);
+
+   std::string Uebergabe_01 ="../data_Zr.png";
+   cv::imwrite(Uebergabe_01, inputImage_01);
+
+
+//   // öffne Diagramm
+//   Diagramm* Dia_00 = new Diagramm;
+//       (*Dia_00)(Uebergabe_00, data_X, data_Y, data_Z);
+
+
 }

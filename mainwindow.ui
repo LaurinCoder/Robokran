@@ -57,7 +57,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
@@ -560,7 +560,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>40</y>
+          <y>10</y>
           <width>191</width>
           <height>25</height>
          </rect>
@@ -573,7 +573,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>80</y>
+          <y>50</y>
           <width>451</width>
           <height>25</height>
          </rect>
@@ -590,24 +590,11 @@
          <bool>true</bool>
         </property>
        </widget>
-       <widget class="QPushButton" name="calculateGP">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>130</y>
-          <width>201</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Greifpunkt berechnen</string>
-        </property>
-       </widget>
        <widget class="QCheckBox" name="showHist">
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>170</y>
+          <y>80</y>
           <width>221</width>
           <height>26</height>
          </rect>
@@ -620,7 +607,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>200</y>
+          <y>110</y>
           <width>281</width>
           <height>26</height>
          </rect>
@@ -629,20 +616,112 @@
          <string>Oberflächenprofil anzeigen</string>
         </property>
        </widget>
-       <widget class="QFrame" name="frame">
+       <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>120</y>
-          <width>511</width>
-          <height>351</height>
+          <x>320</x>
+          <y>600</y>
+          <width>80</width>
+          <height>20</height>
          </rect>
         </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+        <property name="text">
+         <string>Z</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>570</y>
+          <width>251</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <italic>true</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>berechneter Greifpunkt:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="zGp">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>630</y>
+          <width>113</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="yGp">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>630</y>
+          <width>113</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="enPoendorf">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>170</y>
+          <width>321</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Pöndorf Scan (Standard: Labor Scan)</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="calculateGP">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>530</y>
+          <width>391</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Greifpunkt berechnen</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>600</y>
+          <width>80</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>200</y>
+          <width>611</width>
+          <height>321</height>
+         </rect>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -650,137 +729,291 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <widget class="QLineEdit" name="xGp">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>260</y>
-           <width>113</width>
-           <height>28</height>
-          </rect>
+        <widget class="QLineEdit" name="rightBorder">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="yGp">
          <property name="geometry">
           <rect>
            <x>160</x>
-           <y>260</y>
+           <y>220</y>
            <width>113</width>
            <height>28</height>
           </rect>
          </property>
          <property name="readOnly">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
         </widget>
-        <widget class="QLineEdit" name="zGp">
+        <widget class="QLabel" name="label_28">
          <property name="geometry">
           <rect>
-           <x>300</x>
-           <y>260</y>
+           <x>12</x>
+           <y>134</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>linker Winkel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="leftAngle">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>130</y>
            <width>113</width>
            <height>28</height>
           </rect>
          </property>
          <property name="readOnly">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
         </widget>
-        <widget class="QLabel" name="label">
+        <widget class="QCheckBox" name="enUserSettings">
          <property name="geometry">
           <rect>
-           <x>30</x>
-           <y>230</y>
-           <width>80</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>X</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_2">
-         <property name="geometry">
-          <rect>
-           <x>170</x>
-           <y>230</y>
-           <width>80</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Y</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_3">
-         <property name="geometry">
-          <rect>
-           <x>310</x>
-           <y>230</y>
-           <width>80</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Z</string>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="enSopas">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>110</y>
+           <x>10</x>
+           <y>0</y>
            <width>281</width>
            <height>26</height>
           </rect>
          </property>
          <property name="text">
-          <string>Sopas Scan</string>
+          <string>benutzerdefinierte Auswertungsgrenzen</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="enPoendorf">
+        <widget class="QLabel" name="label_14">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>140</y>
-           <width>281</width>
-           <height>26</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Pöndorf Scan</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_12">
-         <property name="geometry">
-          <rect>
-           <x>30</x>
-           <y>200</y>
-           <width>251</width>
+           <x>10</x>
+           <y>224</y>
+           <width>141</width>
            <height>20</height>
           </rect>
          </property>
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <italic>true</italic>
-           <bold>true</bold>
-          </font>
+         <property name="text">
+          <string>rechte Grenze</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="rightAngle">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>160</y>
+           <width>113</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="leftBorder">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>190</y>
+           <width>113</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_15">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>165</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
          </property>
          <property name="text">
-          <string>berechneter Greifpunkt:</string>
+          <string>rechter Winkel</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_29">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>194</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>linke Grenze</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="vRatio">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>250</y>
+           <width>113</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_30">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>254</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Vol. Verhältnis</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_36">
+         <property name="geometry">
+          <rect>
+           <x>12</x>
+           <y>104</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Inkrement Größe</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="inkrSize">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>100</y>
+           <width>113</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_37">
+         <property name="geometry">
+          <rect>
+           <x>12</x>
+           <y>74</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Abstand Boden</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="groundDist">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>70</y>
+           <width>113</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="turned">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>40</y>
+           <width>113</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_38">
+         <property name="geometry">
+          <rect>
+           <x>12</x>
+           <y>44</y>
+           <width>141</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>gedreht</string>
          </property>
         </widget>
        </widget>
-       <zorder>frame</zorder>
-       <zorder>selectData</zorder>
-       <zorder>selectedFile</zorder>
-       <zorder>calculateGP</zorder>
-       <zorder>showHist</zorder>
-       <zorder>showSurface</zorder>
+       <widget class="QCheckBox" name="enSopas">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>140</y>
+          <width>281</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Sopas Scan (Standard: QT Scan)</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="xGp">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>630</y>
+          <width>113</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>600</y>
+          <width>80</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Y</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_6">
        <property name="enabled">

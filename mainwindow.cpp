@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     activeTimer = new QTimer(this);
     activeTimer->setInterval(50);
     activeTimer->setSingleShot(false);
-    connect(activeTimer, SIGNAL(timeout()), this, SLOT(activateOpcSync()));
+    connect(activeTimer, SIGNAL(timeout()), this, SLOT(updateVariousOpcNodes()));
     activeTimer->start();
 
     ui->setupUi(this);
@@ -137,7 +137,7 @@ void MainWindow::update_UI() {
 }
 
 
-void MainWindow::activateOpcSync() {
+void MainWindow::updateVariousOpcNodes() {
 
     if (UA_Client_getState(client) == 1) { //alles nur wenn Client verbunden
 
@@ -332,4 +332,6 @@ void MainWindow::sendSollGreifer()
 {
     posSollValue[7] = ui->sollGreifer->value();
 }
+
+
 
