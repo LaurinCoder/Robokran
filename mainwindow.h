@@ -51,37 +51,6 @@ private:
     void update_UI();
     void TeachIn();
 
-// for Inverskinematik
-//    float Zsoll = 0;
-//    float Ysoll = 0;
-//    float Xsoll = 0;
-//    float a = 710;
-//    float b = 1550;
-//    float c = 0;
-//    float d = 6800 + 1800;
-//    float e = 1106;
-//    float f = 279;
-//    float g = 258;
-//    float i = 449;
-//    float q30 = 1470;
-
-//    cosB0 = qSqrt(a*a + b*b -q30*q30)/(2*a*b);
-//    sinB0 = (1 - qPow(cosB0, 2));
-//    float h = qSqrt(qPow(g,2) + c);
-//    float sinA1 = g/h;
-//    float cosA1 = c/h;
-//    float cosB0B1 = (qPow(a,2) + qPow(b,2))/(2*a*b);
-//    float p = 2*sinB0*cosB0B1;
-//    float q = qPow(cosB0B1,2) - qPow(cosB0,2);
-//    float sinB1 = -p/2 + qSqrt(qPow((p/2),2) -q);
-//    float cosB1 = qSqrt(1 - qPow(sinB1,2));
-//    float sinA1B1 = sinA1*cosB1 + cosA1*sinB1;
-//    float DeltaZ = h * sinA1B1;
-//    float DeltaX = h * qSqrt(1 -qPow(sinA1B1,2));
-//    float cosB; //wird überhaupt gebraucht?
-
-
-//    UA_Float posSollTestValue[8] ;
 
 
 
@@ -146,8 +115,16 @@ private:
   //Für GP Berechnung
 //    QFile gripPoint; //enthält den berechneten Greifpunkt
     QString fileName = tr("./20170714_01.log");
-    bool showHist = 0;
-    bool showSurface = 1;
+    bool showHist           = 0;
+    bool showSurface        = 0;
+    bool gedreht            = 0;
+    long scannerUeberBoden  = 0;
+    double inkrementSize    = 0;
+    unsigned int leftAngle  = 0;
+    unsigned int rightAngle = 0;
+    long leftBorder         = 0;
+    long rightBorder        = 0;
+    unsigned int vRatio     = 0;
 
  /* AB HIER FÜR OPC_UA */
     QTimer *activeTimer;  //für OPC_UA
@@ -201,7 +178,7 @@ private slots:
 
     void on_copyIstPos_clicked();
 
-    void activateOpcSync();  //für OPC_UA
+    void updateVariousOpcNodes();  //für OPC_UA
 
     void on_enableJoints_clicked(bool checked);
 
@@ -265,6 +242,8 @@ private slots:
    void on_calculateInvers_clicked();
 
    void on_copySollPos_clicked();
+
+   void on_enUserSettings_toggled(bool checked);
 
 signals:
 

@@ -15,7 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
     activeTimer = new QTimer(this);
     activeTimer->setInterval(50);
     activeTimer->setSingleShot(false);
+
     connect(activeTimer, SIGNAL(timeout()), this, SLOT(activateOpcSync()));
+
 
     ui->setupUi(this);
 
@@ -73,6 +75,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //setzt alle Punkte des Ausschubs auf Null und löscht damit den aktuellen Pfad
     for (int i = 0; i < 256; i++) path [4][i] = 0;
+
+    //OPC Client initialisieren
+    client = UA_Client_new(UA_ClientConfig_standard);
 }
 
 
@@ -81,6 +86,7 @@ MainWindow::~MainWindow()
 {   delete gripPoint;
     on_enableJoints_clicked(false);
     LMS_111->close();
+
     UA_Client_delete(client); /* Disconnects the client internally */
     delete ui;
     }
@@ -136,7 +142,7 @@ void MainWindow::update_UI() {
 }
 
 
-void MainWindow::activateOpcSync() {
+void MainWindow::updateVariousOpcNodes() {
 
     if (UA_Client_getState(client) == 1) { //alles nur wenn Client verbunden
 
@@ -331,4 +337,6 @@ void MainWindow::sendSollGreifer()
 {
     posSollValue[7] = ui->sollGreifer->value();
 }
+
+
 
