@@ -9,9 +9,11 @@ void MainWindow::on_actionVerbinde_mit_SPS_triggered()
         UA_Client_delete(client);
         ui->statusBar->showMessage(tr("ERRIOR: Verbindung fehlgeschlagen."),5000);
     }
-    else     ui->statusBar->showMessage(tr("Verbindung zur SPS hergestellt."),5000);
-    timerWaypoint.start(); //timer für waypointpause starten
-
+    else    {
+            ui->statusBar->showMessage(tr("Verbindung zur SPS hergestellt."),5000);
+            activeTimer->start(); //timer für OPC Aktualisierung starten
+            timerWaypoint.start(); //timer für waypointpause starten
+        }
     ui->wayPointPause->setValue(wayPointPause);
 }
 
