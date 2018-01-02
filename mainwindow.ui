@@ -1014,6 +1014,21 @@
          <string>Y</string>
         </property>
        </widget>
+       <zorder>frame_2</zorder>
+       <zorder>selectData</zorder>
+       <zorder>selectedFile</zorder>
+       <zorder>showHist</zorder>
+       <zorder>showSurface</zorder>
+       <zorder>label_3</zorder>
+       <zorder>label_12</zorder>
+       <zorder>zGp</zorder>
+       <zorder>yGp</zorder>
+       <zorder>enPoendorf</zorder>
+       <zorder>calculateGP</zorder>
+       <zorder>label</zorder>
+       <zorder>enSopas</zorder>
+       <zorder>xGp</zorder>
+       <zorder>label_2</zorder>
       </widget>
       <widget class="QWidget" name="tab_6">
        <property name="enabled">

@@ -178,7 +178,7 @@ private slots:
 
     void on_copyIstPos_clicked();
 
-    void updateVariousOpcNodes();  //für OPC_UA
+    void activateOpcSync();  //für OPC_UA
 
     void on_enableJoints_clicked(bool checked);
 

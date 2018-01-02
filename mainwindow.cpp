@@ -142,7 +142,7 @@ void MainWindow::update_UI() {
 }
 
 
-void MainWindow::updateVariousOpcNodes() {
+void MainWindow::activateOpcSync() {
 
     if (UA_Client_getState(client) == 1) { //alles nur wenn Client verbunden
 
