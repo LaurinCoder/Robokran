@@ -138,9 +138,7 @@ void MainWindow::update_UI() {
 
 
 void MainWindow::activateOpcSync() {
-    testzahler++;
-     qDebug() << UA_CLIENTSTATE_ERRORED+testzahler;
-    if (UA_Client_getState(client) == 1) { //alles nur wenn Client verbunden
+     if (UA_Client_getState(client) == 1) { //alles nur wenn Client verbunden
 
         //posIst einlesen
         retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
