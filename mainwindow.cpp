@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     activeTimer->setInterval(50);
     activeTimer->setSingleShot(false);
     connect(activeTimer, SIGNAL(timeout()), this, SLOT(activateOpcSync()));
-    activeTimer->start();
+
 
     ui->setupUi(this);
 
@@ -138,7 +138,8 @@ void MainWindow::update_UI() {
 
 
 void MainWindow::activateOpcSync() {
-
+    testzahler++;
+     qDebug() << UA_CLIENTSTATE_ERRORED+testzahler;
     if (UA_Client_getState(client) == 1) { //alles nur wenn Client verbunden
 
         //posIst einlesen

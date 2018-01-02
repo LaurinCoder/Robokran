@@ -3,14 +3,17 @@
 
 void MainWindow::on_actionVerbinde_mit_SPS_triggered()
 {   client = UA_Client_new(UA_ClientConfig_standard);
-//    retval = UA_Client_connect(client, "opc.tcp://169.254.123.90:4840");  //IP Adresse bei Lasco Vor-Ort
+    //    retval = UA_Client_connect(client, "opc.tcp://169.254.123.90:4840");  //IP Adresse bei Lasco Vor-Ort
     retval = UA_Client_connect(client, "opc.tcp://169.254.25.28:4840");    //IP Adresse Labor Tests mit AutomationPC
     if(retval != UA_STATUSCODE_GOOD) {
         UA_Client_delete(client);
         ui->statusBar->showMessage(tr("ERRIOR: Verbindung fehlgeschlagen."),5000);
     }
-    else     ui->statusBar->showMessage(tr("Verbindung zur SPS hergestellt."),5000);
-    timerWaypoint.start(); //timer für waypointpause starten
+    else    {
+        ui->statusBar->showMessage(tr("Verbindung zur SPS hergestellt."),5000);
+        activeTimer->start(); //timer für OPC Aktualisierung starten
+        timerWaypoint.start(); //timer für waypointpause starten
+    }
 
     ui->wayPointPause->setValue(wayPointPause);
 }

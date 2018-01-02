@@ -47,6 +47,8 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    int testzahler = 0;
+
     bool conversion_OK;
     void update_UI();
     void TeachIn();
