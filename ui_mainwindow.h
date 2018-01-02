@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.1
+** Created by: Qt User Interface Compiler version 5.10.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -1109,80 +1109,71 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "RobocraneOpcControl", Q_NULLPTR));
-        actionVerbinde_mit_SPS->setText(QApplication::translate("MainWindow", "Verbinde mit SPS", Q_NULLPTR));
-        actionVerbindung_trennen->setText(QApplication::translate("MainWindow", "Verbindung trennen", Q_NULLPTR));
-        actionchooseFile->setText(QApplication::translate("MainWindow", "CSV File ausw\303\244hlen", Q_NULLPTR));
-        actionVerbinde_mit_Laserscanner->setText(QApplication::translate("MainWindow", "Verbinde mit Laserscanner", Q_NULLPTR));
-        actionPfad_des_Arrays_anzeigen->setText(QApplication::translate("MainWindow", "Pfad des Arrays anzeigen", Q_NULLPTR));
-        startTeachIn->setText(QApplication::translate("MainWindow", "TeachIn On/Off", Q_NULLPTR));
-        saveWaypoint->setText(QApplication::translate("MainWindow", "Save Waypoint", Q_NULLPTR));
-        setGrippingPointManual->setText(QApplication::translate("MainWindow", "Save Greifpunkt", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "RobocraneOpcControl", nullptr));
+        actionVerbinde_mit_SPS->setText(QApplication::translate("MainWindow", "Verbinde mit SPS", nullptr));
+        actionVerbindung_trennen->setText(QApplication::translate("MainWindow", "Verbindung trennen", nullptr));
+        actionchooseFile->setText(QApplication::translate("MainWindow", "CSV File ausw\303\244hlen", nullptr));
+        actionVerbinde_mit_Laserscanner->setText(QApplication::translate("MainWindow", "Verbinde mit Laserscanner", nullptr));
+        actionPfad_des_Arrays_anzeigen->setText(QApplication::translate("MainWindow", "Pfad des Arrays anzeigen", nullptr));
+        startTeachIn->setText(QApplication::translate("MainWindow", "TeachIn On/Off", nullptr));
+        saveWaypoint->setText(QApplication::translate("MainWindow", "Save Waypoint", nullptr));
+        setGrippingPointManual->setText(QApplication::translate("MainWindow", "Save Greifpunkt", nullptr));
         Status->setDocumentTitle(QString());
-        label_9->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Waypoint Nr.</span></p></body></html>", Q_NULLPTR));
-        label_20->setText(QApplication::translate("MainWindow", "Waypoint Pause", Q_NULLPTR));
-        runPath->setText(QApplication::translate("MainWindow", "Run Path", Q_NULLPTR));
-        cyclePath->setText(QApplication::translate("MainWindow", "cycle Path", Q_NULLPTR));
-        includeGP->setText(QApplication::translate("MainWindow", "include gripping Point", Q_NULLPTR));
-        resetPath->setText(QApplication::translate("MainWindow", "Reset Path", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "TeachIn", Q_NULLPTR));
-        uebernehmePfad->setText(QApplication::translate("MainWindow", "Tabelle als Pfad \303\274bernehmen", Q_NULLPTR));
-        writeCsv->setText(QApplication::translate("MainWindow", "speichere Tabelle in CSV", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "Pfad konfigurieren", Q_NULLPTR));
-        speicherortFestlegen->setText(QApplication::translate("MainWindow", "Speicherort festlegen", Q_NULLPTR));
-        singleScan->setText(QApplication::translate("MainWindow", "Messf\303\244cher speichern", Q_NULLPTR));
-        scanSequence->setText(QApplication::translate("MainWindow", "Bereich Scannen", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("MainWindow", "Scanbereich", Q_NULLPTR));
-        label_22->setText(QApplication::translate("MainWindow", "von", Q_NULLPTR));
-        label_6->setText(QApplication::translate("MainWindow", "bis", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Laserscanner", Q_NULLPTR));
-        selectData->setText(QApplication::translate("MainWindow", "Laserdaten ausw\303\244hlen", Q_NULLPTR));
-        showHist->setText(QApplication::translate("MainWindow", "Histogramm anzeigen", Q_NULLPTR));
-        showSurface->setText(QApplication::translate("MainWindow", "Oberfl\303\244chenprofil anzeigen", Q_NULLPTR));
-        label_3->setText(QApplication::translate("MainWindow", "Z", Q_NULLPTR));
-        label_12->setText(QApplication::translate("MainWindow", "berechneter Greifpunkt:", Q_NULLPTR));
-        enPoendorf->setText(QApplication::translate("MainWindow", "P\303\266ndorf Scan (Standard: Labor Scan)", Q_NULLPTR));
-        calculateGP->setText(QApplication::translate("MainWindow", "Greifpunkt berechnen", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "X", Q_NULLPTR));
-        label_28->setText(QApplication::translate("MainWindow", "linker Winkel", Q_NULLPTR));
-        enUserSettings->setText(QApplication::translate("MainWindow", "benutzerdefinierte Auswertungsgrenzen", Q_NULLPTR));
-        label_14->setText(QApplication::translate("MainWindow", "rechte Grenze", Q_NULLPTR));
-        label_15->setText(QApplication::translate("MainWindow", "rechter Winkel", Q_NULLPTR));
-        label_29->setText(QApplication::translate("MainWindow", "linke Grenze", Q_NULLPTR));
-        label_30->setText(QApplication::translate("MainWindow", "Vol. Verh\303\244ltnis", Q_NULLPTR));
-        label_36->setText(QApplication::translate("MainWindow", "Inkrement Gr\303\266\303\237e", Q_NULLPTR));
-        label_37->setText(QApplication::translate("MainWindow", "Abstand Boden", Q_NULLPTR));
-        label_38->setText(QApplication::translate("MainWindow", "gedreht", Q_NULLPTR));
-        enSopas->setText(QApplication::translate("MainWindow", "Sopas Scan (Standard: QT Scan)", Q_NULLPTR));
-        label_2->setText(QApplication::translate("MainWindow", "Y", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_5), QApplication::translate("MainWindow", "Greifpunkt berechnen", Q_NULLPTR));
-        label_10->setText(QApplication::translate("MainWindow", "Z", Q_NULLPTR));
-        label_23->setText(QApplication::translate("MainWindow", "berechnete Soll Position ", Q_NULLPTR));
-        label_24->setText(QApplication::translate("MainWindow", "L\303\244ngsfahrt", Q_NULLPTR));
-        label_25->setText(QApplication::translate("MainWindow", "Drehung", Q_NULLPTR));
-        label_26->setText(QApplication::translate("MainWindow", "Hub", Q_NULLPTR));
-        label_27->setText(QApplication::translate("MainWindow", "Ausschub", Q_NULLPTR));
-        calculateInvers->setText(QApplication::translate("MainWindow", "Inverskinematik berechnen", Q_NULLPTR));
-        label_4->setText(QApplication::translate("MainWindow", "X", Q_NULLPTR));
-        label_5->setText(QApplication::translate("MainWindow", "Y", Q_NULLPTR));
-        label_13->setText(QApplication::translate("MainWindow", "Greifpunkt aus Punktewolke", Q_NULLPTR));
-        copySollPos->setText(QApplication::translate("MainWindow", "\303\234bernehme berechnete Soll Position", Q_NULLPTR));
-        setGrippingPoint->setText(QApplication::translate("MainWindow", "Greifpunkt in Pfad speichern", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab_6), QApplication::translate("MainWindow", "InvKine berechnen", Q_NULLPTR));
-        label_21->setText(QApplication::translate("MainWindow", "Soll Position ", Q_NULLPTR));
-        label_7->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Ist Position</span></p></body></html>", Q_NULLPTR));
-        label_16->setText(QApplication::translate("MainWindow", "L\303\244ngsfahrt", Q_NULLPTR));
-        label_17->setText(QApplication::translate("MainWindow", "Drehung", Q_NULLPTR));
-        label_18->setText(QApplication::translate("MainWindow", "Hub", Q_NULLPTR));
-        label_19->setText(QApplication::translate("MainWindow", "Ausschub", Q_NULLPTR));
-        label_11->setText(QApplication::translate("MainWindow", "Greifer", Q_NULLPTR));
-        copyIstPos->setText(QApplication::translate("MainWindow", "\303\234bernehme Ist Position", Q_NULLPTR));
-        enableJoints->setText(QApplication::translate("MainWindow", "Auto on/off", Q_NULLPTR));
-        AutoLabel->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Automode</span></p></body></html>", Q_NULLPTR));
-        label_8->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\"> Modus </span></p></body></html>", Q_NULLPTR));
-        moveJoints->setText(QApplication::translate("MainWindow", "Steuerung aktivieren", Q_NULLPTR));
-        menuVerbindungen->setTitle(QApplication::translate("MainWindow", "Verbindungen", Q_NULLPTR));
-        menuopenFile->setTitle(QApplication::translate("MainWindow", "Pfad anzeigen", Q_NULLPTR));
+        label_9->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Waypoint Nr.</span></p></body></html>", nullptr));
+        label_20->setText(QApplication::translate("MainWindow", "Waypoint Pause", nullptr));
+        runPath->setText(QApplication::translate("MainWindow", "Run Path", nullptr));
+        cyclePath->setText(QApplication::translate("MainWindow", "cycle Path", nullptr));
+        includeGP->setText(QApplication::translate("MainWindow", "include gripping Point", nullptr));
+        resetPath->setText(QApplication::translate("MainWindow", "Reset Path", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "TeachIn", nullptr));
+        uebernehmePfad->setText(QApplication::translate("MainWindow", "Tabelle als Pfad \303\274bernehmen", nullptr));
+        writeCsv->setText(QApplication::translate("MainWindow", "speichere Tabelle in CSV", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "Pfad konfigurieren", nullptr));
+        speicherortFestlegen->setText(QApplication::translate("MainWindow", "Speicherort festlegen", nullptr));
+        singleScan->setText(QApplication::translate("MainWindow", "Messf\303\244cher speichern", nullptr));
+        scanSequence->setText(QApplication::translate("MainWindow", "Bereich Scannen", nullptr));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Scanbereich", nullptr));
+        label_22->setText(QApplication::translate("MainWindow", "von", nullptr));
+        label_6->setText(QApplication::translate("MainWindow", "bis", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Laserscanner", nullptr));
+        selectData->setText(QApplication::translate("MainWindow", "Laserdaten ausw\303\244hlen", nullptr));
+        calculateGP->setText(QApplication::translate("MainWindow", "Greifpunkt berechnen", nullptr));
+        showHist->setText(QApplication::translate("MainWindow", "Histogramm anzeigen", nullptr));
+        showSurface->setText(QApplication::translate("MainWindow", "Oberfl\303\244chenprofil anzeigen", nullptr));
+        label->setText(QApplication::translate("MainWindow", "X", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Y", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Z", nullptr));
+        enSopas->setText(QApplication::translate("MainWindow", "Sopas Scan", nullptr));
+        enPoendorf->setText(QApplication::translate("MainWindow", "P\303\266ndorf Scan", nullptr));
+        label_12->setText(QApplication::translate("MainWindow", "berechneter Greifpunkt:", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_5), QApplication::translate("MainWindow", "Greifpunkt berechnen", nullptr));
+        label_10->setText(QApplication::translate("MainWindow", "Z", nullptr));
+        label_23->setText(QApplication::translate("MainWindow", "berechnete Soll Position ", nullptr));
+        label_24->setText(QApplication::translate("MainWindow", "L\303\244ngsfahrt", nullptr));
+        label_25->setText(QApplication::translate("MainWindow", "Drehung", nullptr));
+        label_26->setText(QApplication::translate("MainWindow", "Hub", nullptr));
+        label_27->setText(QApplication::translate("MainWindow", "Ausschub", nullptr));
+        calculateInvers->setText(QApplication::translate("MainWindow", "Inverskinematik berechnen", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "X", nullptr));
+        label_5->setText(QApplication::translate("MainWindow", "Y", nullptr));
+        label_13->setText(QApplication::translate("MainWindow", "Greifpunkt aus Punktewolke", nullptr));
+        copySollPos->setText(QApplication::translate("MainWindow", "\303\234bernehme berechnete Soll Position", nullptr));
+        setGrippingPoint->setText(QApplication::translate("MainWindow", "Greifpunkt in Pfad speichern", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_6), QApplication::translate("MainWindow", "InvKine berechnen", nullptr));
+        label_21->setText(QApplication::translate("MainWindow", "Soll Position ", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Ist Position</span></p></body></html>", nullptr));
+        label_16->setText(QApplication::translate("MainWindow", "L\303\244ngsfahrt", nullptr));
+        label_17->setText(QApplication::translate("MainWindow", "Drehung", nullptr));
+        label_18->setText(QApplication::translate("MainWindow", "Hub", nullptr));
+        label_19->setText(QApplication::translate("MainWindow", "Ausschub", nullptr));
+        label_11->setText(QApplication::translate("MainWindow", "Greifer", nullptr));
+        copyIstPos->setText(QApplication::translate("MainWindow", "\303\234bernehme Ist Position", nullptr));
+        enableJoints->setText(QApplication::translate("MainWindow", "Auto on/off", nullptr));
+        AutoLabel->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Automode</span></p></body></html>", nullptr));
+        label_8->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\"> Modus </span></p></body></html>", nullptr));
+        moveJoints->setText(QApplication::translate("MainWindow", "Steuerung aktivieren", nullptr));
+        menuVerbindungen->setTitle(QApplication::translate("MainWindow", "Verbindungen", nullptr));
+        menuopenFile->setTitle(QApplication::translate("MainWindow", "Pfad anzeigen", nullptr));
     } // retranslateUi
 
 };

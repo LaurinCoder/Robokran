@@ -24920,9 +24920,9 @@ void UA_Client_delete(UA_Client* client){
     UA_free(client);
 }
 
-UA_ClientState UA_Client_getState(UA_Client *client) {
+UA_ClientState UA_Client_getState(UA_Client *client){
     if(!client)
-        return UA_CLIENTSTATE_ERRORED;
+          return UA_CLIENTSTATE_ERRORED;
     return client->state;
 }
 
