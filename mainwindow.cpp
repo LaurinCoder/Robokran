@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     activeTimer->setInterval(50);
     activeTimer->setSingleShot(false);
     connect(activeTimer, SIGNAL(timeout()), this, SLOT(activateOpcSync()));
-    activeTimer->start();
 
     ui->setupUi(this);
 
