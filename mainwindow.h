@@ -153,16 +153,16 @@ private:
     UA_Float hysValue[8];
     UA_Float oldHysValue[8];
 
-    const UA_NodeId nodePosIst = UA_NODEID_STRING(6, "::AsGlobalPV:posIst");
-    const UA_NodeId nodePosSoll = UA_NODEID_STRING(6, "::AsGlobalPV:posSoll");
-    const UA_NodeId nodePosSollInv = UA_NODEID_STRING(6, "::InversKine:posSollTest");
-    const UA_NodeId nodeXsoll = UA_NODEID_STRING(6, "::AsGlobalPV:Xsoll");
-    const UA_NodeId nodeYsoll = UA_NODEID_STRING(6, "::AsGlobalPV:Ysoll");
-    const UA_NodeId nodeZsoll = UA_NODEID_STRING(6, "::AsGlobalPV:Zsoll");
-    const UA_NodeId nodePosOk = UA_NODEID_STRING(6, "::AsGlobalPV:posOk");
-    const UA_NodeId nodeAuto = UA_NODEID_STRING(6, "::AsGlobalPV:Auto");
-    const UA_NodeId nodePath = UA_NODEID_STRING(6, "::AsGlobalPV:path");
-    const UA_NodeId nodeHys = UA_NODEID_STRING(6, "::AsGlobalPV:hys");
+    const UA_NodeId nodePosIst = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:posIst");
+    const UA_NodeId nodePosSoll = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:posSoll");
+    const UA_NodeId nodePosSollInv = UA_NODEID_STRING(6, (char*)"::InversKine:posSollTest");
+    const UA_NodeId nodeXsoll = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:Xsoll");
+    const UA_NodeId nodeYsoll = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:Ysoll");
+    const UA_NodeId nodeZsoll = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:Zsoll");
+    const UA_NodeId nodePosOk = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:posOk");
+    const UA_NodeId nodeAuto = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:Auto");
+    const UA_NodeId nodePath = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:path");
+    const UA_NodeId nodeHys = UA_NODEID_STRING(6, (char*)"::AsGlobalPV:hys");
 
 
 

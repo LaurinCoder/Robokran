@@ -150,14 +150,14 @@ void MainWindow::activateOpcSync() {
         retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
         if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
             for (int i = 0; i < 8; ++i) {
-                posIstValue[i] = *(UA_Float*)(posIst.data + i * sizeof(posIst.data)/2);
+                posIstValue[i] = *(UA_Float*)(sizeof(posIst.data) + i * sizeof(posIst.data)/2);
             }
 
             //posSollInv einlesen
             retval = UA_Client_readValueAttribute(client, nodePosSollInv,&posSollInv);
             if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posSollInv,&UA_TYPES[UA_TYPES_FLOAT]) ) {
                 for (int i = 0; i < 8; ++i) {
-                    posSollInvValue[i] = *(UA_Float*)(posSollInv.data + i * sizeof(posSollInv.data)/2);
+                    posSollInvValue[i] = *(UA_Float*)(sizeof(posSollInv.data) + i * sizeof(posSollInv.data)/2);
                 }}
 
 
@@ -172,13 +172,13 @@ void MainWindow::activateOpcSync() {
             retval = UA_Client_readValueAttribute(client, nodePosOk,&posOk);
             if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posOk,&UA_TYPES[UA_TYPES_BOOLEAN]) ) {
                 for (int i = 0; i < 8; ++i) {
-                    posOkValue[i] = *(UA_Boolean*)(posOk.data + i * sizeof(posOk.data)/8);
+                    posOkValue[i] = *(UA_Boolean*)(sizeof(posOk.data) + i * sizeof(posOk.data)/8);
                 }}
             //hys lesen
             retval = UA_Client_readValueAttribute(client, nodeHys,&hys);
             if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&hys,&UA_TYPES[UA_TYPES_FLOAT]) ){
                 for (int i = 0; i < 8; ++i) {
-                    hysValue[i] = *(UA_Float*)(hys.data + i * sizeof(hys.data)/2);
+                    hysValue[i] = *(UA_Float*)(sizeof(hys.data) + i * sizeof(hys.data)/2);
                 }}
 
 
