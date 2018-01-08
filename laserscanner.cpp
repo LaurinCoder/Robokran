@@ -27,12 +27,23 @@ void MainWindow::on_speicherortFestlegen_clicked()
     datadirectory = QFileDialog::getSaveFileName(this, tr("Speicherort festlegen..."),
                                                  "/home/iltuser/Schreibtisch/QT_Sources/",tr("Text Files (*.txt);;log Files (*.log)"));
     qDebug() << "Speicherort festgelegt:  \n" << datadirectory;
+
+    //wenn file existiert, File löschen, um es zu überschreiben, das sagt auch die Dialogfenster, wenn ein bestehendes File ausgewählt wird.
+    laserdata.setFileName(datadirectory);
+    if (laserdata.exists()) {
+        laserdata.remove();
+    }
+
 }
 
 void MainWindow::on_singleScan_clicked()
 {
     if(!datadirectory.isEmpty())
     {
+        laserdata.setFileName(datadirectory);
+        if (laserdata.exists()) {
+            laserdata.remove();
+        }
         if(LMS_connected)
         {
             laserdata.setFileName(datadirectory);
@@ -85,10 +96,12 @@ void MainWindow::on_scanSequence_toggled(bool checked)
 
     if(!datadirectory.isEmpty())
     {
+        laserdata.setFileName(datadirectory);
+        if (laserdata.exists() && checked) {
+            laserdata.remove();
+        }
         if(LMS_connected)
         {
-            laserdata.setFileName(datadirectory);
-
             if(checked)
             {
                 int ret = msgBox_movementWarning.exec();
