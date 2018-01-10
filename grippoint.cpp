@@ -533,8 +533,6 @@ GripPoint::GripPoint(QObject *parent, bool Gedreht, long ScannerUeberBoden, doub
 
 }
 
-
-
 void GripPoint::Transponieren(std::vector< std::vector<long> > & vec)
 {
 
@@ -570,7 +568,6 @@ void GripPoint::Transponieren(std::vector< std::vector<long> > & vec)
     }
     puffer.clear();
 }
-
 
 void GripPoint::Raster(std::vector< std::vector<long> > & vec_X, std::vector< std::vector<long> > & vec_Y, std::vector< std::vector<long> > & vec_Z, std::vector< std::vector<long> > & vec_Xr, std::vector< std::vector<long> > & vec_Yr, std::vector< std::vector<long> > & vec_Zr)
 {
@@ -957,7 +954,6 @@ void GripPoint::Display(const std::string& title, cv::Mat &histImage)
     //    cv::waitKey(0);
     //    cv::destroyWindow(title);
 }
-
 
 void GripPoint::Manhattan(uint &VRatio)
 {
