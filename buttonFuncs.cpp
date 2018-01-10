@@ -30,7 +30,6 @@ void MainWindow::on_actionVerbindung_trennen_triggered()
 
 }
 
-
 void MainWindow::on_copyIstPos_clicked()
 {
     ui->sollLFahrt->setValue(ui->istLFahrt->text().toDouble());
@@ -39,7 +38,6 @@ void MainWindow::on_copyIstPos_clicked()
     ui->sollAusschub->setValue(ui->istAusschub->text().toDouble());
     ui->sollGreifer->setValue(ui->istGreifer->text().toDouble());
 }
-
 
 void MainWindow::on_enableJoints_clicked(bool checked)
 {
@@ -56,8 +54,6 @@ void MainWindow::on_enableJoints_clicked(bool checked)
     }
 
 }
-
-
 
 void MainWindow::on_startTeachIn_clicked(bool checked)
 {

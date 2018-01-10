@@ -11,7 +11,6 @@ void MainWindow::on_selectData_clicked()
 
 }
 
-
 void MainWindow::on_calculateGP_clicked()
 {
     if (!fileName.isEmpty()) {
@@ -92,7 +91,6 @@ void MainWindow::on_calculateInvers_clicked()
     else ui->statusBar->showMessage(tr("Verbindung zur SPS nicht hergestellt."),5000);
 }
 
-
 void MainWindow::on_copySollPos_clicked()
 {   if (AutoValue == 1) {
         ui->sollLFahrt->setValue(ui->sollLFahrtInvers->text().toDouble());
@@ -106,7 +104,6 @@ void MainWindow::on_copySollPos_clicked()
     }
     else ui->statusBar->showMessage(tr("Automodus ist deaktiviert, Übernahme nicht möglich."),5000);
 }
-
 
 void MainWindow::on_enUserSettings_toggled(bool checked)
 {   // Eingabefelder werden aktiviert
