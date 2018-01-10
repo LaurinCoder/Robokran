@@ -78,6 +78,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //OPC Client initialisieren
     client = UA_Client_new(UA_ClientConfig_standard);
+
+    UA_Variant_init(&posIst); /* Variants can hold scalar values and arrays of any type */
+    UA_Variant_init(&posSoll);
+    UA_Variant_init(&posSollInv);
+    UA_Variant_init(&Xsoll);
+    UA_Variant_init(&Ysoll);
+    UA_Variant_init(&Zsoll);
+    UA_Variant_init(&posOk);
+    UA_Variant_init(&Auto);
+    UA_Variant_init(&hys);
+    UA_Variant_init(&oldHys);
 }
 
 
@@ -149,15 +160,19 @@ void MainWindow::activateOpcSync() {
         //posIst einlesen
         retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
         if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+            float *dataPointer = (UA_Float*)posIst.data;
             for (int i = 0; i < 8; ++i) {
-                posIstValue[i] = *(UA_Float*)(posIst.data + i * sizeof(posIst.data)/2);
+                posIstValue[i] = *(dataPointer);
+                ++dataPointer;
             }
 
             //posSollInv einlesen
             retval = UA_Client_readValueAttribute(client, nodePosSollInv,&posSollInv);
             if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posSollInv,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+                float *dataPointer = (UA_Float*)posSollInv.data;
                 for (int i = 0; i < 8; ++i) {
-                    posSollInvValue[i] = *(UA_Float*)(posSollInv.data + i * sizeof(posSollInv.data)/2);
+                    posSollInvValue[i] = *(dataPointer);
+                    ++dataPointer;
                 }}
 
 
@@ -171,14 +186,19 @@ void MainWindow::activateOpcSync() {
             //posOk lesen
             retval = UA_Client_readValueAttribute(client, nodePosOk,&posOk);
             if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posOk,&UA_TYPES[UA_TYPES_BOOLEAN]) ) {
+                bool *dataPointer = (UA_Boolean*)posOk.data;
                 for (int i = 0; i < 8; ++i) {
-                    posOkValue[i] = *(UA_Boolean*)(posOk.data + i * sizeof(posOk.data)/8);
+                    posOkValue[i] = *(dataPointer);
+                    ++dataPointer;
                 }}
+
             //hys lesen
             retval = UA_Client_readValueAttribute(client, nodeHys,&hys);
             if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&hys,&UA_TYPES[UA_TYPES_FLOAT]) ){
+                float *dataPointer = (UA_Float*)hys.data;
                 for (int i = 0; i < 8; ++i) {
-                    hysValue[i] = *(UA_Float*)(hys.data + i * sizeof(hys.data)/2);
+                    hysValue[i] = *(dataPointer);
+                    ++dataPointer;
                 }}
 
 
