@@ -1,6 +1,110 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+void MainWindow::TeachIn()   //TeachIn und Pfadsteuerung
+{
+
+    //TeachIn Funktion
+    if(teachIn)
+    {
+        //Automatikmodus deakitvieren
+
+        AutoValue = 0;
+        on_enableJoints_clicked(AutoValue);
+
+        if(saveWayPoint)
+        {
+            //speichert alle Gelenkskoordinaten als Wegpunkt
+            for(int i = 0; i < 8; i++) path[i][wayPointNr] = posIstValue[i];
+
+            //Plausibilät des nächsten Wegpunktes entfernen
+            path[4][wayPointNr + 1] = 0;
+
+            wayPointNr++;
+            saveWayPoint = 0;
+        }
+    }
+    //Flanke in Teach in erkennen
+    if (teachIn != teachInLast) wayPointNr = 0;
+    teachInLast = teachIn;
+
+    //Automatikmodus schaltet Pfadsteuerung ab
+    if(!AutoValue) {runPath = 0; ui->runPath->setChecked(false);}
+
+    //start der Pfadsteuerung aktiviert Automatikmodus
+
+    if(runPath && AutoValue)
+    {
+        //Überprüfen ob alle Sollwerte des Wegpunktes.. //... ob posIst gleich posSoll ist, weil posOk von der SPS kommt und dann gibts ein Timing Problem, also muss beides posOk und posSoll == posIst passen
+        //...oder letzter Wegpunkt erreicht wurde
+        if((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
+            posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
+                && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7] //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!
+
+                //...oder letzter Wegpunkt erreicht wurde
+                && path[4][wayPointNr] != 0)
+
+        {
+            if (flanke)
+            {
+                timerWaypoint.restart();
+                flanke = false;
+            }
+            //path[3][252] wird manipuliert, abhängig von der tatsächlich erreichten Position in 251
+            if (wayPointNr == 252) path[3][wayPointNr] = posIstValue[3] * liftRatioUp;
+
+            if( timerWaypoint.elapsed() > (1000 * wayPointPause) )
+            {
+                //setzt alle Gelenkskoordinaten des Wegpunkts auf Sollwerte
+                for(int i = 0; i < 8; i++) posSollValue[i] = path[i][wayPointNr];
+                wartezeitZaehler = 0;
+                wayPointNr++;
+
+                //Hysteresen werden gespeichert und für 250,251, 252 vergrößert
+                if (wayPointNr == 250)
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        oldHysValue[i] = hysValue[i];
+                    }
+                    hysValue[0] = oldHysValue[0] * 5;
+                    hysValue[2] = oldHysValue[2] * 5;
+                    //hys schreiben
+                    UA_Variant_setArray(&hys, &hysValue, 8, &UA_TYPES[UA_TYPES_FLOAT]);
+                    retval = UA_Client_writeValueAttribute(client, nodeHys,&hys);
+                }
+                //Hysteresen werden wieder zurückgesetzt
+                else if (wayPointNr == 253)
+                {
+                    //oldHys schreiben
+                    UA_Variant_setArray(&hys, &oldHysValue, 8, &UA_TYPES[UA_TYPES_FLOAT]);
+                    retval = UA_Client_writeValueAttribute(client, nodeHys,&hys);
+                }
+
+
+                //posSoll schicken
+                UA_Variant_setArray(&posSoll, &posSollValue, 8, &UA_TYPES[UA_TYPES_FLOAT]);
+                retval = UA_Client_writeValueAttribute(client, nodePosSoll,&posSoll);
+                flanke = true;
+            }
+
+        }
+
+        //Überprüfen ob zyklisch oder antizyklisch, mit Greifpunkt von LaserscannerTelegram oder ohne
+        if      (path[4][wayPointNr] == 0 && setGPActive && wayPointNr < 247)			wayPointNr = 247;
+        else if (path[4][wayPointNr] == 0 && setGPActive)	           					wayPointNr = 0;
+        else if (cyclic && path[4][wayPointNr] == 0 && !setGPActive) 					wayPointNr = 0;
+        else if (path[4][wayPointNr] == 0) 													{wayPointNr = 0; runPath = false; AutoValue = false;}
+    }
+
+    //bei Reset und außerhalb von TeachIn wird Pfad auf Startposition zurückgesetzt
+    if(resetPath && !teachIn) {wayPointNr = 0; resetPath = 0;}
+
+    ui->waypointNr->display(wayPointNr);
+}
+
 void MainWindow::on_actionVerbinde_mit_SPS_triggered()
 {   client = UA_Client_new(UA_ClientConfig_standard);
 //    retval = UA_Client_connect(client, "opc.tcp://169.254.123.90:4840");  //IP Adresse bei Lasco Vor-Ort
