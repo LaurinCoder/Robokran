@@ -17,9 +17,11 @@ void MainWindow::TeachIn()   //TeachIn und Pfadsteuerung
             //speichert alle Gelenkskoordinaten als Wegpunkt
             for(int i = 0; i < 8; i++) path[i][wayPointNr] = posIstValue[i];
 
+            // ins Log schreiben
+            ui->teachInLog->append("Waypoint "+ QString::number(wayPointNr+1) + " saved.");
+
             //Plausibilät des nächsten Wegpunktes entfernen
             path[4][wayPointNr + 1] = 0;
-
             wayPointNr++;
             saveWayPoint = 0;
         }
@@ -150,7 +152,15 @@ void MainWindow::on_enableJoints_clicked(bool checked)
         AutoValue = checked;
         UA_Variant_setScalar(&Auto,&AutoValue,&UA_TYPES[UA_TYPES_BOOLEAN]);
         retval = UA_Client_writeValueAttribute(client, nodeAuto,&Auto);
-    }
+        //Falls Scan gerade abläuft und auto deaktiviert wird, wird der Scan unterbrochen
+        if (scan_inProcess && !checked) {
+            ui->scanSequence->setChecked(false);
+            scan_inProcess = 0; sequenceCounter = -1;
+            ui->progressBar->setValue(0);
+            LMS_111->write("\02sEN LMDscandata 0\03");
+            ui->statusBar->showMessage(tr("Scan gestoppt, weil Auto deaktiviert."),10000);
+        }
+     }
     else
     {
         ui->enableJoints->setChecked(false);

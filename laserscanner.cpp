@@ -106,17 +106,17 @@ void MainWindow::on_scanSequence_toggled(bool checked)
                     scanFrom    = ui->scanFrom->value(); //Werte von Feldern in der Gui übernehmen
                     scanTo      = ui->scanTo->value();
 
-                    if (scanFrom == posIstValue[0]) {           //Prüfung für definierte Kranstellung einfügen, die sicher für die Scanfahrt ist.
+//                    if (scanFrom == posIstValue[0]) {           //Prüfung für definierte Kranstellung einfügen, die sicher für die Scanfahrt ist.
 
                             scan_inProcess = 1; sequenceCounter = 0;
                             ui->progressBar->setValue(10);
-                        }
-                    else
-                    {
-                        ui->scanSequence->setChecked(false); //ScanSequence beenden, darin wird Laserscanner gestoppt.
-                            msgBox_invalidPose.exec();
+//                        }
+//                    else
+//                    {
+//                        ui->scanSequence->setChecked(false); //ScanSequence beenden, darin wird Laserscanner gestoppt.
+//                            msgBox_invalidPose.exec();
 
-                     }
+//                     }
                 }
                 else              ui->scanSequence->setChecked(0);
 
@@ -147,6 +147,9 @@ void MainWindow::on_scanSequence_toggled(bool checked)
 
 void MainWindow::scanSequence()
 {if (scan_inProcess) {
+        //Prüfen ob Position vor dem Scan überprüft werden soll (schnelle Scanfahrt)
+        if (ui->noPositionCheck->isChecked()) {
+//Schnelle Scanfahrt ohne Positionsüberprüfung aller Achsen
         switch (sequenceCounter) {
         case 0:
                 statusBar()->showMessage(tr("Fahre zur Startposition"));
@@ -164,6 +167,15 @@ void MainWindow::scanSequence()
         {
             qDebug() << "Startposition erreicht";
             qDebug() << "Scanner starten";
+            qDebug() << "tatsächliche Scanposition einlesen";
+
+            //posIst[0] einlesen
+            retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
+            if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+                    scanFromReal =(int)*(UA_Float*)posIst.data;
+                }
+            ui->scanFromReal->setEnabled(true);
+            ui->scanFromReal->setValue(scanFromReal);
             LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
             qDebug() << "Zielposition anfahren";
             ui->sollLFahrt->setValue(scanTo);
@@ -195,8 +207,106 @@ void MainWindow::scanSequence()
         default:
             break;
         }
-    }
+        }
 
+ else {
+        //komplette Positionsüberprüfung aller Achsen
+        switch (sequenceCounter) {
+        //Ausschub vor dem Scannen einziehen
+        case 0:
+                statusBar()->showMessage(tr("Ausschub in Position bringen."));
+                on_enableJoints_clicked(true);
+                ui->sollAusschub->setValue(scanFromAusschub1);
+                sendSollAusschub();
+                sequenceCounter++;
+            break;
+        // wenn Ausschub < "scanFromAusschub2" dann auch heben.
+        case 1:
+            if (posIstValue[4] < scanFromAusschub2)
+        {
+                statusBar()->showMessage(tr("Arm und Ausschub in Position bringen."));
+                ui->sollHub->setValue(scanFromHub);
+                sendSollHub();
+                sequenceCounter++;
+            }
+        //wenn Position erreicht, dann 0° ausrichten.
+        case 2:
+            if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
+                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+        {
+                statusBar()->showMessage(tr("0° ausrichten."));
+                ui->sollDrehen->setValue(scanFromDrehung);
+                sendSollDrehung();
+                sequenceCounter++;
+            }
+        //wenn Position erreicht, dann zur Startposition fahren.
+        case 3:
+            if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
+                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+        {
+                statusBar()->showMessage(tr("Fahre zur Startposition."));
+                ui->sollLFahrt->setValue(scanFrom);
+                sendSollLFahrt();
+                sequenceCounter++;
+            }
+        //Scannen starten und tatsächliche Scannposition in "scanFromReal" speichern
+        case 4:
+            if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
+                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+        {
+            qDebug() << "Startposition erreicht";
+            qDebug() << "Scanner starten";
+            qDebug() << "tatsächliche Scanposition einlesen";
+
+            //posIst[0] einlesen
+            retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
+            if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+                    scanFromReal =(int)*(UA_Float*)posIst.data;
+                }
+            ui->scanFromReal->setEnabled(true);
+            ui->scanFromReal->setValue(scanFromReal);
+            LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
+            qDebug() << "Zielposition anfahren";
+            ui->sollLFahrt->setValue(scanTo);
+            sendSollLFahrt();
+            statusBar()->showMessage(tr("Scanne..."));
+            sequenceCounter ++;
+            }
+
+            break;
+        case 5:
+            if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
+                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7] //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+                )
+            {
+            qDebug() << "Zielposition erreicht";
+            qDebug() << "Scanner stoppen";
+            process.start("gedit", QStringList() << datadirectory);
+            ui->scanSequence->setChecked(false); //ScanSequence beenden, darin wird Laserscanner gestoppt.
+            statusBar()->showMessage(tr("Scan abgeschlossen!"));
+            sequenceCounter = -1;
+            }
+            break;
+        case 6:
+
+            break;
+        default:
+            break;
+        }
+    }
+   }
 }
 
 
