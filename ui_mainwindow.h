@@ -57,10 +57,10 @@ public:
     QPushButton *startTeachIn;
     QPushButton *saveWaypoint;
     QPushButton *setGrippingPointManual;
-    QTextEdit *Status;
     QHBoxLayout *horizontalLayout_18;
     QLabel *label_9;
     QLCDNumber *waypointNr;
+    QTextEdit *teachInLog;
     QSpacerItem *verticalSpacer_5;
     QVBoxLayout *verticalLayout_8;
     QSpacerItem *verticalSpacer_2;
@@ -87,6 +87,8 @@ public:
     QLabel *label_6;
     QSpinBox *scanFrom;
     QSpinBox *scanTo;
+    QLabel *label_31;
+    QSpinBox *scanFromReal;
     QWidget *tab_5;
     QPushButton *selectData;
     QLineEdit *selectedFile;
@@ -267,35 +269,16 @@ public:
 
         verticalLayout_7->addWidget(setGrippingPointManual);
 
-        Status = new QTextEdit(tab_2);
-        Status->setObjectName(QStringLiteral("Status"));
-        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(Status->sizePolicy().hasHeightForWidth());
-        Status->setSizePolicy(sizePolicy2);
-        Status->setLayoutDirection(Qt::LeftToRight);
-        Status->setFrameShape(QFrame::WinPanel);
-        Status->setFrameShadow(QFrame::Sunken);
-        Status->setLineWidth(2);
-        Status->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
-        Status->setAutoFormatting(QTextEdit::AutoNone);
-        Status->setUndoRedoEnabled(true);
-        Status->setReadOnly(true);
-        Status->setOverwriteMode(false);
-
-        verticalLayout_7->addWidget(Status);
-
         horizontalLayout_18 = new QHBoxLayout();
         horizontalLayout_18->setSpacing(6);
         horizontalLayout_18->setObjectName(QStringLiteral("horizontalLayout_18"));
         label_9 = new QLabel(tab_2);
         label_9->setObjectName(QStringLiteral("label_9"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
-        label_9->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
+        label_9->setSizePolicy(sizePolicy2);
 
         horizontalLayout_18->addWidget(label_9);
 
@@ -306,14 +289,38 @@ public:
         font.setBold(true);
         font.setWeight(75);
         waypointNr->setFont(font);
+        waypointNr->setLineWidth(1);
+        waypointNr->setSmallDecimalPoint(false);
+        waypointNr->setDigitCount(5);
         waypointNr->setSegmentStyle(QLCDNumber::Flat);
+        waypointNr->setProperty("value", QVariant(0));
+        waypointNr->setProperty("intValue", QVariant(0));
 
         horizontalLayout_18->addWidget(waypointNr);
 
 
         verticalLayout_7->addLayout(horizontalLayout_18);
 
-        verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        teachInLog = new QTextEdit(tab_2);
+        teachInLog->setObjectName(QStringLiteral("teachInLog"));
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(teachInLog->sizePolicy().hasHeightForWidth());
+        teachInLog->setSizePolicy(sizePolicy3);
+        teachInLog->setLayoutDirection(Qt::LeftToRight);
+        teachInLog->setFrameShape(QFrame::WinPanel);
+        teachInLog->setFrameShadow(QFrame::Sunken);
+        teachInLog->setLineWidth(2);
+        teachInLog->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        teachInLog->setAutoFormatting(QTextEdit::AutoNone);
+        teachInLog->setUndoRedoEnabled(true);
+        teachInLog->setReadOnly(true);
+        teachInLog->setOverwriteMode(false);
+
+        verticalLayout_7->addWidget(teachInLog);
+
+        verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Preferred);
 
         verticalLayout_7->addItem(verticalSpacer_5);
 
@@ -427,7 +434,7 @@ public:
         scanSequence->setCheckable(true);
         progressBar = new QProgressBar(tab_4);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        progressBar->setGeometry(QRect(10, 350, 341, 23));
+        progressBar->setGeometry(QRect(20, 650, 551, 23));
         QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Expanding);
         sizePolicy5.setHorizontalStretch(0);
         sizePolicy5.setVerticalStretch(0);
@@ -439,7 +446,7 @@ public:
         progressBar->setValue(0);
         groupBox = new QGroupBox(tab_4);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(40, 250, 301, 80));
+        groupBox->setGeometry(QRect(30, 250, 301, 80));
         label_22 = new QLabel(groupBox);
         label_22->setObjectName(QStringLiteral("label_22"));
         label_22->setGeometry(QRect(20, 30, 89, 17));
@@ -458,6 +465,17 @@ public:
         scanTo->setMaximum(6400);
         scanTo->setSingleStep(5);
         scanTo->setValue(4800);
+        label_31 = new QLabel(tab_4);
+        label_31->setObjectName(QStringLiteral("label_31"));
+        label_31->setGeometry(QRect(40, 350, 331, 20));
+        scanFromReal = new QSpinBox(tab_4);
+        scanFromReal->setObjectName(QStringLiteral("scanFromReal"));
+        scanFromReal->setEnabled(false);
+        scanFromReal->setGeometry(QRect(40, 380, 111, 29));
+        scanFromReal->setReadOnly(true);
+        scanFromReal->setMinimum(0);
+        scanFromReal->setMaximum(5700);
+        scanFromReal->setValue(0);
         tabWidget->addTab(tab_4, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName(QStringLiteral("tab_5"));
@@ -1116,7 +1134,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1133,8 +1151,8 @@ public:
         startTeachIn->setText(QApplication::translate("MainWindow", "TeachIn On/Off", Q_NULLPTR));
         saveWaypoint->setText(QApplication::translate("MainWindow", "Save Waypoint", Q_NULLPTR));
         setGrippingPointManual->setText(QApplication::translate("MainWindow", "Save Greifpunkt", Q_NULLPTR));
-        Status->setDocumentTitle(QString());
         label_9->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Waypoint Nr.</span></p></body></html>", Q_NULLPTR));
+        teachInLog->setDocumentTitle(QString());
         label_20->setText(QApplication::translate("MainWindow", "Waypoint Pause", Q_NULLPTR));
         runPath->setText(QApplication::translate("MainWindow", "Run Path", Q_NULLPTR));
         cyclePath->setText(QApplication::translate("MainWindow", "cycle Path", Q_NULLPTR));
@@ -1150,6 +1168,7 @@ public:
         groupBox->setTitle(QApplication::translate("MainWindow", "Scanbereich", Q_NULLPTR));
         label_22->setText(QApplication::translate("MainWindow", "von", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWindow", "bis", Q_NULLPTR));
+        label_31->setText(QApplication::translate("MainWindow", "letzter Scan tats\303\244chlich ab", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Laserscanner", Q_NULLPTR));
         selectData->setText(QApplication::translate("MainWindow", "Laserdaten ausw\303\244hlen", Q_NULLPTR));
         showHist->setText(QApplication::translate("MainWindow", "Histogramm anzeigen", Q_NULLPTR));
