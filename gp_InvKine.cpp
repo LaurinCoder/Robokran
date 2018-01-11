@@ -47,7 +47,7 @@ void MainWindow::on_calculateGP_clicked()
             vRatio            = 10;
         }
 
-        gripPoint = new GripPoint(nullptr, gedreht, scannerUeberBoden, inkrementSize, leftAngle, rightAngle, leftBorder, rightBorder, vRatio, fileName, ui->showHist->isChecked(), ui->showSurface->isChecked(), ui->enSopas->isChecked());
+        gripPoint = new GripPoint(nullptr, gedreht, scannerUeberBoden, inkrementSize, leftAngle, rightAngle, leftBorder, rightBorder, vRatio, fileName, ui->showHist->isChecked(), ui->showSurface->isChecked(), ui->enSopas->isChecked(), /*scanFromReal*/);
         xGp = gripPoint->xGp;
         yGp = gripPoint->yGp;
         zGp = gripPoint->zGp;

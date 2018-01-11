@@ -94,6 +94,7 @@ private:
     int wayPointNr = 0;
     bool flanke = 0;
     bool runPath = 0;  //starte den gespeicherten Pfad
+//    QString logString;
 
  //für Qfile
     QFile waypointsRead;
@@ -110,6 +111,11 @@ private:
     short int sequenceCounter = -1;
     int scanFrom = 0;
     int scanTo = 0;
+    int scanFromAusschub1 = 380;
+    int scanFromAusschub2 = 600;
+    int scanFromHub = 1470;
+    int scanFromDrehung = 0;
+    int scanFromReal = -1;
     QProcess process; //zum Ausführen von Programmen, hier gedit
 
   //Für GP Berechnung
