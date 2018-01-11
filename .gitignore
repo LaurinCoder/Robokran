@@ -46,4 +46,3 @@ target_wrapper.*
 CMakeLists.txt.user*
 
 RobocraneOpcControl
-RobocraneOpcControl.pro
