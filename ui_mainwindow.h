@@ -89,6 +89,7 @@ public:
     QSpinBox *scanTo;
     QLabel *label_31;
     QSpinBox *scanFromReal;
+    QCheckBox *noPositionCheck;
     QWidget *tab_5;
     QPushButton *selectData;
     QLineEdit *selectedFile;
@@ -430,7 +431,7 @@ public:
         singleScan->setCheckable(false);
         scanSequence = new QPushButton(tab_4);
         scanSequence->setObjectName(QStringLiteral("scanSequence"));
-        scanSequence->setGeometry(QRect(30, 120, 191, 31));
+        scanSequence->setGeometry(QRect(30, 150, 191, 31));
         scanSequence->setCheckable(true);
         progressBar = new QProgressBar(tab_4);
         progressBar->setObjectName(QStringLiteral("progressBar"));
@@ -476,6 +477,9 @@ public:
         scanFromReal->setMinimum(0);
         scanFromReal->setMaximum(5700);
         scanFromReal->setValue(0);
+        noPositionCheck = new QCheckBox(tab_4);
+        noPositionCheck->setObjectName(QStringLiteral("noPositionCheck"));
+        noPositionCheck->setGeometry(QRect(30, 120, 261, 26));
         tabWidget->addTab(tab_4, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName(QStringLiteral("tab_5"));
@@ -1169,6 +1173,7 @@ public:
         label_22->setText(QApplication::translate("MainWindow", "von", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWindow", "bis", Q_NULLPTR));
         label_31->setText(QApplication::translate("MainWindow", "letzter Scan tats\303\244chlich ab", Q_NULLPTR));
+        noPositionCheck->setText(QApplication::translate("MainWindow", "Scan ohne Positionspr\303\274fung", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Laserscanner", Q_NULLPTR));
         selectData->setText(QApplication::translate("MainWindow", "Laserdaten ausw\303\244hlen", Q_NULLPTR));
         showHist->setText(QApplication::translate("MainWindow", "Histogramm anzeigen", Q_NULLPTR));
