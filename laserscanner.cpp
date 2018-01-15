@@ -161,9 +161,10 @@ void MainWindow::scanSequence()
         case 1:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
                     posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                        /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
                         && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                    )
         {
             qDebug() << "Startposition erreicht";
             qDebug() << "Scanner starten";
@@ -188,9 +189,9 @@ void MainWindow::scanSequence()
         case 2:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
                     posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7] //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
                 )
             {
             qDebug() << "Zielposition erreicht";
@@ -233,10 +234,11 @@ void MainWindow::scanSequence()
         case 2:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
                     posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
-        {
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                )
+            {
                 statusBar()->showMessage(tr("0° ausrichten."));
                 ui->sollDrehen->setValue(scanFromDrehung);
                 sendSollDrehung();
@@ -246,10 +248,11 @@ void MainWindow::scanSequence()
         case 3:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
                     posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
-        {
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                )
+            {
                 statusBar()->showMessage(tr("Fahre zur Startposition."));
                 ui->sollLFahrt->setValue(scanFrom);
                 sendSollLFahrt();
@@ -259,10 +262,11 @@ void MainWindow::scanSequence()
         case 4:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
                     posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
-        {
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                )
+            {
             qDebug() << "Startposition erreicht";
             qDebug() << "Scanner starten";
             qDebug() << "tatsächliche Scanposition einlesen";
@@ -286,9 +290,9 @@ void MainWindow::scanSequence()
         case 5:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
                     posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7] //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
                 )
             {
             qDebug() << "Zielposition erreicht";
