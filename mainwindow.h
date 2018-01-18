@@ -112,11 +112,13 @@ private:
     int scanFrom = 0;
     int scanTo = 0;
     int scanFromAusschub1 = 380;
-    int scanFromAusschub2 = 600;
+    int scanFromAusschub2 = 480;
     int scanFromHub = 1470;
     int scanFromDrehung = 0;
     int scanFromReal = -1;
     QProcess process; //zum Ausführen von Programmen, hier gedit
+    int counterlaserscan = 0;
+    int caseBrakeLaserscan = 20;
 
   //Für GP Berechnung
 //    QFile gripPoint; //enthält den berechneten Greifpunkt
