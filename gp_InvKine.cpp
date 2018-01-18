@@ -6,7 +6,7 @@
 void MainWindow::on_selectData_clicked()
 {
     fileName = QFileDialog::getOpenFileName(this, tr("Laserdaten auswählen"),
-                                            QDir::currentPath(),"log Files (Text Files (*.txt);;*.log);;CSV (*.csv);;All files (*.*)");
+                                            QDir::currentPath(),"txt Files (Text Files (*.txt);;log Files (*.log);;CSV (*.csv);;All files (*.*)");
     ui->selectedFile->setText(fileName);
 
 }
@@ -72,7 +72,6 @@ void MainWindow::on_calculateGP_clicked()
 void MainWindow::on_calculateInvers_clicked()
 {
     if (UA_Client_getState(client) == 1){  //nur wenn Verbindung zur SPS besteht.
-
     //x aus ui.xGp_2 an SPS Xsoll senden
     XsollValue = ui->xGp_2->text().toFloat();
     UA_Variant_setScalar(&Xsoll, &XsollValue, &UA_TYPES[UA_TYPES_FLOAT]);

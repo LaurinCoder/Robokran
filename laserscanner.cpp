@@ -3,7 +3,7 @@
 void MainWindow::on_actionVerbinde_mit_Laserscanner_triggered()
 {
 
-        IP_LMS = "169.254.56.85";
+        IP_LMS = "169.254.0.3";
         qDebug() << "Connecting to Laserscanner IP:" <<IP_LMS;
 
         LMS_111->connectToHost(IP_LMS, 2111);
@@ -156,14 +156,16 @@ void MainWindow::scanSequence()
                 on_enableJoints_clicked(true);
                 ui->sollLFahrt->setValue(scanFrom);
                 sendSollLFahrt();
+                counterlaserscan = 0;
                 sequenceCounter++;
             break;
         case 1:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && counterlaserscan > (caseBrakeLaserscan + 180))
+                        /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
                         && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                    )
         {
             qDebug() << "Startposition erreicht";
             qDebug() << "Scanner starten";
@@ -181,16 +183,17 @@ void MainWindow::scanSequence()
             ui->sollLFahrt->setValue(scanTo);
             sendSollLFahrt();
             statusBar()->showMessage(tr("Scanne..."));
+            counterlaserscan = 0;
             sequenceCounter ++;
             }
 
             break;
         case 2:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7] //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && counterlaserscan > caseBrakeLaserscan)
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
                 )
             {
             qDebug() << "Zielposition erreicht";
@@ -218,51 +221,64 @@ void MainWindow::scanSequence()
                 on_enableJoints_clicked(true);
                 ui->sollAusschub->setValue(scanFromAusschub1);
                 sendSollAusschub();
+                qDebug() << "Ausschub einziehen.";
                 sequenceCounter++;
             break;
         // wenn Ausschub < "scanFromAusschub2" dann auch heben.
         case 1:
             if (posIstValue[4] < scanFromAusschub2)
-        {
+        {qDebug() << "posIst4= " << posIstValue[4];
                 statusBar()->showMessage(tr("Arm und Ausschub in Position bringen."));
                 ui->sollHub->setValue(scanFromHub);
                 sendSollHub();
+                qDebug() << "Mindestausschub erreicht. Hubsteuerung aktivieren.";
+                counterlaserscan = 0;
                 sequenceCounter++;
             }
+            break;
         //wenn Position erreicht, dann 0° ausrichten.
         case 2:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
-        {
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && (counterlaserscan > caseBrakeLaserscan))
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                )
+            {
                 statusBar()->showMessage(tr("0° ausrichten."));
                 ui->sollDrehen->setValue(scanFromDrehung);
                 sendSollDrehung();
+                qDebug() << "Hub und Ausschubposition erreicht. Drehe auf 0 Grad.";
+                counterlaserscan = 0;
                 sequenceCounter++;
             }
+            break;
         //wenn Position erreicht, dann zur Startposition fahren.
         case 3:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
-        {
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterlaserscan > caseBrakeLaserscan)
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                )
+            {
                 statusBar()->showMessage(tr("Fahre zur Startposition."));
                 ui->sollLFahrt->setValue(scanFrom);
                 sendSollLFahrt();
+                qDebug() << "Scanstellung erreicht. Fahre zur Startposition.";
+                counterlaserscan = 0;
                 sequenceCounter++;
             }
+            break;
         //Scannen starten und tatsächliche Scannposition in "scanFromReal" speichern
         case 4:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]) //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
-        {
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterlaserscan > (caseBrakeLaserscan + 80))
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
+                )
+            {
             qDebug() << "Startposition erreicht";
             qDebug() << "Scanner starten";
             qDebug() << "tatsächliche Scanposition einlesen";
@@ -279,16 +295,17 @@ void MainWindow::scanSequence()
             ui->sollLFahrt->setValue(scanTo);
             sendSollLFahrt();
             statusBar()->showMessage(tr("Scanne..."));
+            counterlaserscan = 0;
             sequenceCounter ++;
             }
 
             break;
         case 5:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                        && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7] //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!) {
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterlaserscan > caseBrakeLaserscan)
+                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
+                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
                 )
             {
             qDebug() << "Zielposition erreicht";
@@ -296,6 +313,7 @@ void MainWindow::scanSequence()
             process.start("gedit", QStringList() << datadirectory);
             ui->scanSequence->setChecked(false); //ScanSequence beenden, darin wird Laserscanner gestoppt.
             statusBar()->showMessage(tr("Scan abgeschlossen!"));
+            counterlaserscan = 0;
             sequenceCounter = -1;
             }
             break;
@@ -308,5 +326,4 @@ void MainWindow::scanSequence()
     }
    }
 }
-
 
