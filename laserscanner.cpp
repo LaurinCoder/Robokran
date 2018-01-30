@@ -28,7 +28,7 @@ void MainWindow::on_speicherortFestlegen_clicked()
                                                  "/home/iltuser/Schreibtisch/QT_Sources/",tr("Text Files (*.txt);;log Files (*.log)"));
     qDebug() << "Speicherort festgelegt:  \n" << datadirectory;
 
-    //wenn file existiert, File löschen, um es zu überschreiben, das sagt auch die Dialogfenster, wenn ein bestehendes File ausgewählt wird.
+    //wenn file existiert, File löschen, um es neu zu erstellen. Diese Warnung gibt auch das Dialogfenster aus, wenn ein bestehendes File ausgewählt wird. Ohne die Datei zu löschen würde allerdings nur an die bestehende Datei angehängt werden.
     laserdata.setFileName(datadirectory);
     if (laserdata.exists()) {
         laserdata.remove();

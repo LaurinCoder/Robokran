@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-void MainWindow::TeachIn()   //TeachIn und Pfadsteuerung
+//TeachIn und Pfadsteuerung
+void MainWindow::TeachIn()
 {
-
     //TeachIn Funktion
     if(teachIn)
     {
@@ -30,7 +30,7 @@ void MainWindow::TeachIn()   //TeachIn und Pfadsteuerung
     if (teachIn != teachInLast) wayPointNr = 0;
     teachInLast = teachIn;
 
-    //Automatikmodus schaltet Pfadsteuerung ab
+    //Automatikmodus deaktivieren, deaktivier auch die Pfadsteuerung
     if(!AutoValue) {runPath = 0; ui->runPath->setChecked(false);}
 
     //start der Pfadsteuerung aktiviert Automatikmodus
@@ -61,8 +61,7 @@ void MainWindow::TeachIn()   //TeachIn und Pfadsteuerung
             {
                 //setzt alle Gelenkskoordinaten des Wegpunkts auf Sollwerte
                 for(int i = 0; i < 8; i++) posSollValue[i] = path[i][wayPointNr];
-                wartezeitZaehler = 0;
-                wayPointNr++;
+               wayPointNr++;
 
                 //Hysteresen werden gespeichert und für 250,251, 252 vergrößert
                 if (wayPointNr == 250)
@@ -294,8 +293,8 @@ void MainWindow::on_setGrippingPointManual_clicked()
     path[7][254] = 1;
 }
 
-void MainWindow::on_wayPointPause_valueChanged(double arg1)
+void MainWindow::on_wayPointPause_valueChanged(double arg)
 {
-    wayPointPause = arg1;
+    wayPointPause = arg;
 
 }
