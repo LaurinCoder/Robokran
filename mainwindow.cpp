@@ -223,6 +223,10 @@ void MainWindow::activateOpcSync() {
             //scanSequence aufrufen wenn scan_inProcess == 1
             MainWindow::scanSequence();
 
+            counterlaserscan++;
+            // damit der counter nicht überläuft
+            counterlaserscan = counterlaserscan * (counterlaserscan < 10000) ;
+
         }
     }
 }
@@ -247,6 +251,5 @@ void MainWindow::sendSollGreifer()
 {
     posSollValue[7] = ui->sollGreifer->value();
 }
-
 
 

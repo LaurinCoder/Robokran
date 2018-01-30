@@ -41,9 +41,9 @@ void MainWindow::TeachIn()
         //...oder letzter Wegpunkt erreicht wurde
         if((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
             posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                && posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
+                /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
                 && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7] //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!
+                && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*/ //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!
 
                 //...oder letzter Wegpunkt erreicht wurde
                 && path[4][wayPointNr] != 0)
