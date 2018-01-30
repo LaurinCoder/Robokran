@@ -57,7 +57,7 @@ void MainWindow::TeachIn()
             //path[3][252] wird manipuliert, abhängig von der tatsächlich erreichten Position in 251
             if (wayPointNr == 252) path[3][wayPointNr] = posIstValue[3] * liftRatioUp;
 
-            if( timerWaypoint.elapsed() > (1000 * wayPointPause) )
+            if( timerWaypoint.elapsed() > (1000 * wayPointBreak) )
             {
                 //setzt alle Gelenkskoordinaten des Wegpunkts auf Sollwerte
                 for(int i = 0; i < 8; i++) posSollValue[i] = path[i][wayPointNr];
@@ -119,7 +119,7 @@ void MainWindow::on_actionVerbinde_mit_SPS_triggered()
             activeTimer->start(); //timer für OPC Aktualisierung starten
             timerWaypoint.start(); //timer für waypointpause starten
         }
-    ui->wayPointPause->setValue(wayPointPause);
+    ui->wayPointPause->setValue(wayPointBreak);
 }
 
 void MainWindow::on_actionVerbindung_trennen_triggered()
@@ -295,6 +295,6 @@ void MainWindow::on_setGrippingPointManual_clicked()
 
 void MainWindow::on_wayPointPause_valueChanged(double arg)
 {
-    wayPointPause = arg;
+    wayPointBreak = arg;
 
 }

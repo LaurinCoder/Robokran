@@ -83,7 +83,7 @@ private:
 
  // für TeachIn
     bool teachIn = 0; //startet teachIn
-    int wayPointPause = 5;
+    int wayPointBreak = 5;
 
     QString startTeachIn = "0";
     QByteArray inString;
@@ -113,7 +113,7 @@ private:
     int scanFromDrehung = 0;
     int scanFromReal = -1;
     QProcess process; //zum Ausführen von Programmen, hier gedit
-    int counterlaserscan = 0;
+    int counterLaserscan = 0;
     int caseBrakeLaserscan = 20;
 
   //Für GP Berechnung
@@ -182,7 +182,9 @@ private slots:
 
     void on_copyIstPos_clicked();
 
-    void activateOpcSync();  //für OPC_UA
+    void x_milliCycle();
+
+    void opcSync();  //für OPC_UA
 
     void on_enableJoints_clicked(bool checked);
 

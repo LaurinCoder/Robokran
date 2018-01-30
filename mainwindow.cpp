@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <qvariant.h>
 
-
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -16,16 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     activeTimer->setInterval(50);
     activeTimer->setSingleShot(false);
 
-    connect(activeTimer, SIGNAL(timeout()), this, SLOT(activateOpcSync()));
+    connect(activeTimer, SIGNAL(timeout()), this, SLOT(x_milliCycle()));
 
 
     ui->setupUi(this);
 
     //Message Boxen
-//    msgBox_movementWarning.setText("Achtung, die ausgewählte Funktion führt zu einer Bewegung des Krans.");
-//    retryButton = msgBox_connectionFailed.addButton("Erneut verbinden", QMessageBox::AcceptRole);
-//    msgBox_connectionFailed.addButton("Abbrechen", QMessageBox::RejectRole);    //Message Boxen
-
     msgBox_movementWarning.setText("Achtung, die ausgewählte Funktion führt zu einer Bewegung des Krans.");
     msgBox_movementWarning.setInformativeText("Soll die Bewegung ausgeführt werden?");
     msgBox_movementWarning.addButton("Ja", QMessageBox::AcceptRole);
@@ -34,13 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
     msgBox_invalidPose.setText("Stellung des Krans verhindert Scanfahrt.\n\nKran in Scanposition bringen!");
     msgBox_invalidPose.setWindowTitle("ACHTUNG - falsche Kranstellung");
     msgBox_invalidPose.addButton(QMessageBox::Ok);
-
-//    msgBox_MatlabFAIL.setText("Fehler im Matlab");
-//    msgBox_MatlabFAIL.addButton(QMessageBox::Ok);
-
-//    msgBox_ManuelMode.setText("Manuel Modus aktiviert");
-//    msgBox_ManuelMode.addButton(QMessageBox::Ok);
-
 
     //FÜR LASERSCANNER
     LMS_111 = new QTcpSocket(this);
@@ -100,61 +86,30 @@ MainWindow::~MainWindow()
     delete ui;
     }
 
-void MainWindow::update_UI() {
-    if (posOkValue[0] == true) {
-        ui->istLFahrt->setStyleSheet(lineEditStyleGreen);
-    } else {
-        ui->istLFahrt->setStyleSheet(lineEditStyleYellow);
-    }
-    if (posOkValue[2] == true) {
-        ui->istDrehen->setStyleSheet(lineEditStyleGreen);
-    } else {
-        ui->istDrehen->setStyleSheet(lineEditStyleYellow);
-    }
-    if (posOkValue[3] == true) {
-        ui->istHub->setStyleSheet(lineEditStyleGreen);
-    } else {
-        ui->istHub->setStyleSheet(lineEditStyleYellow);
-    }
-    if (posOkValue[4] == true) {
-        ui->istAusschub->setStyleSheet(lineEditStyleGreen);
-    } else {
-        ui->istAusschub->setStyleSheet(lineEditStyleYellow);
-    }
-    if (posOkValue[7] == true) {
-        ui->istGreifer->setStyleSheet(lineEditStyleGreen);
-    } else {
-        ui->istGreifer->setStyleSheet(lineEditStyleYellow);
-    }
+//alle x Millisekunden löst ein Timerslot diese Funktion auf. Es dient dem zyklischen Aufruf weiterer Anweisungen.
+void MainWindow::x_milliCycle() {
+    //nur wenn OPC Client verbunden
+    if (UA_Client_getState(client) == 1)
+    {
+        //OPC Synchronisierung
+        opcSync();
+        //TeachIn Funktion aufrufen wenn TeachIn = true
+        TeachIn();
+        //update posIst[0..7] der GUI aufrufen
+        update_UI();
+        //scanSequence aufrufen wenn scan_inProcess == 1
+        scanSequence();
 
-    if (AutoValue == true) {
-        ui->Automode->setText("ON");
+        counterLaserscan++;
+        // damit der counter nicht überläuft
+        counterLaserscan = counterLaserscan * (counterLaserscan < 10000) ;
     }
-    else ui->Automode->setText("OFF");
-
-
-    ui->enableJoints->setChecked(AutoValue);
-    ui->istLFahrt->setText(QString::number(posIstValue[0]));
-    ui->istDrehen->setText(QString::number(posIstValue[2]));
-    ui->istHub->setText(QString::number(posIstValue[3]));
-    ui->istAusschub->setText(QString::number(posIstValue[4]));
-    ui->istGreifer->setText(QString::number(posIstValue[7]));
-    ui->runPath->setChecked(runPath);
-    ui->cyclePath->setChecked(cyclic);
-    ui->includeGP->setChecked(setGPActive);
-
-    ui->sollLFahrtInvers->setValue(posSollInvValue[0]);
-    ui->sollDrehenInvers->setValue(posSollInvValue[2]);
-    ui->sollHubInvers->setValue(posSollInvValue[3]);
-    ui->sollAusschubInvers->setValue(posSollInvValue[4]);
-
 }
 
-void MainWindow::activateOpcSync() {
+//OPC Client ließt alle OPC Nodes ein, und beschreibt OPC Nodes
+void MainWindow::opcSync() {
 
-    if (UA_Client_getState(client) == 1) { //alles nur wenn Client verbunden
-
-        //posIst einlesen
+        //posIst einlesen, nur wenn die IF Abfrage true ist, werden die restlichen Anweisungen von opcSync durchgeführt.
         retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
         if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
             float *dataPointer = (UA_Float*)posIst.data;
@@ -199,12 +154,12 @@ void MainWindow::activateOpcSync() {
                 }}
 
 
-            //posSoll schreiben wenn AutoValue = true
-
+            //posSoll schreiben wenn AutoValue == true
             if (AutoValue) {
                 UA_Variant_setArray(&posSoll, &posSollValue, 8, &UA_TYPES[UA_TYPES_FLOAT]);
                 retval = UA_Client_writeValueAttribute(client, nodePosSoll,&posSoll);
             }
+            //wenn AutoValue == false, dann wird die sollPosition gleich der istposition gesetzt.
             else {
                 for (int i = 0; i < 8; ++i) {
                     posSollValue[i] = posIstValue[i];
@@ -215,41 +170,44 @@ void MainWindow::activateOpcSync() {
                 ui->sollAusschub->setValue((int)posSollValue[4]);
                 ui->sollGreifer->setValue(posSollValue[7]);
             }
-
-            //TeachIn Funktion aufrufen wenn TeachIn = true
-            TeachIn();
-            //update posIst der GUI aufrufen
-            MainWindow::update_UI();
-            //scanSequence aufrufen wenn scan_inProcess == 1
-            MainWindow::scanSequence();
-
-            counterlaserscan++;
-            // damit der counter nicht überläuft
-            counterlaserscan = counterlaserscan * (counterlaserscan < 10000) ;
-
-        }
     }
 }
 
-void MainWindow::sendSollLFahrt() {
-    posSollValue[0] = ui->sollLFahrt->value();
-}
-void MainWindow::sendSollDrehung()
-{
-    posSollValue[2] = ui->sollDrehen->value();
-}
-void MainWindow::sendSollHub()
-{
-    posSollValue[3] = ui->sollHub->value();
-}
-void MainWindow::sendSollAusschub()
-{
-    posSollValue[4] = ui->sollAusschub->value();
+//Felder der UI werden mit Werten versehen, eingefärbt usw.
+void MainWindow::update_UI() {
 
+    // ist Position Felder werden auf Grün gesetzt, wenn die SPS posOk==true meldet, sonst wird das Feld auf Gelb gesetzt.
+    if (posOkValue[0] == true) {ui->istLFahrt->setStyleSheet(lineEditStyleGreen);} else {ui->istLFahrt->setStyleSheet(lineEditStyleYellow);}
+    if (posOkValue[2] == true) {ui->istDrehen->setStyleSheet(lineEditStyleGreen);} else {ui->istDrehen->setStyleSheet(lineEditStyleYellow);}
+    if (posOkValue[3] == true) {ui->istHub->setStyleSheet(lineEditStyleGreen);} else {ui->istHub->setStyleSheet(lineEditStyleYellow);}
+    if (posOkValue[4] == true) {ui->istAusschub->setStyleSheet(lineEditStyleGreen);} else {ui->istAusschub->setStyleSheet(lineEditStyleYellow);}
+    if (posOkValue[7] == true) {ui->istGreifer->setStyleSheet(lineEditStyleGreen);} else {ui->istGreifer->setStyleSheet(lineEditStyleYellow);}
+
+    //AutoMode Feld wir mit ON/OFF gesetzt, wenn SPS Auto ON/OFF meldet
+    if (AutoValue == true) {ui->Automode->setText("ON");}else ui->Automode->setText("OFF");
+
+    //Felde werden mit Variablenwerten beschrieben.
+    ui->enableJoints->setChecked(AutoValue);
+    ui->istLFahrt->setText(QString::number(posIstValue[0]));
+    ui->istDrehen->setText(QString::number(posIstValue[2]));
+    ui->istHub->setText(QString::number(posIstValue[3]));
+    ui->istAusschub->setText(QString::number(posIstValue[4]));
+    ui->istGreifer->setText(QString::number(posIstValue[7]));
+    ui->runPath->setChecked(runPath);
+    ui->cyclePath->setChecked(cyclic);
+    ui->includeGP->setChecked(setGPActive);
+
+    ui->sollLFahrtInvers->setValue(posSollInvValue[0]);
+    ui->sollDrehenInvers->setValue(posSollInvValue[2]);
+    ui->sollHubInvers->setValue(posSollInvValue[3]);
+    ui->sollAusschubInvers->setValue(posSollInvValue[4]);
 }
-void MainWindow::sendSollGreifer()
-{
-    posSollValue[7] = ui->sollGreifer->value();
-}
+
+//posSollValue[x] wird mit Werten aus der UI beschrieben. Diese Funktionen werden entweder durch einen SIGNAL(editingFinished()) ODER direkt in anderen Funktionen aufgerufen.
+void MainWindow::sendSollLFahrt()   {posSollValue[0] = ui->sollLFahrt->value();}
+void MainWindow::sendSollDrehung()  {posSollValue[2] = ui->sollDrehen->value();}
+void MainWindow::sendSollHub()      {posSollValue[3] = ui->sollHub->value();}
+void MainWindow::sendSollAusschub() {posSollValue[4] = ui->sollAusschub->value();}
+void MainWindow::sendSollGreifer()  {posSollValue[7] = ui->sollGreifer->value();}
 
 
