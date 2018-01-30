@@ -51,24 +51,20 @@ private:
     void update_UI();
     void TeachIn();
 
-
-
-
 //Message Boxen
-    QMessageBox msgBox_invalidPose;
-    QMessageBox msgBox_movementWarning;
-    QAbstractButton* retryButton;
+    QMessageBox         msgBox_invalidPose;
+    QMessageBox         msgBox_movementWarning;
+    QAbstractButton*    retryButton;
 
 // for TeachIn
-    bool teachInLast = 0; //Hysterese Speicherplatz der Steuerung in cm
-    int wartezeitZaehler = 0; //Zähler für Wartezeit, Zählgeschw abhängig vom Cylce
-    float liftRatioUp = 0.97; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; unter 1 ist kürzer als 251*/
-    float liftRatioDown = 1.1; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; unter 1 ist kürzer als 251*/
-    int hubHighestPoint = 1550; /*gibt an, wie hoch der Hub bei den Greifwaypoints fahren soll*/
-    bool cyclic = 0;    //path wird wiederholend ausgeführt
-    bool resetPath = 0; //resetet den waypoint auf 0
-    bool saveWayPoint = 0; //Speichert die aktuellen Gelenkskoordinaten als neuen wayPoint
-    bool setGPActive = 0; //TRUE schaltet die wayPoints aus dem Telegram vom Laserscanner im TeachIn Pfad aktiv
+    bool teachInLast =      0;  //Hysterese Speicherplatz der Steuerung in cm
+    float liftRatioUp =     0.97; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
+    float liftRatioDown =   1.1; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
+    int hubHighestPoint =   1550; /*gibt an, wie hoch der Hub bei den Greifwaypoints fahren soll*/
+    bool cyclic =           0;    //path wird wiederholend ausgeführt
+    bool resetPath =        0; //resetet den waypoint auf 0
+    bool saveWayPoint =     0; //Speichert die aktuellen Gelenkskoordinaten als neuen wayPoint
+    bool setGPActive =      0; //TRUE schaltet die wayPoints aus dem Telegram vom Laserscanner im TeachIn Pfad aktiv
 
 //for csv files
     QList<QStringList> csv;
