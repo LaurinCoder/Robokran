@@ -46,6 +46,7 @@ public:
     QAction *chooseFile;
     QAction *connectLMS;
     QAction *actionPfad_des_Arrays_anzeigen;
+    QAction *openReadme;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget;
@@ -192,6 +193,7 @@ public:
     QMenuBar *menuBar;
     QMenu *menuVerbindungen;
     QMenu *menuopenFile;
+    QMenu *menuHilfe;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -216,6 +218,8 @@ public:
         connectLMS->setObjectName(QStringLiteral("connectLMS"));
         actionPfad_des_Arrays_anzeigen = new QAction(MainWindow);
         actionPfad_des_Arrays_anzeigen->setObjectName(QStringLiteral("actionPfad_des_Arrays_anzeigen"));
+        openReadme = new QAction(MainWindow);
+        openReadme->setObjectName(QStringLiteral("openReadme"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -1114,6 +1118,8 @@ public:
         menuVerbindungen->setObjectName(QStringLiteral("menuVerbindungen"));
         menuopenFile = new QMenu(menuBar);
         menuopenFile->setObjectName(QStringLiteral("menuopenFile"));
+        menuHilfe = new QMenu(menuBar);
+        menuHilfe->setObjectName(QStringLiteral("menuHilfe"));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -1121,12 +1127,14 @@ public:
 
         menuBar->addAction(menuVerbindungen->menuAction());
         menuBar->addAction(menuopenFile->menuAction());
+        menuBar->addAction(menuHilfe->menuAction());
         menuVerbindungen->addAction(connectSPS);
         menuVerbindungen->addAction(disconnectSPS);
         menuVerbindungen->addSeparator();
         menuVerbindungen->addAction(connectLMS);
         menuopenFile->addAction(chooseFile);
         menuopenFile->addAction(actionPfad_des_Arrays_anzeigen);
+        menuHilfe->addAction(openReadme);
 
         retranslateUi(MainWindow);
 
@@ -1144,6 +1152,7 @@ public:
         chooseFile->setText(QApplication::translate("MainWindow", "CSV Datei ausw\303\244hlen", Q_NULLPTR));
         connectLMS->setText(QApplication::translate("MainWindow", "Verbinde mit Laserscanner", Q_NULLPTR));
         actionPfad_des_Arrays_anzeigen->setText(QApplication::translate("MainWindow", "Pfad des Arrays", Q_NULLPTR));
+        openReadme->setText(QApplication::translate("MainWindow", "Liesmich Datei \303\266ffnen", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         enableTeachIn->setToolTip(QApplication::translate("MainWindow", "Startet das TeachIn bei Wegpunkt 0. Nochmaliges Dr\303\274cken beendet TeachIn", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
@@ -1222,6 +1231,7 @@ public:
         label_8->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\"> Modus </span></p></body></html>", Q_NULLPTR));
         menuVerbindungen->setTitle(QApplication::translate("MainWindow", "Verbindungen", Q_NULLPTR));
         menuopenFile->setTitle(QApplication::translate("MainWindow", "Pfad anzeigen", Q_NULLPTR));
+        menuHilfe->setTitle(QApplication::translate("MainWindow", "Hilfe", Q_NULLPTR));
     } // retranslateUi
 
 };

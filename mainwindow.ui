@@ -2138,8 +2138,15 @@
     <addaction name="chooseFile"/>
     <addaction name="actionPfad_des_Arrays_anzeigen"/>
    </widget>
+   <widget class="QMenu" name="menuHilfe">
+    <property name="title">
+     <string>Hilfe</string>
+    </property>
+    <addaction name="openReadme"/>
+   </widget>
    <addaction name="menuVerbindungen"/>
    <addaction name="menuopenFile"/>
+   <addaction name="menuHilfe"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="connectSPS">
@@ -2168,6 +2175,11 @@
   <action name="actionPfad_des_Arrays_anzeigen">
    <property name="text">
     <string>Pfad des Arrays</string>
+   </property>
+  </action>
+  <action name="openReadme">
+   <property name="text">
+    <string>Liesmich Datei öffnen</string>
    </property>
   </action>
  </widget>

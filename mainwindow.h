@@ -180,6 +180,8 @@ private:
 
 private slots:
 
+    void on_openReadme_triggered();
+
     void on_copyIstPos_clicked();
 
     void x_milliCycle();
@@ -249,6 +251,8 @@ private slots:
    void on_copySollPos_clicked();
 
    void on_enUserSettings_toggled(bool checked);
+
+
 
 signals:
 

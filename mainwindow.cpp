@@ -86,6 +86,13 @@ MainWindow::~MainWindow()
     delete ui;
     }
 
+//öffnet Readme Datei
+void MainWindow::on_openReadme_triggered()
+{
+    //process.start("gedit", QStringList() << datadirectory);
+    process.start("gedit",QStringList() << "Readme_Liesmich_Manual.txt");
+}
+
 //alle x Millisekunden löst ein Timerslot diese Funktion auf. Es dient dem zyklischen Aufruf weiterer Anweisungen.
 void MainWindow::x_milliCycle() {
     //nur wenn OPC Client verbunden
@@ -211,5 +218,7 @@ void MainWindow::sendSollDrehung()  {posSollValue[2] = ui->sollDrehen->value();}
 void MainWindow::sendSollHub()      {posSollValue[3] = ui->sollHub->value();}
 void MainWindow::sendSollAusschub() {posSollValue[4] = ui->sollAusschub->value();}
 void MainWindow::sendSollGreifer()  {posSollValue[7] = ui->sollGreifer->value();}
+
+
 
 
