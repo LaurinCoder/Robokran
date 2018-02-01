@@ -50,6 +50,7 @@ private:
     bool conversion_OK;
     void update_UI();
     void TeachIn();
+    void runPath();
 
 //Message Boxen
     QMessageBox         msgBox_invalidPose;
@@ -89,7 +90,7 @@ private:
     QByteArray inString;
     int wayPointNr = 0;
     bool flanke = 0;
-    bool runPath = 0;  //starte den gespeicherten Pfad
+    bool enableRunPath = 0;  //starte den gespeicherten Pfad
 //    QString logString;
 
  //für Qfile
@@ -145,7 +146,6 @@ private:
     UA_Variant hys;
     UA_Variant oldHys;
     float path[8][256] = {{0}};  /*wayPoints / path des TeachIns*/
-//    int pathSaveFile[8][256] = {{0}}; //für path in file speichern und umgekehrt
     UA_Boolean AutoValue;
     UA_Boolean posOkValue[8] ={0};
     UA_Float posIstValue[8] ;
@@ -188,21 +188,21 @@ private slots:
 
     void on_enableJoints_clicked(bool checked);
 
-    void on_startTeachIn_clicked(bool checked);
+    void on_enableTeachIn_clicked(bool checked);
 
     void on_saveWaypoint_clicked();
 
-    void on_setGrippingPoint_clicked();
+    void on_setGrippingPointInv_clicked();
 
-    void on_setGrippingPointManual_clicked();
+    void on_setGrippingPointTeachIn_clicked();
 
     void checkString(QString &temp, QChar character = 0);
 
-    void on_actionchooseFile_triggered();
+    void on_chooseFile_triggered();
 
     void sendSollLFahrt();void sendSollDrehung();void sendSollAusschub();void sendSollHub();void sendSollGreifer();
 
-    void on_writeCsv_clicked();
+    void on_saveCsv_clicked();
 
     void on_runPath_clicked(bool checked);
 
@@ -212,24 +212,23 @@ private slots:
 
     void on_resetPath_clicked();
 
-    void on_actionVerbinde_mit_SPS_triggered();
+    void on_connectSPS_triggered();
 
-    void on_actionVerbindung_trennen_triggered();
+    void on_disconnectSPS_triggered();
 
-    void on_wayPointPause_valueChanged(double arg1);
+    void on_wayPointBreak_valueChanged(double arg1);
 
     //AB HIER FÜR LASERSCANNER
 
-   void on_actionVerbinde_mit_Laserscanner_triggered();
+   void on_connectLMS_triggered();
 
    void connected();
 
    void on_actionPfad_des_Arrays_anzeigen_triggered();
 
+   void on_acceptPath_clicked();
 
-   void on_uebernehmePfad_clicked();
-
-   void on_speicherortFestlegen_clicked();
+   void on_saveAs_clicked();
 
    void on_singleScan_clicked();
 

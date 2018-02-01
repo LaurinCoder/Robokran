@@ -41,10 +41,10 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionVerbinde_mit_SPS;
-    QAction *actionVerbindung_trennen;
-    QAction *actionchooseFile;
-    QAction *actionVerbinde_mit_Laserscanner;
+    QAction *connectSPS;
+    QAction *disconnectSPS;
+    QAction *chooseFile;
+    QAction *connectLMS;
     QAction *actionPfad_des_Arrays_anzeigen;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
@@ -54,9 +54,9 @@ public:
     QHBoxLayout *horizontalLayout_50;
     QVBoxLayout *verticalLayout_7;
     QSpacerItem *verticalSpacer_6;
-    QPushButton *startTeachIn;
+    QPushButton *enableTeachIn;
     QPushButton *saveWaypoint;
-    QPushButton *setGrippingPointManual;
+    QPushButton *setGrippingPointTeachIn;
     QHBoxLayout *horizontalLayout_18;
     QLabel *label_9;
     QLCDNumber *waypointNr;
@@ -66,7 +66,7 @@ public:
     QSpacerItem *verticalSpacer_2;
     QHBoxLayout *horizontalLayout_25;
     QLabel *label_20;
-    QDoubleSpinBox *wayPointPause;
+    QDoubleSpinBox *wayPointBreak;
     QPushButton *runPath;
     QPushButton *cyclePath;
     QPushButton *includeGP;
@@ -75,10 +75,10 @@ public:
     QWidget *tab_3;
     QTableView *tableView;
     QWidget *widget;
-    QPushButton *uebernehmePfad;
-    QPushButton *writeCsv;
+    QPushButton *acceptPath;
+    QPushButton *saveCsv;
     QWidget *tab_4;
-    QPushButton *speicherortFestlegen;
+    QPushButton *saveAs;
     QPushButton *singleScan;
     QPushButton *scanSequence;
     QProgressBar *progressBar;
@@ -89,7 +89,7 @@ public:
     QSpinBox *scanTo;
     QLabel *label_31;
     QSpinBox *scanFromReal;
-    QCheckBox *noPositionCheck;
+    QCheckBox *noPoseCheck;
     QWidget *tab_5;
     QPushButton *selectData;
     QLineEdit *selectedFile;
@@ -150,7 +150,7 @@ public:
     QLineEdit *xGp_2;
     QLabel *label_13;
     QPushButton *copySollPos;
-    QPushButton *setGrippingPoint;
+    QPushButton *setGrippingPointInv;
     QVBoxLayout *verticalLayout;
     QSpacerItem *verticalSpacer_3;
     QFrame *frame_4;
@@ -188,7 +188,6 @@ public:
     QHBoxLayout *horizontalLayout_17;
     QLabel *label_8;
     QLineEdit *Modus;
-    QPushButton *moveJoints;
     QSpacerItem *verticalSpacer;
     QMenuBar *menuBar;
     QMenu *menuVerbindungen;
@@ -206,15 +205,15 @@ public:
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setMinimumSize(QSize(1000, 800));
-        actionVerbinde_mit_SPS = new QAction(MainWindow);
-        actionVerbinde_mit_SPS->setObjectName(QStringLiteral("actionVerbinde_mit_SPS"));
-        actionVerbinde_mit_SPS->setCheckable(false);
-        actionVerbindung_trennen = new QAction(MainWindow);
-        actionVerbindung_trennen->setObjectName(QStringLiteral("actionVerbindung_trennen"));
-        actionchooseFile = new QAction(MainWindow);
-        actionchooseFile->setObjectName(QStringLiteral("actionchooseFile"));
-        actionVerbinde_mit_Laserscanner = new QAction(MainWindow);
-        actionVerbinde_mit_Laserscanner->setObjectName(QStringLiteral("actionVerbinde_mit_Laserscanner"));
+        connectSPS = new QAction(MainWindow);
+        connectSPS->setObjectName(QStringLiteral("connectSPS"));
+        connectSPS->setCheckable(false);
+        disconnectSPS = new QAction(MainWindow);
+        disconnectSPS->setObjectName(QStringLiteral("disconnectSPS"));
+        chooseFile = new QAction(MainWindow);
+        chooseFile->setObjectName(QStringLiteral("chooseFile"));
+        connectLMS = new QAction(MainWindow);
+        connectLMS->setObjectName(QStringLiteral("connectLMS"));
         actionPfad_des_Arrays_anzeigen = new QAction(MainWindow);
         actionPfad_des_Arrays_anzeigen->setObjectName(QStringLiteral("actionPfad_des_Arrays_anzeigen"));
         centralWidget = new QWidget(MainWindow);
@@ -252,23 +251,24 @@ public:
 
         verticalLayout_7->addItem(verticalSpacer_6);
 
-        startTeachIn = new QPushButton(tab_2);
-        startTeachIn->setObjectName(QStringLiteral("startTeachIn"));
-        startTeachIn->setCheckable(true);
-        startTeachIn->setChecked(false);
-        startTeachIn->setAutoRepeat(false);
+        enableTeachIn = new QPushButton(tab_2);
+        enableTeachIn->setObjectName(QStringLiteral("enableTeachIn"));
+        enableTeachIn->setLayoutDirection(Qt::LeftToRight);
+        enableTeachIn->setCheckable(true);
+        enableTeachIn->setChecked(false);
+        enableTeachIn->setAutoRepeat(false);
 
-        verticalLayout_7->addWidget(startTeachIn);
+        verticalLayout_7->addWidget(enableTeachIn);
 
         saveWaypoint = new QPushButton(tab_2);
         saveWaypoint->setObjectName(QStringLiteral("saveWaypoint"));
 
         verticalLayout_7->addWidget(saveWaypoint);
 
-        setGrippingPointManual = new QPushButton(tab_2);
-        setGrippingPointManual->setObjectName(QStringLiteral("setGrippingPointManual"));
+        setGrippingPointTeachIn = new QPushButton(tab_2);
+        setGrippingPointTeachIn->setObjectName(QStringLiteral("setGrippingPointTeachIn"));
 
-        verticalLayout_7->addWidget(setGrippingPointManual);
+        verticalLayout_7->addWidget(setGrippingPointTeachIn);
 
         horizontalLayout_18 = new QHBoxLayout();
         horizontalLayout_18->setSpacing(6);
@@ -350,13 +350,13 @@ public:
 
         horizontalLayout_25->addWidget(label_20);
 
-        wayPointPause = new QDoubleSpinBox(tab_2);
-        wayPointPause->setObjectName(QStringLiteral("wayPointPause"));
-        wayPointPause->setDecimals(0);
-        wayPointPause->setMaximum(20);
-        wayPointPause->setSingleStep(1);
+        wayPointBreak = new QDoubleSpinBox(tab_2);
+        wayPointBreak->setObjectName(QStringLiteral("wayPointBreak"));
+        wayPointBreak->setDecimals(0);
+        wayPointBreak->setMaximum(20);
+        wayPointBreak->setSingleStep(1);
 
-        horizontalLayout_25->addWidget(wayPointPause);
+        horizontalLayout_25->addWidget(wayPointBreak);
 
 
         verticalLayout_8->addLayout(horizontalLayout_25);
@@ -413,18 +413,18 @@ public:
         widget = new QWidget(tab_3);
         widget->setObjectName(QStringLiteral("widget"));
         widget->setGeometry(QRect(0, 300, 481, 41));
-        uebernehmePfad = new QPushButton(tab_3);
-        uebernehmePfad->setObjectName(QStringLiteral("uebernehmePfad"));
-        uebernehmePfad->setGeometry(QRect(30, 640, 271, 31));
-        writeCsv = new QPushButton(tab_3);
-        writeCsv->setObjectName(QStringLiteral("writeCsv"));
-        writeCsv->setGeometry(QRect(490, 640, 271, 31));
+        acceptPath = new QPushButton(tab_3);
+        acceptPath->setObjectName(QStringLiteral("acceptPath"));
+        acceptPath->setGeometry(QRect(30, 640, 271, 31));
+        saveCsv = new QPushButton(tab_3);
+        saveCsv->setObjectName(QStringLiteral("saveCsv"));
+        saveCsv->setGeometry(QRect(490, 640, 271, 31));
         tabWidget->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QStringLiteral("tab_4"));
-        speicherortFestlegen = new QPushButton(tab_4);
-        speicherortFestlegen->setObjectName(QStringLiteral("speicherortFestlegen"));
-        speicherortFestlegen->setGeometry(QRect(30, 40, 191, 31));
+        saveAs = new QPushButton(tab_4);
+        saveAs->setObjectName(QStringLiteral("saveAs"));
+        saveAs->setGeometry(QRect(30, 40, 191, 31));
         singleScan = new QPushButton(tab_4);
         singleScan->setObjectName(QStringLiteral("singleScan"));
         singleScan->setGeometry(QRect(30, 80, 191, 31));
@@ -477,9 +477,9 @@ public:
         scanFromReal->setMinimum(0);
         scanFromReal->setMaximum(5700);
         scanFromReal->setValue(0);
-        noPositionCheck = new QCheckBox(tab_4);
-        noPositionCheck->setObjectName(QStringLiteral("noPositionCheck"));
-        noPositionCheck->setGeometry(QRect(30, 120, 261, 26));
+        noPoseCheck = new QCheckBox(tab_4);
+        noPoseCheck->setObjectName(QStringLiteral("noPoseCheck"));
+        noPoseCheck->setGeometry(QRect(30, 120, 261, 26));
         tabWidget->addTab(tab_4, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName(QStringLiteral("tab_5"));
@@ -803,9 +803,9 @@ public:
         sizePolicy8.setVerticalStretch(0);
         sizePolicy8.setHeightForWidth(copySollPos->sizePolicy().hasHeightForWidth());
         copySollPos->setSizePolicy(sizePolicy8);
-        setGrippingPoint = new QPushButton(tab_6);
-        setGrippingPoint->setObjectName(QStringLiteral("setGrippingPoint"));
-        setGrippingPoint->setGeometry(QRect(30, 420, 256, 29));
+        setGrippingPointInv = new QPushButton(tab_6);
+        setGrippingPointInv->setObjectName(QStringLiteral("setGrippingPointInv"));
+        setGrippingPointInv->setGeometry(QRect(30, 420, 256, 29));
         tabWidget->addTab(tab_6, QString());
 
         horizontalLayout->addWidget(tabWidget);
@@ -1099,14 +1099,6 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_17);
 
-        moveJoints = new QPushButton(centralWidget);
-        moveJoints->setObjectName(QStringLiteral("moveJoints"));
-        sizePolicy9.setHeightForWidth(moveJoints->sizePolicy().hasHeightForWidth());
-        moveJoints->setSizePolicy(sizePolicy9);
-        moveJoints->setMaximumSize(QSize(330, 16777215));
-
-        verticalLayout->addWidget(moveJoints);
-
         verticalSpacer = new QSpacerItem(20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
@@ -1129,11 +1121,11 @@ public:
 
         menuBar->addAction(menuVerbindungen->menuAction());
         menuBar->addAction(menuopenFile->menuAction());
-        menuVerbindungen->addAction(actionVerbinde_mit_SPS);
-        menuVerbindungen->addAction(actionVerbindung_trennen);
+        menuVerbindungen->addAction(connectSPS);
+        menuVerbindungen->addAction(disconnectSPS);
         menuVerbindungen->addSeparator();
-        menuVerbindungen->addAction(actionVerbinde_mit_Laserscanner);
-        menuopenFile->addAction(actionchooseFile);
+        menuVerbindungen->addAction(connectLMS);
+        menuopenFile->addAction(chooseFile);
         menuopenFile->addAction(actionPfad_des_Arrays_anzeigen);
 
         retranslateUi(MainWindow);
@@ -1147,33 +1139,42 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "RobocraneOpcControl", Q_NULLPTR));
-        actionVerbinde_mit_SPS->setText(QApplication::translate("MainWindow", "Verbinde mit SPS", Q_NULLPTR));
-        actionVerbindung_trennen->setText(QApplication::translate("MainWindow", "Verbindung trennen", Q_NULLPTR));
-        actionchooseFile->setText(QApplication::translate("MainWindow", "CSV File ausw\303\244hlen", Q_NULLPTR));
-        actionVerbinde_mit_Laserscanner->setText(QApplication::translate("MainWindow", "Verbinde mit Laserscanner", Q_NULLPTR));
-        actionPfad_des_Arrays_anzeigen->setText(QApplication::translate("MainWindow", "Pfad des Arrays anzeigen", Q_NULLPTR));
-        startTeachIn->setText(QApplication::translate("MainWindow", "TeachIn On/Off", Q_NULLPTR));
-        saveWaypoint->setText(QApplication::translate("MainWindow", "Save Waypoint", Q_NULLPTR));
-        setGrippingPointManual->setText(QApplication::translate("MainWindow", "Save Greifpunkt", Q_NULLPTR));
-        label_9->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Waypoint Nr.</span></p></body></html>", Q_NULLPTR));
+        connectSPS->setText(QApplication::translate("MainWindow", "Verbinde mit SPS", Q_NULLPTR));
+        disconnectSPS->setText(QApplication::translate("MainWindow", "Verbindung trennen", Q_NULLPTR));
+        chooseFile->setText(QApplication::translate("MainWindow", "CSV Datei ausw\303\244hlen", Q_NULLPTR));
+        connectLMS->setText(QApplication::translate("MainWindow", "Verbinde mit Laserscanner", Q_NULLPTR));
+        actionPfad_des_Arrays_anzeigen->setText(QApplication::translate("MainWindow", "Pfad des Arrays", Q_NULLPTR));
+#ifndef QT_NO_TOOLTIP
+        enableTeachIn->setToolTip(QApplication::translate("MainWindow", "Startet das TeachIn bei Wegpunkt 0. Nochmaliges Dr\303\274cken beendet TeachIn", Q_NULLPTR));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+        enableTeachIn->setWhatsThis(QString());
+#endif // QT_NO_WHATSTHIS
+#ifndef QT_NO_ACCESSIBILITY
+        enableTeachIn->setAccessibleDescription(QString());
+#endif // QT_NO_ACCESSIBILITY
+        enableTeachIn->setText(QApplication::translate("MainWindow", "TeachIn On/Off", Q_NULLPTR));
+        saveWaypoint->setText(QApplication::translate("MainWindow", "Wegpunkt speichern", Q_NULLPTR));
+        setGrippingPointTeachIn->setText(QApplication::translate("MainWindow", "Greifpunkt speichern", Q_NULLPTR));
+        label_9->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Wegpunkt Nr.</span></p></body></html>", Q_NULLPTR));
         teachInLog->setDocumentTitle(QString());
-        label_20->setText(QApplication::translate("MainWindow", "Waypoint Pause", Q_NULLPTR));
-        runPath->setText(QApplication::translate("MainWindow", "Run Path", Q_NULLPTR));
-        cyclePath->setText(QApplication::translate("MainWindow", "cycle Path", Q_NULLPTR));
-        includeGP->setText(QApplication::translate("MainWindow", "include gripping Point", Q_NULLPTR));
-        resetPath->setText(QApplication::translate("MainWindow", "Reset Path", Q_NULLPTR));
+        label_20->setText(QApplication::translate("MainWindow", "Pause zw. Wegpunkten", Q_NULLPTR));
+        runPath->setText(QApplication::translate("MainWindow", "Pfad ausf\303\274hren", Q_NULLPTR));
+        cyclePath->setText(QApplication::translate("MainWindow", "Pfad Endlosschleife aktivieren", Q_NULLPTR));
+        includeGP->setText(QApplication::translate("MainWindow", "Greifroutine aktivieren", Q_NULLPTR));
+        resetPath->setText(QApplication::translate("MainWindow", "Pfad WP 0 setzen / Reset", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "TeachIn", Q_NULLPTR));
-        uebernehmePfad->setText(QApplication::translate("MainWindow", "Tabelle als Pfad \303\274bernehmen", Q_NULLPTR));
-        writeCsv->setText(QApplication::translate("MainWindow", "speichere Tabelle in CSV", Q_NULLPTR));
+        acceptPath->setText(QApplication::translate("MainWindow", "Tabelle als Pfad \303\274bernehmen", Q_NULLPTR));
+        saveCsv->setText(QApplication::translate("MainWindow", "speichere Tabelle in CSV", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "Pfad konfigurieren", Q_NULLPTR));
-        speicherortFestlegen->setText(QApplication::translate("MainWindow", "Speicherort festlegen", Q_NULLPTR));
+        saveAs->setText(QApplication::translate("MainWindow", "Speicherort festlegen", Q_NULLPTR));
         singleScan->setText(QApplication::translate("MainWindow", "Messf\303\244cher speichern", Q_NULLPTR));
         scanSequence->setText(QApplication::translate("MainWindow", "Bereich Scannen", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("MainWindow", "Scanbereich", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Scanbereich [cm]", Q_NULLPTR));
         label_22->setText(QApplication::translate("MainWindow", "von", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWindow", "bis", Q_NULLPTR));
-        label_31->setText(QApplication::translate("MainWindow", "letzter Scan tats\303\244chlich ab", Q_NULLPTR));
-        noPositionCheck->setText(QApplication::translate("MainWindow", "Scan ohne Positionspr\303\274fung", Q_NULLPTR));
+        label_31->setText(QApplication::translate("MainWindow", "letzter Scan tats\303\244chlich ab [cm]", Q_NULLPTR));
+        noPoseCheck->setText(QApplication::translate("MainWindow", "Scan ohne Posenpr\303\274fung", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Laserscanner", Q_NULLPTR));
         selectData->setText(QApplication::translate("MainWindow", "Laserdaten ausw\303\244hlen", Q_NULLPTR));
         showHist->setText(QApplication::translate("MainWindow", "Histogramm anzeigen", Q_NULLPTR));
@@ -1206,7 +1207,7 @@ public:
         label_5->setText(QApplication::translate("MainWindow", "Y", Q_NULLPTR));
         label_13->setText(QApplication::translate("MainWindow", "Greifpunkt aus Punktewolke", Q_NULLPTR));
         copySollPos->setText(QApplication::translate("MainWindow", "\303\234bernehme berechnete Soll Position", Q_NULLPTR));
-        setGrippingPoint->setText(QApplication::translate("MainWindow", "Greifpunkt in Pfad speichern", Q_NULLPTR));
+        setGrippingPointInv->setText(QApplication::translate("MainWindow", "Greifpunkt in Pfad speichern", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_6), QApplication::translate("MainWindow", "InvKine berechnen", Q_NULLPTR));
         label_21->setText(QApplication::translate("MainWindow", "Soll Position ", Q_NULLPTR));
         label_7->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Ist Position</span></p></body></html>", Q_NULLPTR));
@@ -1219,7 +1220,6 @@ public:
         enableJoints->setText(QApplication::translate("MainWindow", "Auto on/off", Q_NULLPTR));
         AutoLabel->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Automode</span></p></body></html>", Q_NULLPTR));
         label_8->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\"> Modus </span></p></body></html>", Q_NULLPTR));
-        moveJoints->setText(QApplication::translate("MainWindow", "Steuerung aktivieren", Q_NULLPTR));
         menuVerbindungen->setTitle(QApplication::translate("MainWindow", "Verbindungen", Q_NULLPTR));
         menuopenFile->setTitle(QApplication::translate("MainWindow", "Pfad anzeigen", Q_NULLPTR));
     } // retranslateUi

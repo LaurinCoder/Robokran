@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-void MainWindow::on_uebernehmePfad_clicked() // speichert den Pfad aus dem Table ins Array
+void MainWindow::on_acceptPath_clicked() // speichert den Pfad aus dem Table ins Array
 {
     QModelIndex index;
     for (int i = 0; i < model->rowCount(); ++i) {
@@ -19,7 +19,7 @@ void MainWindow::on_uebernehmePfad_clicked() // speichert den Pfad aus dem Table
 
 }
 
-void MainWindow::on_writeCsv_clicked()  // schreibt alle Punkte aus dem path Array in ein csv file "," getrennt "\n" newline
+void MainWindow::on_saveCsv_clicked()  // schreibt alle Punkte aus dem path Array in ein csv file "," getrennt "\n" newline
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Speicherort festlegen..."),
                                                  QDir::currentPath(),"CSV (*.csv);;Text Files (*.txt);;log Files (*.log);;All files (*.*)");
@@ -74,7 +74,7 @@ void MainWindow::checkString(QString &temp, QChar character)
     }
 }
 
-void MainWindow::on_actionchooseFile_triggered()
+void MainWindow::on_chooseFile_triggered()
 {
     model = new QStandardItemModel(this);
     ui->tableView->setModel(model);
@@ -111,7 +111,7 @@ void MainWindow::on_actionPfad_des_Arrays_anzeigen_triggered()
 
     model = new QStandardItemModel(this);
     model->setRowCount(256);
-    model->setColumnCount(9);
+    model->setColumnCount(8);
 
     ui->tableView->setModel(model);
 

@@ -93,8 +93,10 @@ void MainWindow::x_milliCycle() {
     {
         //OPC Synchronisierung
         opcSync();
-        //TeachIn Funktion aufrufen wenn TeachIn = true
+        //TeachIn Funktion aufrufen wenn TeachIn == true
         TeachIn();
+        //runPath Funktion aufrufen wenn enableRunPath == true
+        runPath();
         //update posIst[0..7] der GUI aufrufen
         update_UI();
         //scanSequence aufrufen wenn scan_inProcess == 1
@@ -193,7 +195,7 @@ void MainWindow::update_UI() {
     ui->istHub->setText(QString::number(posIstValue[3]));
     ui->istAusschub->setText(QString::number(posIstValue[4]));
     ui->istGreifer->setText(QString::number(posIstValue[7]));
-    ui->runPath->setChecked(runPath);
+    ui->runPath->setChecked(enableRunPath);
     ui->cyclePath->setChecked(cyclic);
     ui->includeGP->setChecked(setGPActive);
 

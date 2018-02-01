@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-void MainWindow::on_actionVerbinde_mit_Laserscanner_triggered()
+void MainWindow::on_connectLMS_triggered()
 {
 
         IP_LMS = "169.254.0.3";
@@ -23,7 +23,7 @@ void MainWindow::connected()
     qDebug() << "Laserscanner verbunden!";   //ausgabe der erfolgreichen Herstellung der Verbindung
 }
 
-void MainWindow::on_speicherortFestlegen_clicked()
+void MainWindow::on_saveAs_clicked()
 {
     datadirectory = QFileDialog::getSaveFileName(this, tr("Speicherort festlegen..."),
                                                  "/home/iltuser/Schreibtisch/QT_Sources/",tr("Text Files (*.txt);;log Files (*.log)"));
@@ -138,7 +138,7 @@ void MainWindow::on_scanSequence_toggled(bool checked)
 void MainWindow::scanSequence()
 {if (scan_inProcess) {
         //Prüfen ob Position vor dem Scan überprüft werden soll (nein --> schnelle Scanfahrt || ja --> Kran wird in Scanpose gebracht, vor der Scanfahrt)
-        if (ui->noPositionCheck->isChecked()) {
+        if (ui->noPoseCheck->isChecked()) {
 //Schnelle Scanfahrt ohne Positionsüberprüfung vor der Scanfahrt
         switch (sequenceCounter) {
         case 0:
