@@ -51,6 +51,9 @@ private:
     void update_UI();
     void TeachIn();
     void runPath();
+    void opcSync();      //Synchronisation mit OPC Server
+    void scanSequence(); //Switch_Case Scanfahrt
+
 
 //Message Boxen
     QMessageBox         msgBox_invalidPose;
@@ -58,15 +61,15 @@ private:
     QAbstractButton*    retryButton;
 
 // für TeachIn
-    bool teachInLast =      0;  //Hysterese Speicherplatz der Steuerung in cm
-    float liftRatioUp =     0.97; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
-    float liftRatioDown =   1.1; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
-    int hubHighestPoint =   1550; /*gibt an, wie hoch der Hub bei den Greifwaypoints fahren soll*/
-    bool cyclic =           0;    //path wird wiederholend ausgeführt
-    bool resetPath =        0; //resetet den waypoint auf 0
-    bool saveWayPoint =     0; //Speichert die aktuellen Gelenkskoordinaten als neuen wayPoint
-    bool setGPActive =      0; //TRUE schaltet die wayPoints aus dem Telegram vom Laserscanner im TeachIn Pfad aktiv
-    bool teachIn = 0; //startet teachIn
+    bool teachInLast =      0;      //Hysterese Speicherplatz der Steuerung in cm
+    float liftRatioUp =     0.97;   /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
+    float liftRatioDown =   1.1;    /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
+    int hubHighestPoint =   1550;   /*gibt an, wie hoch der Hub bei den Greifwaypoints fahren soll*/
+    bool cyclic =           0;      //path wird wiederholend ausgeführt
+    bool resetPath =        0;      //resetet den waypoint auf 0
+    bool saveWayPoint =     0;      //Speichert die aktuellen Gelenkskoordinaten als neuen wayPoint
+    bool setGPActive =      0;      //TRUE schaltet die wayPoints aus dem Telegram vom Laserscanner im TeachIn Pfad aktiv
+    bool teachIn = 0;               //startet teachIn
     int wayPointBreak = 5;
     QString startTeachIn = "0";
     QByteArray inString;
@@ -103,7 +106,7 @@ private:
     int scanFromHub = 1470;
     int scanFromDrehung = 0;
     int scanFromReal = -1;
-    QProcess process;       //zum Ausführen von Programmen, hier gedit
+    QProcess process;       //zum Ausführen von Anwendungen, hier gedit
     int counterLaserscan = 0;
     int caseBrakeLaserscan = 20;
 
@@ -178,8 +181,6 @@ private slots:
 
     void x_milliCycle();
 
-    void opcSync();  //für OPC_UA
-
     void on_enableJoints_clicked(bool checked);
 
     void on_enableTeachIn_clicked(bool checked);
@@ -229,8 +230,6 @@ private slots:
    void readyRead();
 
    void on_scanSequence_toggled(bool checked);
-
-   void scanSequence();
 
    //Ab hier für Greifpunktberechnung
 
