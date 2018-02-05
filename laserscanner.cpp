@@ -1,21 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//Verbindung zu LMS herstellen, IP im HEADER "mainwindow.h" festgelegt
 void MainWindow::on_connectLMS_triggered()
 {
-
-        IP_LMS = "169.254.0.3";
         qDebug() << "Verbinde mit Laserscanner, IP: " << IP_LMS;
-
         LMS_111->connectToHost(IP_LMS, 2111);
 
 //        warten bis Verbingung steht und Ausgabe falls Error auftritt
-        if(!LMS_111->waitForConnected(2000))
+        if(!LMS_111->waitForConnected(3000))
         {
-             qDebug() << "Verbindung fehlgeschlagen!";
+             qDebug() << "Verbindung fehlgeschlagen! Laserscanner eingeschaltet? IP richtig?";
         }
 }
 
+//Slot für SIGNAL "Connected" von LMS_111 Objekt
 void MainWindow::connected()
 {
     LMS_connected = 1;
@@ -23,6 +22,7 @@ void MainWindow::connected()
     qDebug() << "Laserscanner verbunden!";   //ausgabe der erfolgreichen Herstellung der Verbindung
 }
 
+//Datei für Laserscandaten auswählen
 void MainWindow::on_saveAs_clicked()
 {
     datadirectory = QFileDialog::getSaveFileName(this, tr("Speicherort festlegen..."),
@@ -34,9 +34,9 @@ void MainWindow::on_saveAs_clicked()
     if (laserdata.exists()) {
         laserdata.remove();
     }
-
 }
 
+//Einzelnen Scanfächer in Datei speichern. Überschreiben, falls Datei bereits vorhanden.
 void MainWindow::on_singleScan_clicked()
 {
     if(!datadirectory.isEmpty())
@@ -59,7 +59,8 @@ void MainWindow::on_singleScan_clicked()
         statusBar()->showMessage(tr("Speicherort nicht ausgewählt"), 5000);
 }
 
-void MainWindow::readyRead()  //einlesen der Daten vom LMS und Übergabe an Datei
+//Slot für SIGNAL "readyRead" von LMS_111 Objekt. Einlesen der Daten vom LMS und Übergabe an Datei
+void MainWindow::readyRead()
 {
     //Öffnen der Datei
     laserdata.open(QIODevice::WriteOnly|QIODevice::Append|QIODevice::Text);
@@ -86,10 +87,9 @@ void MainWindow::readyRead()  //einlesen der Daten vom LMS und Übergabe an Date
     }
 }
 
+//Schalter-Funktion für Aktivierung/Deaktivierung der Scanfahrt und speichern der Start-/Endposition der Scanfahrt
 void MainWindow::on_scanSequence_toggled(bool checked)
 {
-
-
     if(!datadirectory.isEmpty())
     {
         laserdata.setFileName(datadirectory);
@@ -135,11 +135,12 @@ void MainWindow::on_scanSequence_toggled(bool checked)
     }
 }
 
+//tatsächeliches Switch_case für die Scanfahrt. Mit/ohne Posenprüfung.
 void MainWindow::scanSequence()
 {if (scan_inProcess) {
-        //Prüfen ob Position vor dem Scan überprüft werden soll (nein --> schnelle Scanfahrt || ja --> Kran wird in Scanpose gebracht, vor der Scanfahrt)
+        //Prüfen ob Pose vor dem Scan überprüft werden soll (nein --> schnelle Scanfahrt || ja --> Kran wird in Scanpose gebracht, vor der Scanfahrt)
         if (ui->noPoseCheck->isChecked()) {
-//Schnelle Scanfahrt ohne Positionsüberprüfung vor der Scanfahrt
+//Schnelle Scanfahrt ohne Posenprüfung vor der Scanfahrt
         switch (sequenceCounter) {
         case 0:
                 statusBar()->showMessage(tr("Fahre zur Startposition"));

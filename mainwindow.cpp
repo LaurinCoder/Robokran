@@ -93,7 +93,7 @@ void MainWindow::on_openReadme_triggered()
     process.start("gedit",QStringList() << "Readme_Liesmich_Manual.txt");
 }
 
-//alle x Millisekunden löst ein Timerslot diese Funktion auf. Es dient dem zyklischen Aufruf weiterer Anweisungen.
+//alle x Millisekunden ruft ein Timersignal diese Funktion auf. Dient dem zyklischen Aufruf weiterer Anweisungen.
 void MainWindow::x_milliCycle() {
     //nur wenn OPC Client verbunden
     if (UA_Client_getState(client) == 1)

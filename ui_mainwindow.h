@@ -45,7 +45,7 @@ public:
     QAction *disconnectSPS;
     QAction *chooseFile;
     QAction *connectLMS;
-    QAction *actionPfad_des_Arrays_anzeigen;
+    QAction *showArrayPath;
     QAction *openReadme;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
@@ -216,8 +216,8 @@ public:
         chooseFile->setObjectName(QStringLiteral("chooseFile"));
         connectLMS = new QAction(MainWindow);
         connectLMS->setObjectName(QStringLiteral("connectLMS"));
-        actionPfad_des_Arrays_anzeigen = new QAction(MainWindow);
-        actionPfad_des_Arrays_anzeigen->setObjectName(QStringLiteral("actionPfad_des_Arrays_anzeigen"));
+        showArrayPath = new QAction(MainWindow);
+        showArrayPath->setObjectName(QStringLiteral("showArrayPath"));
         openReadme = new QAction(MainWindow);
         openReadme->setObjectName(QStringLiteral("openReadme"));
         centralWidget = new QWidget(MainWindow);
@@ -635,17 +635,17 @@ public:
         tab_6->setEnabled(true);
         zGp_2 = new QLineEdit(tab_6);
         zGp_2->setObjectName(QStringLiteral("zGp_2"));
-        zGp_2->setGeometry(QRect(310, 39, 113, 28));
+        zGp_2->setGeometry(QRect(310, 69, 113, 28));
         label_10 = new QLabel(tab_6);
         label_10->setObjectName(QStringLiteral("label_10"));
-        label_10->setGeometry(QRect(320, 20, 80, 20));
+        label_10->setGeometry(QRect(320, 50, 80, 20));
         yGp_2 = new QLineEdit(tab_6);
         yGp_2->setObjectName(QStringLiteral("yGp_2"));
-        yGp_2->setGeometry(QRect(170, 39, 113, 28));
+        yGp_2->setGeometry(QRect(170, 69, 113, 28));
         frame_5 = new QFrame(tab_6);
         frame_5->setObjectName(QStringLiteral("frame_5"));
         frame_5->setEnabled(true);
-        frame_5->setGeometry(QRect(30, 110, 330, 250));
+        frame_5->setGeometry(QRect(30, 180, 330, 250));
         sizePolicy.setHeightForWidth(frame_5->sizePolicy().hasHeightForWidth());
         frame_5->setSizePolicy(sizePolicy);
         frame_5->setMinimumSize(QSize(330, 0));
@@ -781,19 +781,19 @@ public:
 
         calculateInvers = new QPushButton(tab_6);
         calculateInvers->setObjectName(QStringLiteral("calculateInvers"));
-        calculateInvers->setGeometry(QRect(30, 77, 241, 25));
+        calculateInvers->setGeometry(QRect(30, 140, 241, 25));
         label_4 = new QLabel(tab_6);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(40, 20, 80, 20));
+        label_4->setGeometry(QRect(40, 50, 80, 20));
         label_5 = new QLabel(tab_6);
         label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setGeometry(QRect(180, 20, 80, 20));
+        label_5->setGeometry(QRect(180, 50, 80, 20));
         xGp_2 = new QLineEdit(tab_6);
         xGp_2->setObjectName(QStringLiteral("xGp_2"));
-        xGp_2->setGeometry(QRect(30, 39, 113, 28));
+        xGp_2->setGeometry(QRect(30, 69, 113, 28));
         label_13 = new QLabel(tab_6);
         label_13->setObjectName(QStringLiteral("label_13"));
-        label_13->setGeometry(QRect(30, 0, 251, 20));
+        label_13->setGeometry(QRect(30, 30, 251, 20));
         QFont font5;
         font5.setBold(true);
         font5.setItalic(false);
@@ -801,7 +801,7 @@ public:
         label_13->setFont(font5);
         copySollPos = new QPushButton(tab_6);
         copySollPos->setObjectName(QStringLiteral("copySollPos"));
-        copySollPos->setGeometry(QRect(30, 380, 321, 29));
+        copySollPos->setGeometry(QRect(30, 440, 321, 29));
         QSizePolicy sizePolicy8(QSizePolicy::Minimum, QSizePolicy::Fixed);
         sizePolicy8.setHorizontalStretch(0);
         sizePolicy8.setVerticalStretch(0);
@@ -809,7 +809,7 @@ public:
         copySollPos->setSizePolicy(sizePolicy8);
         setGrippingPointInv = new QPushButton(tab_6);
         setGrippingPointInv->setObjectName(QStringLiteral("setGrippingPointInv"));
-        setGrippingPointInv->setGeometry(QRect(30, 420, 256, 29));
+        setGrippingPointInv->setGeometry(QRect(30, 480, 256, 29));
         tabWidget->addTab(tab_6, QString());
 
         horizontalLayout->addWidget(tabWidget);
@@ -1133,12 +1133,12 @@ public:
         menuVerbindungen->addSeparator();
         menuVerbindungen->addAction(connectLMS);
         menuopenFile->addAction(chooseFile);
-        menuopenFile->addAction(actionPfad_des_Arrays_anzeigen);
+        menuopenFile->addAction(showArrayPath);
         menuHilfe->addAction(openReadme);
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(4);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1151,7 +1151,7 @@ public:
         disconnectSPS->setText(QApplication::translate("MainWindow", "Verbindung trennen", Q_NULLPTR));
         chooseFile->setText(QApplication::translate("MainWindow", "CSV Datei ausw\303\244hlen", Q_NULLPTR));
         connectLMS->setText(QApplication::translate("MainWindow", "Verbinde mit Laserscanner", Q_NULLPTR));
-        actionPfad_des_Arrays_anzeigen->setText(QApplication::translate("MainWindow", "Pfad des Arrays", Q_NULLPTR));
+        showArrayPath->setText(QApplication::translate("MainWindow", "Pfad des Arrays", Q_NULLPTR));
         openReadme->setText(QApplication::translate("MainWindow", "Liesmich Datei \303\266ffnen", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         enableTeachIn->setToolTip(QApplication::translate("MainWindow", "Startet das TeachIn bei Wegpunkt 0. Nochmaliges Dr\303\274cken beendet TeachIn", Q_NULLPTR));

@@ -1,14 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-//TeachIn und Pfadsteuerung
+//TeachIn, speichert aktuelle Kranposition als Wegpunkt (Knopf schaltet )
 void MainWindow::TeachIn()
 {
     //TeachIn Funktion
     if(teachIn)
     {
         //Automatikmodus deakitvieren
-
         AutoValue = 0;
         on_enableJoints_clicked(AutoValue);
 
@@ -34,6 +33,7 @@ void MainWindow::TeachIn()
     teachInLast = teachIn;
 }
 
+//Pfadsteuerung
 void MainWindow::runPath()
 {
     //Automatikmodus deaktivieren, deaktiviert auch die Pfadsteuerung
@@ -113,10 +113,10 @@ void MainWindow::runPath()
     ui->waypointNr->display(wayPointNr);
 }
 
+//SPS Verbindung herstellen
 void MainWindow::on_connectSPS_triggered()
 {   client = UA_Client_new(UA_ClientConfig_standard);
-//    retval = UA_Client_connect(client, "opc.tcp://169.254.123.90:4840");  //IP Adresse bei Lasco Vor-Ort
-    retval = UA_Client_connect(client, "opc.tcp://169.254.25.28:4840");    //IP Adresse Labor Tests mit AutomationPC
+    retval = UA_Client_connect(client, SpsIp);
     if(retval != UA_STATUSCODE_GOOD) {
         UA_Client_delete(client);
         ui->statusBar->showMessage(tr("ERRIOR: Verbindung fehlgeschlagen."),5000);
@@ -129,6 +129,7 @@ void MainWindow::on_connectSPS_triggered()
     ui->wayPointBreak->setValue(wayPointBreak);
 }
 
+//SPS Verbindung trennen
 void MainWindow::on_disconnectSPS_triggered()
 {
     if (UA_Client_getState(client) == true)
@@ -140,6 +141,7 @@ void MainWindow::on_disconnectSPS_triggered()
     else  ui->statusBar->showMessage(tr("Trennen nicht möglich, keine bestehende Verbindung."),5000);
 }
 
+//momentane Ist Positionswerte in Soll-Positionswerte der GUI kopieren
 void MainWindow::on_copyIstPos_clicked()
 {
     ui->sollLFahrt->setValue(ui->istLFahrt->text().toDouble());
@@ -149,7 +151,7 @@ void MainWindow::on_copyIstPos_clicked()
     ui->sollGreifer->setValue(ui->istGreifer->text().toDouble());
 }
 
-//Funktion zum Aktivieren von Auto Modus. Auto wird nur aktiviert, wenn OPC Client verbunden.
+//Aktivieren des Auto Modus. Auto wird nur aktiviert, wenn OPC Client verbunden.
 void MainWindow::on_enableJoints_clicked(bool checked)
 {
     if (UA_Client_getState(client) == 1) {
@@ -270,19 +272,38 @@ void MainWindow::on_setGrippingPointTeachIn_clicked()
     ui->statusBar->showMessage(tr("Greifpunkt in Pfad übetragen. Wegpunkte 247 bis 254 überschrieben."),5000);
 }
 
+//Flanke zum Wegpunkt speichern setzen
 void MainWindow::on_saveWaypoint_clicked() {
     if (teachIn == true) {saveWayPoint = true;}
-    else saveWayPoint = false;
-                                           }
+    else {
+        saveWayPoint = false;
+        ui->statusBar->showMessage(tr("TeachIn nicht aktiv."),5000);
+    }
+}
 
-void MainWindow::on_enableTeachIn_clicked(bool checked) {teachIn = checked;}
+//teachIn BOOL aktivieren/deaktivieren
+void MainWindow::on_enableTeachIn_clicked(bool checked) {
+    if (UA_Client_getState(client) == 1){
+       teachIn = checked;
+    }
+    else {
+        teachIn = false;
+        ui->enableTeachIn->setChecked(false);
+        ui->statusBar->showMessage(tr("Verbindung zur SPS nicht hergestellt."),5000);
+    }
+    }
 
+//runPath BOOL aktivieren/deaktivieren
 void MainWindow::on_runPath_clicked(bool checked) {enableRunPath = checked;}
 
+//cyclePath BOOL aktivieren/deaktivieren
 void MainWindow::on_cyclePath_clicked(bool checked) {cyclic = checked;}
 
+//include Greifpunkt BOOL aktivieren/deaktivieren
 void MainWindow::on_includeGP_clicked(bool checked) {setGPActive = checked;}
 
+//Flanke zum Path reseten setzen
 void MainWindow::on_resetPath_clicked() {resetPath = true;}
 
+//Pause der Pfadsteuerung zwischen - Wegpunkt erreicht und neuen Wegpunkt setzen - setzen
 void MainWindow::on_wayPointBreak_valueChanged(double arg) {wayPointBreak = arg;}

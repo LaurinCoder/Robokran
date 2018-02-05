@@ -26,7 +26,7 @@ void MainWindow::on_calculateGP_clicked()
             rightBorder       = ui->rightBorder->text().toInt();
             vRatio            = ui->vRatio->text().toInt();
         }
-        else if (ui->enUserParameter->isChecked()) {
+        else if (ui->enPoendorf->isChecked()) {
             gedreht           = true;
             scannerUeberBoden = 6800;
             inkrementSize     = 40;
@@ -65,6 +65,7 @@ void MainWindow::on_calculateGP_clicked()
     else statusBar()->showMessage(tr("Kein File ausgewählt."),7000);
 }
 
+//XYZ Werte aus der GUI (berechnet oder manuell eingetragen) an die SPS senden. Die SPS berechnet die Inverskinematik.
 void MainWindow::on_calculateInvers_clicked()
 {
     if (UA_Client_getState(client) == 1){  //nur wenn Verbindung zur SPS besteht.
@@ -101,14 +102,14 @@ void MainWindow::on_copySollPos_clicked()
     else ui->statusBar->showMessage(tr("Automodus ist deaktiviert, Übernahme nicht möglich."),5000);
 }
 
-//setzte benutzerdefinierte Parameter
+//aktiviere die benutzerdefinierte Parametereingabe, übernehme als Startwerde die angeklickten Standardwerte (Pöndorf/Labor)
 void MainWindow::on_enUserParameter_toggled(bool checked)
 {   // Eingabefelder werden aktiviert
     ui->turned->setEnabled(checked); ui->groundDist->setEnabled(checked); ui->inkrSize->setEnabled(checked);
     ui->leftAngle->setEnabled(checked); ui->rightAngle->setEnabled(checked); ui->leftBorder->setEnabled(checked);
     ui->rightBorder->setEnabled(checked); ui->vRatio->setEnabled(checked);
 
-    //übernehme Pöndorf Parameter
+    //trage Pöndorf Parameter in Parameter Felder ein
     if (checked) {
         if(ui->enPoendorf->isChecked()){
             gedreht           = true;
@@ -120,7 +121,7 @@ void MainWindow::on_enUserParameter_toggled(bool checked)
             rightBorder       = 12000; //11700;
             vRatio            = 10;
         }
-    //übernehme Pöndorf Parameter
+    //trage Labor Parameter in Parameter Felder ein
         if(!ui->enPoendorf->isChecked()){
             gedreht           = true;
             scannerUeberBoden = 2880;
@@ -132,7 +133,7 @@ void MainWindow::on_enUserParameter_toggled(bool checked)
             vRatio            = 10;
         }
 
-   //wenn KEIN Feld verändert wurde, übernehme aktuelle Parameter (je nachdem ob enPoendorf checked, welche siehe IFs darüber)
+   //wenn mindest. EIN Parameter Feld manuell verändert wurde, werden keine standard Parameter (Pöndorf/Labor) in die Parameter Felder übertragen
         if (!ui->turned->isModified() && !ui->groundDist->isModified() && !ui->inkrSize->isModified()
                 && !ui->leftAngle->isModified() && !ui->rightAngle->isModified() && !ui->leftBorder->isModified()
                 && !ui->rightBorder->isModified() && !ui->vRatio->isModified()) {
