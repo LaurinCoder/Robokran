@@ -54,13 +54,26 @@ private:
     void opcSync();      //Synchronisation mit OPC Server
     void scanSequence(); //Switch_Case Scanfahrt
 
-
+//GUI
 //Message Boxen
     QMessageBox         msgBox_invalidPose;
     QMessageBox         msgBox_movementWarning;
     QAbstractButton*    retryButton;
+//csv Handling / Tabelle in der GUI
+    QList<QStringList> csv;
+    QStandardItemModel *model;
+    QList<QStandardItem*> standardItemList;
+    int getDataFloat(QByteArray waypointsByteArray);
+    int searchIndex; //für Datenextraktion
+    QString uhrzeitString = "";
+    QTime timerWaypoint;
+    QFile waypointsRead;
+    QFile waypointsWrite;
 
-// für TeachIn
+
+
+
+// für TeachIn und Pfadsteuerung
     bool teachInLast =      0;      //Hysterese Speicherplatz der Steuerung in cm
     float liftRatioUp =     0.97;   /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
     float liftRatioDown =   1.1;    /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
@@ -78,19 +91,8 @@ private:
     bool enableRunPath = 0;  //starte den gespeicherten Pfad
 
 
-//csv Handling
-    QList<QStringList> csv;
-    QStandardItemModel *model;
-    QList<QStandardItem*> standardItemList;
-    int getDataFloat(QByteArray waypointsByteArray);
-    int searchIndex; //für Datenextraktion
-    QString uhrzeitString = "";
-    QTime timerWaypoint;
-    QFile waypointsRead;
-    QFile waypointsWrite;
 
-
- //FÜR LASERSCANNER
+ //LASERSCANNER
     QString LMS_data;
     QString IP_LMS =    "169.254.0.3";      //IP des Laserscanners
     QString datadirectory;
