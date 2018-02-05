@@ -57,7 +57,7 @@ private:
     QMessageBox         msgBox_movementWarning;
     QAbstractButton*    retryButton;
 
-// for TeachIn
+// für TeachIn
     bool teachInLast =      0;  //Hysterese Speicherplatz der Steuerung in cm
     float liftRatioUp =     0.97; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
     float liftRatioDown =   1.1; /*liftRatio ist prozentual wie viel kürzer die Hubzylinderlänge sein soll in wayPoint 250 als wayPoint 251; kleiner 1 ist kürzer als 251*/
@@ -66,43 +66,33 @@ private:
     bool resetPath =        0; //resetet den waypoint auf 0
     bool saveWayPoint =     0; //Speichert die aktuellen Gelenkskoordinaten als neuen wayPoint
     bool setGPActive =      0; //TRUE schaltet die wayPoints aus dem Telegram vom Laserscanner im TeachIn Pfad aktiv
-
-//for csv files
-    QList<QStringList> csv;
-    QStandardItemModel *model;
-    QList<QStandardItem*> standardItemList;
-
-//von Arduino Control
-    int getDataFloat(QByteArray waypointsByteArray);
-    int searchIndex; //für Datenextraktion
-
-
-
-    QString uhrzeitString = "";
-    QTime timerWaypoint;
-
-
- // für TeachIn
     bool teachIn = 0; //startet teachIn
     int wayPointBreak = 5;
-
     QString startTeachIn = "0";
     QByteArray inString;
     int wayPointNr = 0;
     bool flanke = 0;
     bool enableRunPath = 0;  //starte den gespeicherten Pfad
-//    QString logString;
 
- //für Qfile
+
+//csv Handling
+    QList<QStringList> csv;
+    QStandardItemModel *model;
+    QList<QStandardItem*> standardItemList;
+    int getDataFloat(QByteArray waypointsByteArray);
+    int searchIndex; //für Datenextraktion
+    QString uhrzeitString = "";
+    QTime timerWaypoint;
     QFile waypointsRead;
     QFile waypointsWrite;
 
+
  //FÜR LASERSCANNER
     QString LMS_data;
-    QString IP_LMS;  //festgelegt IPs der Laserscanner
+    QString IP_LMS;         //festgelegt IPs der Laserscanner
     QString datadirectory;
     QTcpSocket *LMS_111;
-    QFile laserdata;     //file für Laserdaten
+    QFile laserdata;        //file für Laserdaten
     bool LMS_connected = 0;
     bool scan_inProcess = 0;
     short int sequenceCounter = -1;
@@ -113,12 +103,11 @@ private:
     int scanFromHub = 1470;
     int scanFromDrehung = 0;
     int scanFromReal = -1;
-    QProcess process; //zum Ausführen von Programmen, hier gedit
+    QProcess process;       //zum Ausführen von Programmen, hier gedit
     int counterLaserscan = 0;
     int caseBrakeLaserscan = 20;
 
   //Für GP Berechnung
-//    QFile gripPoint; //enthält den berechneten Greifpunkt
     QString fileName = tr("./20170714_01.log");
     bool showHist           = 0;
     bool showSurface        = 0;
@@ -172,6 +161,7 @@ private:
 
 /* BIS HIER FÜR OPC_UA */
 
+    //QlineEdit Schaltflächen Styles
     QString lineEditStyleYellow = ("QLineEdit{background: yellow;}");
     QString lineEditStyleGreen = ("QLineEdit{background: lightgreen;}");
     QString lineEditStyleRed = ("QLineEdit{background: red;}");
@@ -250,7 +240,7 @@ private slots:
 
    void on_copySollPos_clicked();
 
-   void on_enUserSettings_toggled(bool checked);
+   void on_enUserParameter_toggled(bool checked);
 
 
 

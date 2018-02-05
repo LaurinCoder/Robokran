@@ -107,7 +107,7 @@ public:
     QLineEdit *rightBorder;
     QLabel *label_28;
     QLineEdit *leftAngle;
-    QCheckBox *enUserSettings;
+    QCheckBox *enUserParameter;
     QLabel *label_14;
     QLineEdit *rightAngle;
     QLineEdit *leftBorder;
@@ -550,9 +550,9 @@ public:
         leftAngle->setEnabled(false);
         leftAngle->setGeometry(QRect(160, 130, 113, 28));
         leftAngle->setReadOnly(false);
-        enUserSettings = new QCheckBox(frame_2);
-        enUserSettings->setObjectName(QStringLiteral("enUserSettings"));
-        enUserSettings->setGeometry(QRect(10, 0, 281, 26));
+        enUserParameter = new QCheckBox(frame_2);
+        enUserParameter->setObjectName(QStringLiteral("enUserParameter"));
+        enUserParameter->setGeometry(QRect(10, 0, 281, 26));
         label_14 = new QLabel(frame_2);
         label_14->setObjectName(QStringLiteral("label_14"));
         label_14->setGeometry(QRect(10, 224, 141, 20));
@@ -1138,7 +1138,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1194,7 +1194,7 @@ public:
         calculateGP->setText(QApplication::translate("MainWindow", "Greifpunkt berechnen", Q_NULLPTR));
         label->setText(QApplication::translate("MainWindow", "X", Q_NULLPTR));
         label_28->setText(QApplication::translate("MainWindow", "linker Winkel", Q_NULLPTR));
-        enUserSettings->setText(QApplication::translate("MainWindow", "benutzerdefinierte Auswertungsgrenzen", Q_NULLPTR));
+        enUserParameter->setText(QApplication::translate("MainWindow", "benutzerdefinierte Auswertungsgrenzen", Q_NULLPTR));
         label_14->setText(QApplication::translate("MainWindow", "rechte Grenze", Q_NULLPTR));
         label_15->setText(QApplication::translate("MainWindow", "rechter Winkel", Q_NULLPTR));
         label_29->setText(QApplication::translate("MainWindow", "linke Grenze", Q_NULLPTR));

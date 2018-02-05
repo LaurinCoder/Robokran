@@ -1,22 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-//#include "grippoint.h"
 
-
+//Datei auswählen
 void MainWindow::on_selectData_clicked()
 {
     fileName = QFileDialog::getOpenFileName(this, tr("Laserdaten auswählen"),
                                             QDir::currentPath(),"txt Files (Text Files (*.txt);;log Files (*.log);;CSV (*.csv);;All files (*.*)");
     ui->selectedFile->setText(fileName);
-
 }
 
+//Greifpunkt Berechnungsfunktion mit Pöndorf/Labor/Benutzerdefinierten Parametern aufrufen
 void MainWindow::on_calculateGP_clicked()
 {
     if (!fileName.isEmpty()) {
         //START added for Grippoint
         //übernehme Parameter benutzerdefiniert, Pöndorf oder Labor
-        if (ui->enUserSettings->isChecked()) {
+        if (ui->enUserParameter->isChecked()) {
 
             gedreht           = ui->turned->text().toInt();
             scannerUeberBoden = ui->groundDist->text().toInt();
@@ -27,7 +26,7 @@ void MainWindow::on_calculateGP_clicked()
             rightBorder       = ui->rightBorder->text().toInt();
             vRatio            = ui->vRatio->text().toInt();
         }
-        else if (ui->enPoendorf->isChecked()) {
+        else if (ui->enUserParameter->isChecked()) {
             gedreht           = true;
             scannerUeberBoden = 6800;
             inkrementSize     = 40;
@@ -61,12 +60,9 @@ void MainWindow::on_calculateGP_clicked()
         ui->zGp_2->setText(ui->zGp->text());
         statusBar()->showMessage(tr("Greifpunkt berechnet."),7000);
 
-
         //END added for Grippoint
     }
-
     else statusBar()->showMessage(tr("Kein File ausgewählt."),7000);
-
 }
 
 void MainWindow::on_calculateInvers_clicked()
@@ -90,6 +86,7 @@ void MainWindow::on_calculateInvers_clicked()
     else ui->statusBar->showMessage(tr("Verbindung zur SPS nicht hergestellt."),5000);
 }
 
+//Setze berechnete Sollposition als aktuelle Sollposition.
 void MainWindow::on_copySollPos_clicked()
 {   if (AutoValue == 1) {
         ui->sollLFahrt->setValue(ui->sollLFahrtInvers->text().toDouble());
@@ -104,7 +101,8 @@ void MainWindow::on_copySollPos_clicked()
     else ui->statusBar->showMessage(tr("Automodus ist deaktiviert, Übernahme nicht möglich."),5000);
 }
 
-void MainWindow::on_enUserSettings_toggled(bool checked)
+//setzte benutzerdefinierte Parameter
+void MainWindow::on_enUserParameter_toggled(bool checked)
 {   // Eingabefelder werden aktiviert
     ui->turned->setEnabled(checked); ui->groundDist->setEnabled(checked); ui->inkrSize->setEnabled(checked);
     ui->leftAngle->setEnabled(checked); ui->rightAngle->setEnabled(checked); ui->leftBorder->setEnabled(checked);
@@ -134,7 +132,7 @@ void MainWindow::on_enUserSettings_toggled(bool checked)
             vRatio            = 10;
         }
 
-   //wenn KEIN Feld verändert wurde, übernehme aktuelle Parameter (je nachdem ob enPoendorf checked, welche sie IFs darüber)
+   //wenn KEIN Feld verändert wurde, übernehme aktuelle Parameter (je nachdem ob enPoendorf checked, welche siehe IFs darüber)
         if (!ui->turned->isModified() && !ui->groundDist->isModified() && !ui->inkrSize->isModified()
                 && !ui->leftAngle->isModified() && !ui->rightAngle->isModified() && !ui->leftBorder->isModified()
                 && !ui->rightBorder->isModified() && !ui->vRatio->isModified()) {
@@ -151,7 +149,5 @@ void MainWindow::on_enUserSettings_toggled(bool checked)
    //deaktiviere Pöndorf Scan und setzte es unchecked
    ui->enPoendorf->setChecked(false);
    ui->enPoendorf->setDisabled(checked);
-
-
 
 }
