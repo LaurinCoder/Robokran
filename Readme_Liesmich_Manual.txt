@@ -3,13 +3,13 @@
 **********************************************************************************************************************************************************************
 RobocraneOpcControl 
 **********************************************************************************************************************************************************************
-Das Programm dient als Schnittstelle zwischen Kran und Mensch. Es verfügt über eine GUI. Die Kommunikation passiert über OPC und TcpIP. Die SPS fungiert dabei als Server. Derzeit ist keine Sicherheit implementiert. Das Programm ist als absoluter Prototyp zu verstehen. Es darf nur unter Aufsicht von geschultem Personal verwendet werden. Es können unvorhersehbare Bewegungen des Krans ausgelöst werden, welche eine Gefahr für Sachen sowie Leib und Leben darstellen können. Ein Notaus muss in direkter Nähe des Bedieners sein. Jegliche Haftung durch die Verwendung dieses Programms wird ausgeschlossen. 
+Das Programm dient als Schnittstelle zwischen Kran und Mensch. Es verfügt über eine GUI. Die Kommunikation passiert über OPC und TcpIP. Die SPS fungiert dabei als Server. Derzeit ist keine Sicherheit implementiert. Das Programm ist als absoluter Prototyp zu verstehen. Es darf nur unter Aufsicht von geschultem Personal verwendet werden. Es können unvorhersehbare Bewegungen des Krans ausgelöst werden, welche eine Gefahr für Sachen sowie Leib und Leben darstellen. Ein Notaus muss in direkter Nähe des Bedieners sein. Jegliche Haftung durch die Verwendung dieses Programms wird ausgeschlossen. 
 
 RoboraneOpcControl schickt Soll-Gelenkspositionen an die SPS. Die SPS hat die Steuer- und Regelung der Aktoren inne. Die SPS schickt die Ist-Gelenkspositionen an RobocraneOpcControl. 
 
 Neben der SPS ist RobocraneOpcControl über das TcpIP Protokoll mit dem Laserscanner verbunden um die Laserscandaten aufzunehmen.
 
-Aufbau der OPC Verbindung: Statusleiste/Verbindungen/Verbinde mit SPS
+Aufbau der OPC Verbindung: 		Statusleiste/Verbindungen/Verbinde mit SPS
 Aufbau der Verbindung zum Laserscanner: Statusleiste/Verbindungen/Verbinde mit Laserscanner
 
 
@@ -76,6 +76,12 @@ Arm wird angehoben und der Ausleger auf 420cm eingefahren. Welcher Freiheitsgrad
 WP 254: 
 Kran 0° ausgerichtet,, Hub auf „hubHighestPoint“, Ausleger auf 370 cm, Schaufel geschlossen 
 Kran dreht sich zurück auf die sichere Anfangs-/Endpose. Bei zyklischer Pfadsteuerung, wird nach diesem bekannten WP 254 wieder WP 0 der Pfadsteuerung angefahren.
+
+*******
+Zusatzinfo, Hysteresen
+*******
+Die Pfadsteuerung setzt für Wegpunkt 250, 251 und 252 die Hysterese der Achsen[0 und 2] auf der SPS seite auf das 3-fache. AB Wegpunkt 253 werden die Hysteresen wieder auf den ursprünglichen Wert zurückgesetzt. Dies war ein Workaround, der Kran hat sich beim Greifen in den Haufen aus der Sollposition "gedrückt". Die Pfadsteuerung versuchte das auszugleichn und der Kran "verklemmt sich". Die Soll Position kann nicht mehr erreicht werden und die Pfadsteuerung hängt an dem Wegpunkt.
+Achtung: Die ursprünglichen Hysteresen sind nicht hardcoded, sondern werden von der SPS gelesen, wenn WP 250 angesteuert wird. Wird die Pfadsteuerung dann vor WP 253 unterbrochen, bleiben die 3 mal so großen Hysteresen bestehen. So können die Hysteresen für Achsen 0 und 2 immer größer werden. Sehr rudimentär programmiert, nur Notlösung vor Ort.
 
 **********************************************************************************************************************************************************************
 Pfad konfigurieren

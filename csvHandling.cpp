@@ -9,7 +9,7 @@ void MainWindow::on_acceptPath_clicked()
             for (int x = 0; x < 8; ++x) {
                 index = model->index(i,x);
                 if(index.isValid())
-                {   path[x][i] = model->data(index).toInt();
+                {   path[x][i] = model->data(index).toFloat();
                 }
                 else qDebug() << "invalid String";
             }

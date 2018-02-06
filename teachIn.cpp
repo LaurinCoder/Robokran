@@ -74,8 +74,8 @@ void MainWindow::runPath()
                     {
                         oldHysValue[i] = hysValue[i];
                     }
-                    hysValue[0] = oldHysValue[0] * 5;
-                    hysValue[2] = oldHysValue[2] * 5;
+                    hysValue[0] = oldHysValue[0] * 3;
+                    hysValue[2] = oldHysValue[2] * 3;
                     //hys schreiben
                     UA_Variant_setArray(&hys, &hysValue, 8, &UA_TYPES[UA_TYPES_FLOAT]);
                     retval = UA_Client_writeValueAttribute(client, nodeHys,&hys);
@@ -101,7 +101,11 @@ void MainWindow::runPath()
         if      (path[4][wayPointNr] == 0 && setGPActive && wayPointNr < 247)			wayPointNr = 247;
         else if (path[4][wayPointNr] == 0 && setGPActive)	           					wayPointNr = 0;
         else if (cyclic && path[4][wayPointNr] == 0 && !setGPActive) 					wayPointNr = 0;
-        else if (path[4][wayPointNr] == 0) 												{wayPointNr = 0; enableRunPath = false; AutoValue = false;}
+        else if (path[4][wayPointNr] == 0)
+        {
+            ui->teachInLog->append("Letzter Wegpunkt des Pfades, Pfadsteuerung beendet.");
+            wayPointNr = 0; enableRunPath = false; AutoValue = false;
+        }
     }
 
     //bei Reset und außerhalb von TeachIn wird Pfad auf Startposition zurückgesetzt
@@ -294,15 +298,19 @@ void MainWindow::on_enableTeachIn_clicked(bool checked) {
 void MainWindow::on_runPath_clicked(bool checked) {
     if (UA_Client_getState(client) == 1){
         if (AutoValue) {
-            enableRunPath = checked;
+            if (posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
+            {
+                enableRunPath = checked;
+            } else  ui->statusBar->showMessage(tr("Pfadsteuerung nicht möglich. Nicht alle Achsen posOK!"),5000);
         }
         else ui->statusBar->showMessage(tr("Pfadsteuerung nicht möglich. Automatikmodus aktivieren!"),5000);
-     }
-     else {
-         enableRunPath = false;
-         ui->runPath->setChecked(false);
-         ui->statusBar->showMessage(tr("Verbindung zur SPS nicht hergestellt."),5000);
-     }
+    }
+    else {
+        enableRunPath = false;
+        ui->runPath->setChecked(false);
+        ui->statusBar->showMessage(tr("Verbindung zur SPS nicht hergestellt."),5000);
+    }
 }
 
 //cyclePath BOOL aktivieren/deaktivieren
