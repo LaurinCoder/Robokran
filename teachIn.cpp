@@ -108,7 +108,6 @@ void MainWindow::runPath()
 
     //bei Reset und außerhalb von TeachIn wird Pfad auf Startposition zurückgesetzt
     if(resetPath && !teachIn) {wayPointNr = 0; resetPath = 0;}
-    else ui->statusBar->showMessage(tr("Arm und Ausschub in Position bringen."));
 
     ui->waypointNr->display(wayPointNr);
 }
