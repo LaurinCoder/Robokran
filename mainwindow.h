@@ -87,7 +87,7 @@ private:
     QString startTeachIn = "0";
     QByteArray inString;
     int wayPointNr = 0;
-    bool flanke = 0;
+    bool flanke = 1;
     bool enableRunPath = 0;  //starte den gespeicherten Pfad
 
 

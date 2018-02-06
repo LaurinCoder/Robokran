@@ -37,7 +37,7 @@ void MainWindow::TeachIn()
 void MainWindow::runPath()
 {
     //Automatikmodus deaktivieren, deaktiviert auch die Pfadsteuerung
-    if(!AutoValue) {ui->teachInLog->append("Automatikmodus deaktiviert. Pfadausführung unterbrochen.");enableRunPath = 0; ui->runPath->setChecked(false);}
+    if(!AutoValue) {enableRunPath = 0; ui->runPath->setChecked(false);}
 
     //start der Pfadsteuerung aktiviert Automatikmodus
 
@@ -293,7 +293,10 @@ void MainWindow::on_enableTeachIn_clicked(bool checked) {
 //runPath BOOL aktivieren/deaktivieren
 void MainWindow::on_runPath_clicked(bool checked) {
     if (UA_Client_getState(client) == 1){
-        enableRunPath = checked;
+        if (AutoValue) {
+            enableRunPath = checked;
+        }
+        else ui->statusBar->showMessage(tr("Pfadsteuerung nicht möglich. Automatikmodus aktivieren!"),5000);
      }
      else {
          enableRunPath = false;
