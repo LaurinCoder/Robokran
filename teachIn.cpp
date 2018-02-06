@@ -24,7 +24,7 @@ void MainWindow::TeachIn()
             wayPointNr++;
             saveWayPoint = 0;
         }
-        else {
+        else if (wayPointNr >= 246) {
             ui->teachInLog->append("Fehler: Maximale Anzahl an Waypoints erreicht.");
         }
     }
@@ -37,7 +37,7 @@ void MainWindow::TeachIn()
 void MainWindow::runPath()
 {
     //Automatikmodus deaktivieren, deaktiviert auch die Pfadsteuerung
-    if(!AutoValue) {enableRunPath = 0; ui->runPath->setChecked(false);}
+    if(!AutoValue) {ui->teachInLog->append("Automatikmodus deaktiviert. Pfadausführung unterbrochen.");enableRunPath = 0; ui->runPath->setChecked(false);}
 
     //start der Pfadsteuerung aktiviert Automatikmodus
 
@@ -47,24 +47,22 @@ void MainWindow::runPath()
         //...oder letzter Wegpunkt erreicht wurde
         if((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
             posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7])
-                /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*/ //nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!
-
-                //...oder letzter Wegpunkt erreicht wurde
+                  //...oder letzter Wegpunkt erreicht wurde
                 && path[4][wayPointNr] != 0)
 
         {
             if (flanke)
             {
-                timerWaypoint.restart();
+                ui->teachInLog->append("Warte "+ QString::number(wayPointBreak) + " Sekunden bis zum nächsten Wegpunkt...");
+                waypointTimer.restart();
                 flanke = false;
             }
             //path[3][252] wird manipuliert, abhängig von der tatsächlich erreichten Position in 251
             if (wayPointNr == 252) path[3][wayPointNr] = posIstValue[3] * liftRatioUp;
 
-            if( timerWaypoint.elapsed() > (1000 * wayPointBreak) )
-            {
+            if( waypointTimer.elapsed() > (1000 * wayPointBreak) )
+            {   ui->teachInLog->append("Fahre Wegpunkt Nr. "+ QString::number(wayPointNr + 1) + " an.");
+
                 //setzt alle Gelenkskoordinaten des Wegpunkts auf Sollwerte
                 for(int i = 0; i < 8; i++) posSollValue[i] = path[i][wayPointNr];
                wayPointNr++;
@@ -109,7 +107,7 @@ void MainWindow::runPath()
     //bei Reset und außerhalb von TeachIn wird Pfad auf Startposition zurückgesetzt
     if(resetPath && !teachIn) {wayPointNr = 0; resetPath = 0;}
 
-    ui->waypointNr->display(wayPointNr);
+    ui->waypointNr->display(wayPointNr + 1);
 }
 
 //SPS Verbindung herstellen
@@ -122,8 +120,8 @@ void MainWindow::on_connectSPS_triggered()
     }
     else    {
             ui->statusBar->showMessage(tr("Verbindung zur SPS hergestellt."),5000);
-            activeTimer->start(); //timer für OPC Aktualisierung starten
-            timerWaypoint.start(); //timer für waypointpause starten
+            cycleTimer->start(); //timer für OPC Aktualisierung starten
+            waypointTimer.start(); //timer für waypointpause starten
         }
     ui->wayPointBreak->setValue(wayPointBreak);
 }
@@ -293,7 +291,16 @@ void MainWindow::on_enableTeachIn_clicked(bool checked) {
     }
 
 //runPath BOOL aktivieren/deaktivieren
-void MainWindow::on_runPath_clicked(bool checked) {enableRunPath = checked;}
+void MainWindow::on_runPath_clicked(bool checked) {
+    if (UA_Client_getState(client) == 1){
+        enableRunPath = checked;
+     }
+     else {
+         enableRunPath = false;
+         ui->runPath->setChecked(false);
+         ui->statusBar->showMessage(tr("Verbindung zur SPS nicht hergestellt."),5000);
+     }
+}
 
 //cyclePath BOOL aktivieren/deaktivieren
 void MainWindow::on_cyclePath_clicked(bool checked) {cyclic = checked;}

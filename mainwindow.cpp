@@ -9,11 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
 
-    activeTimer = new QTimer(this);
-    activeTimer->setInterval(50);
-    activeTimer->setSingleShot(false);
+    cycleTimer = new QTimer(this);
+    cycleTimer->setInterval(50);
+    cycleTimer->setSingleShot(false);
 
-    connect(activeTimer, SIGNAL(timeout()), this, SLOT(x_milliCycle()));
+    connect(cycleTimer, SIGNAL(timeout()), this, SLOT(x_milliCycle()));
 
 
     ui->setupUi(this);

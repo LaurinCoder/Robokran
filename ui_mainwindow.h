@@ -1138,7 +1138,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1165,7 +1165,7 @@ public:
         enableTeachIn->setText(QApplication::translate("MainWindow", "TeachIn On/Off", Q_NULLPTR));
         saveWaypoint->setText(QApplication::translate("MainWindow", "Wegpunkt speichern", Q_NULLPTR));
         setGrippingPointTeachIn->setText(QApplication::translate("MainWindow", "Greifpunkt speichern", Q_NULLPTR));
-        label_9->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Wegpunkt Nr.</span></p></body></html>", Q_NULLPTR));
+        label_9->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Aktueller WP:</span></p></body></html>", Q_NULLPTR));
         teachInLog->setDocumentTitle(QString());
         label_20->setText(QApplication::translate("MainWindow", "Pause zw. Wegpunkten", Q_NULLPTR));
         runPath->setText(QApplication::translate("MainWindow", "Pfad ausf\303\274hren", Q_NULLPTR));
