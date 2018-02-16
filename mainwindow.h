@@ -126,9 +126,9 @@ private:
     unsigned int vRatio     = 0;
 
  /* AB HIER FÜR OPC_UA */
-    #define SpsIp "opc.tcp://192.168.0.1:4840"   //IP Adresse Boku Keller
+    //#define SpsIp "opc.tcp://192.168.0.1:4840"   //IP Adresse Boku Keller
     //#define SpsIp "opc.tcp://169.254.25.28:4840"   //IP Adresse Labor Tests mit AutomationPC
-    //#define SpsIp "opc.tcp://169.254.123.90:4840"   //IP Adresse Lasco Vor-Ort
+    #define SpsIp "opc.tcp://169.254.123.90:4840"   //IP Adresse Lasco Vor-Ort
     QTimer *cycleTimer;  //für OPC_UA
     UA_Client *client;
     UA_StatusCode retval;
