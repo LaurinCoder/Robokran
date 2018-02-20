@@ -5,7 +5,7 @@
 void MainWindow::on_selectData_clicked()
 {
     fileName = QFileDialog::getOpenFileName(this, tr("Laserdaten auswählen"),
-                                            QDir::currentPath(),"txt Files (Text Files (*.txt);;log Files (*.log);;CSV (*.csv);;All files (*.*)");
+                                            QDir::currentPath(),"txt Files (Text Files (*.txt);;log Files (*.log);;CSV (*.csv);;All files (*)");
     ui->selectedFile->setText(fileName);
 }
 

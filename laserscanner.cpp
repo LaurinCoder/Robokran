@@ -152,26 +152,34 @@ void MainWindow::scanSequence()
             break;
         case 1:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && counterLaserscan > (caseBrakeLaserscan + 180)))
-        {
-            qDebug() << "Startposition erreicht";
-            qDebug() << "Scanner starten";
-            qDebug() << "tatsächliche Scanposition einlesen";
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterLaserscan > caseBrakeLaserscan))
+            {   if (counterLaserscan > 160 && flankeLaser == true) {
+                    qDebug() << "Startposition erreicht";
+                    qDebug() << "Scanner starten";
+                    qDebug() << "tatsächliche Scanposition einlesen";
 
-            //posIst[0] einlesen
-            retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
-            if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
-                    scanFromReal =(int)*(UA_Float*)posIst.data;
+                    //posIst[0] einlesen
+                    retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
+                    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+                            scanFromReal =(int)*(UA_Float*)posIst.data;
+                        }
+                    ui->scanFromReal->setEnabled(true);
+                    ui->scanFromReal->setValue(scanFromReal);
+                    LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
+                    qDebug() << "Zielposition anfahren";
+                    ui->sollLFahrt->setValue(scanTo);
+                    sendSollLFahrt();
+                    statusBar()->showMessage(tr("Scanne..."));
+                    counterLaserscan = 0;
+                    sequenceCounter ++;
+                 }
+                else if (flankeLaser == false)
+               {
+                    statusBar()->showMessage(tr("Warte 3 Sekunden, damit nur in eine Richtung gescannt wird."));
+                    counterLaserscan = 100;
+                    flankeLaser = true;
                 }
-            ui->scanFromReal->setEnabled(true);
-            ui->scanFromReal->setValue(scanFromReal);
-            LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
-            qDebug() << "Zielposition anfahren";
-            ui->sollLFahrt->setValue(scanTo);
-            sendSollLFahrt();
-            statusBar()->showMessage(tr("Scanne..."));
-            counterLaserscan = 0;
-            sequenceCounter ++;
+
             }
 
             break;
@@ -248,26 +256,34 @@ void MainWindow::scanSequence()
         //Scannen starten und tatsächliche Scannposition in "scanFromReal" speichern
         case 4:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterLaserscan > (caseBrakeLaserscan + 80)))
-            {
-            qDebug() << "Startposition erreicht";
-            qDebug() << "Scanner starten";
-            qDebug() << "tatsächliche Scanposition einlesen";
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterLaserscan > caseBrakeLaserscan))
+            {   if (counterLaserscan > 160 && flankeLaser == true) {
+                    qDebug() << "Startposition erreicht";
+                    qDebug() << "Scanner starten";
+                    qDebug() << "tatsächliche Scanposition einlesen";
 
-            //posIst[0] einlesen
-            retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
-            if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
-                    scanFromReal =(int)*(UA_Float*)posIst.data;
+                    //posIst[0] einlesen
+                    retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
+                    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+                            scanFromReal =(int)*(UA_Float*)posIst.data;
+                        }
+                    ui->scanFromReal->setEnabled(true);
+                    ui->scanFromReal->setValue(scanFromReal);
+                    LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
+                    qDebug() << "Zielposition anfahren";
+                    ui->sollLFahrt->setValue(scanTo);
+                    sendSollLFahrt();
+                    statusBar()->showMessage(tr("Scanne..."));
+                    counterLaserscan = 0;
+                    sequenceCounter ++;
+                 }
+                else if (flankeLaser == false)
+               {
+                    statusBar()->showMessage(tr("Warte 3 Sekunden, damit nur in eine Richtung gescannt wird."));
+                    counterLaserscan = 100;
+                    flankeLaser = true;
                 }
-            ui->scanFromReal->setEnabled(true);
-            ui->scanFromReal->setValue(scanFromReal);
-            LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
-            qDebug() << "Zielposition anfahren";
-            ui->sollLFahrt->setValue(scanTo);
-            sendSollLFahrt();
-            statusBar()->showMessage(tr("Scanne..."));
-            counterLaserscan = 0;
-            sequenceCounter ++;
+
             }
 
             break;

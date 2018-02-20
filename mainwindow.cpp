@@ -111,7 +111,7 @@ void MainWindow::x_milliCycle() {
 
         counterLaserscan++;
         // damit der counter nicht überläuft
-        counterLaserscan = counterLaserscan * (counterLaserscan < 10000) ;
+        counterLaserscan = counterLaserscan * (counterLaserscan < 30000) ;
     }
 }
 

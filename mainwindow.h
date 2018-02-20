@@ -111,6 +111,7 @@ private:
     QProcess process;       //zum Ausführen von Anwendungen, hier gedit
     int counterLaserscan = 0;
     int caseBrakeLaserscan = 20;
+    bool flankeLaser = 0;
 
   //Für GP Berechnung
     QString fileName = tr("./20170714_01.log");
