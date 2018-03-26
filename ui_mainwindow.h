@@ -206,7 +206,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setMinimumSize(QSize(1000, 800));
+        MainWindow->setMinimumSize(QSize(800, 600));
         connectSPS = new QAction(MainWindow);
         connectSPS->setObjectName(QStringLiteral("connectSPS"));
         connectSPS->setCheckable(false);

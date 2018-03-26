@@ -90,7 +90,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_openReadme_triggered()
 {
     //process.start("gedit", QStringList() << datadirectory);
-    process.start("gedit",QStringList() << "Readme_Liesmich_Manual.txt");
+    process.start("libreoffice",QStringList() << "Readme_Liesmich_Manual.docx");
 }
 
 //alle x Millisekunden ruft ein Timersignal diese Funktion auf. Dient dem zyklischen Aufruf weiterer Anweisungen.
