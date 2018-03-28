@@ -177,6 +177,14 @@ public:
     QLabel *label_19;
     QSpinBox *sollAusschub;
     QLineEdit *istAusschub;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_32;
+    QSpinBox *sollHochsteller;
+    QLineEdit *istHochsteller;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_33;
+    QSpinBox *sollRotator;
+    QLineEdit *istRotator;
     QHBoxLayout *horizontalLayout_23;
     QLabel *label_11;
     QDoubleSpinBox *sollGreifer;
@@ -200,13 +208,13 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1200, 800);
+        MainWindow->resize(1053, 800);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setMinimumSize(QSize(800, 600));
+        MainWindow->setMinimumSize(QSize(800, 800));
         connectSPS = new QAction(MainWindow);
         connectSPS->setObjectName(QStringLiteral("connectSPS"));
         connectSPS->setCheckable(false);
@@ -1002,6 +1010,60 @@ public:
 
         verticalLayout_9->addLayout(horizontalLayout_22);
 
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        label_32 = new QLabel(frame_4);
+        label_32->setObjectName(QStringLiteral("label_32"));
+        sizePolicy.setHeightForWidth(label_32->sizePolicy().hasHeightForWidth());
+        label_32->setSizePolicy(sizePolicy);
+
+        horizontalLayout_2->addWidget(label_32);
+
+        sollHochsteller = new QSpinBox(frame_4);
+        sollHochsteller->setObjectName(QStringLiteral("sollHochsteller"));
+        sizePolicy7.setHeightForWidth(sollHochsteller->sizePolicy().hasHeightForWidth());
+        sollHochsteller->setSizePolicy(sizePolicy7);
+        sollHochsteller->setMinimumSize(QSize(100, 0));
+
+        horizontalLayout_2->addWidget(sollHochsteller);
+
+        istHochsteller = new QLineEdit(frame_4);
+        istHochsteller->setObjectName(QStringLiteral("istHochsteller"));
+        istHochsteller->setMaximumSize(QSize(100, 16777215));
+
+        horizontalLayout_2->addWidget(istHochsteller);
+
+
+        verticalLayout_9->addLayout(horizontalLayout_2);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        label_33 = new QLabel(frame_4);
+        label_33->setObjectName(QStringLiteral("label_33"));
+        sizePolicy.setHeightForWidth(label_33->sizePolicy().hasHeightForWidth());
+        label_33->setSizePolicy(sizePolicy);
+
+        horizontalLayout_3->addWidget(label_33);
+
+        sollRotator = new QSpinBox(frame_4);
+        sollRotator->setObjectName(QStringLiteral("sollRotator"));
+        sizePolicy7.setHeightForWidth(sollRotator->sizePolicy().hasHeightForWidth());
+        sollRotator->setSizePolicy(sizePolicy7);
+        sollRotator->setMinimumSize(QSize(100, 0));
+
+        horizontalLayout_3->addWidget(sollRotator);
+
+        istRotator = new QLineEdit(frame_4);
+        istRotator->setObjectName(QStringLiteral("istRotator"));
+        istRotator->setMaximumSize(QSize(100, 16777215));
+
+        horizontalLayout_3->addWidget(istRotator);
+
+
+        verticalLayout_9->addLayout(horizontalLayout_3);
+
         horizontalLayout_23 = new QHBoxLayout();
         horizontalLayout_23->setSpacing(6);
         horizontalLayout_23->setObjectName(QStringLiteral("horizontalLayout_23"));
@@ -1113,7 +1175,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1200, 25));
+        menuBar->setGeometry(QRect(0, 0, 1053, 25));
         menuVerbindungen = new QMenu(menuBar);
         menuVerbindungen->setObjectName(QStringLiteral("menuVerbindungen"));
         menuopenFile = new QMenu(menuBar);
@@ -1138,7 +1200,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1221,9 +1283,11 @@ public:
         label_21->setText(QApplication::translate("MainWindow", "Soll Position ", Q_NULLPTR));
         label_7->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Ist Position</span></p></body></html>", Q_NULLPTR));
         label_16->setText(QApplication::translate("MainWindow", "L\303\244ngsfahrt", Q_NULLPTR));
-        label_17->setText(QApplication::translate("MainWindow", "Drehung", Q_NULLPTR));
+        label_17->setText(QApplication::translate("MainWindow", "Schwenken", Q_NULLPTR));
         label_18->setText(QApplication::translate("MainWindow", "Hub", Q_NULLPTR));
         label_19->setText(QApplication::translate("MainWindow", "Ausschub", Q_NULLPTR));
+        label_32->setText(QApplication::translate("MainWindow", "Hochsteller", Q_NULLPTR));
+        label_33->setText(QApplication::translate("MainWindow", "Rotator", Q_NULLPTR));
         label_11->setText(QApplication::translate("MainWindow", "Greifer", Q_NULLPTR));
         copyIstPos->setText(QApplication::translate("MainWindow", "\303\234bernehme Ist Position", Q_NULLPTR));
         enableJoints->setText(QApplication::translate("MainWindow", "Auto on/off", Q_NULLPTR));

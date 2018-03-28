@@ -36,8 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect Soll Felder zu Variablen zur Übergabe an SPS
     connect(ui->sollLFahrt, SIGNAL(editingFinished()), this, SLOT(sendSollLFahrt()));
     connect(ui->sollDrehen, SIGNAL(editingFinished()), this, SLOT(sendSollDrehung()));
-    connect(ui->sollAusschub, SIGNAL(editingFinished()), this, SLOT(sendSollAusschub()));
     connect(ui->sollHub, SIGNAL(editingFinished()), this, SLOT(sendSollHub()));
+    connect(ui->sollAusschub, SIGNAL(editingFinished()), this, SLOT(sendSollAusschub()));
+    connect(ui->sollHochsteller, SIGNAL(editingFinished()), this, SLOT(sendSollRotator()));
+    connect(ui->sollRotator, SIGNAL(editingFinished()), this, SLOT(sendSollRotator()));
     connect(ui->sollGreifer, SIGNAL(editingFinished()), this, SLOT(sendSollGreifer()));
 
 
@@ -45,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->istDrehen->setText("-");
     ui->istHub->setText("-");
     ui->istAusschub->setText("-");
+    ui->istHochsteller->setText("-");
+    ui->istRotator->setText("-");
     ui->istGreifer->setText("-");
     ui->Automode->setText("-");
 
@@ -53,6 +57,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->istDrehen->setStyleSheet(lineEditStyleYellow);
     ui->istHub->setStyleSheet(lineEditStyleYellow);
     ui->istAusschub->setStyleSheet(lineEditStyleYellow);
+    ui->istHochsteller->setStyleSheet(lineEditStyleYellow);
+    ui->istHochsteller->setStyleSheet(lineEditStyleYellow);
     ui->istGreifer->setStyleSheet(lineEditStyleYellow);
 
     ui->selectedFile->setText(fileName);
@@ -177,6 +183,8 @@ void MainWindow::opcSync() {
                 ui->sollDrehen->setValue((int)posSollValue[2]);
                 ui->sollHub->setValue((int)posSollValue[3]);
                 ui->sollAusschub->setValue((int)posSollValue[4]);
+                ui->sollHochsteller->setValue((int)posSollValue[5]);
+                ui->sollRotator->setValue((int)posSollValue[6]);
                 ui->sollGreifer->setValue(posSollValue[7]);
             }
     }
@@ -186,11 +194,13 @@ void MainWindow::opcSync() {
 void MainWindow::update_UI() {
 
     // ist Position Felder werden auf Grün gesetzt, wenn die SPS posOk==true meldet, sonst wird das Feld auf Gelb gesetzt.
-    if (posOkValue[0] == true) {ui->istLFahrt->setStyleSheet(lineEditStyleGreen);} else {ui->istLFahrt->setStyleSheet(lineEditStyleYellow);}
-    if (posOkValue[2] == true) {ui->istDrehen->setStyleSheet(lineEditStyleGreen);} else {ui->istDrehen->setStyleSheet(lineEditStyleYellow);}
-    if (posOkValue[3] == true) {ui->istHub->setStyleSheet(lineEditStyleGreen);} else {ui->istHub->setStyleSheet(lineEditStyleYellow);}
-    if (posOkValue[4] == true) {ui->istAusschub->setStyleSheet(lineEditStyleGreen);} else {ui->istAusschub->setStyleSheet(lineEditStyleYellow);}
-    if (posOkValue[7] == true) {ui->istGreifer->setStyleSheet(lineEditStyleGreen);} else {ui->istGreifer->setStyleSheet(lineEditStyleYellow);}
+    if (posOkValue[0] == true) {ui->istLFahrt->setStyleSheet(lineEditStyleGreen);} else {ui->istLFahrt->setStyleSheet(lineEditStyleRed);}
+    if (posOkValue[2] == true) {ui->istDrehen->setStyleSheet(lineEditStyleGreen);} else {ui->istDrehen->setStyleSheet(lineEditStyleRed);}
+    if (posOkValue[3] == true) {ui->istHub->setStyleSheet(lineEditStyleGreen);} else {ui->istHub->setStyleSheet(lineEditStyleRed);}
+    if (posOkValue[4] == true) {ui->istAusschub->setStyleSheet(lineEditStyleGreen);} else {ui->istAusschub->setStyleSheet(lineEditStyleRed);}
+    if (posOkValue[5] == true) {ui->istHochsteller->setStyleSheet(lineEditStyleGreen);} else {ui->istHochsteller->setStyleSheet(lineEditStyleRed);}
+    if (posOkValue[6] == true) {ui->istRotator->setStyleSheet(lineEditStyleGreen);} else {ui->istRotator->setStyleSheet(lineEditStyleRed);}
+    if (posOkValue[7] == true) {ui->istGreifer->setStyleSheet(lineEditStyleGreen);} else {ui->istGreifer->setStyleSheet(lineEditStyleRed);}
 
     //AutoMode Feld wir mit ON/OFF gesetzt, wenn SPS Auto ON/OFF meldet
     if (AutoValue == true) {ui->Automode->setText("ON");}else ui->Automode->setText("OFF");
@@ -201,6 +211,8 @@ void MainWindow::update_UI() {
     ui->istDrehen->setText(QString::number(posIstValue[2]));
     ui->istHub->setText(QString::number(posIstValue[3]));
     ui->istAusschub->setText(QString::number(posIstValue[4]));
+    ui->istHochsteller->setText(QString::number(posIstValue[5]));
+    ui->istRotator->setText(QString::number(posIstValue[6]));
     ui->istGreifer->setText(QString::number(posIstValue[7]));
     ui->runPath->setChecked(enableRunPath);
     ui->cyclePath->setChecked(cyclic);
@@ -217,6 +229,8 @@ void MainWindow::sendSollLFahrt()   {posSollValue[0] = ui->sollLFahrt->value();}
 void MainWindow::sendSollDrehung()  {posSollValue[2] = ui->sollDrehen->value();}
 void MainWindow::sendSollHub()      {posSollValue[3] = ui->sollHub->value();}
 void MainWindow::sendSollAusschub() {posSollValue[4] = ui->sollAusschub->value();}
+void MainWindow::sendSollHochsteller() {posSollValue[5] = ui->sollHochsteller->value();}
+void MainWindow::sendSollRotator() {posSollValue[6] = ui->sollRotator->value();}
 void MainWindow::sendSollGreifer()  {posSollValue[7] = ui->sollGreifer->value();}
 
 

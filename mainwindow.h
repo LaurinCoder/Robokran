@@ -199,7 +199,7 @@ private slots:
 
     void on_chooseFile_triggered();
 
-    void sendSollLFahrt();void sendSollDrehung();void sendSollAusschub();void sendSollHub();void sendSollGreifer();
+    void sendSollLFahrt();void sendSollDrehung();void sendSollAusschub();void sendSollHub();void sendSollHochsteller();void sendSollRotator();void sendSollGreifer();
 
     void on_saveCsv_clicked();
 
