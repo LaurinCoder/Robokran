@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->istHub->setStyleSheet(lineEditStyleYellow);
     ui->istAusschub->setStyleSheet(lineEditStyleYellow);
     ui->istHochsteller->setStyleSheet(lineEditStyleYellow);
-    ui->istHochsteller->setStyleSheet(lineEditStyleYellow);
+    ui->istRotator>setStyleSheet(lineEditStyleYellow);
     ui->istGreifer->setStyleSheet(lineEditStyleYellow);
 
     ui->selectedFile->setText(fileName);
