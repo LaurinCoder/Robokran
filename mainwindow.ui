@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
+    <width>1053</width>
     <height>800</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
+    <width>800</width>
     <height>800</height>
    </size>
   </property>
@@ -57,7 +57,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
@@ -91,7 +91,19 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="startTeachIn">
+             <widget class="QPushButton" name="enableTeachIn">
+              <property name="toolTip">
+               <string>Startet das TeachIn bei Wegpunkt 0. Nochmaliges Drücken beendet TeachIn</string>
+              </property>
+              <property name="whatsThis">
+               <string/>
+              </property>
+              <property name="accessibleDescription">
+               <string/>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
               <property name="text">
                <string>TeachIn On/Off</string>
               </property>
@@ -109,14 +121,14 @@
             <item>
              <widget class="QPushButton" name="saveWaypoint">
               <property name="text">
-               <string>Save Waypoint</string>
+               <string>Wegpunkt speichern</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="setGrippingPointManual">
+             <widget class="QPushButton" name="setGrippingPointTeachIn">
               <property name="text">
-               <string>Save Greifpunkt</string>
+               <string>Greifpunkt speichern</string>
               </property>
              </widget>
             </item>
@@ -131,7 +143,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Waypoint Nr.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nächster WP:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -255,12 +267,12 @@
                </font>
               </property>
               <property name="text">
-               <string>Waypoint Pause</string>
+               <string>Pause zw. Wegpunkten</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="wayPointPause">
+             <widget class="QDoubleSpinBox" name="wayPointBreak">
               <property name="decimals">
                <number>0</number>
               </property>
@@ -277,7 +289,7 @@
           <item>
            <widget class="QPushButton" name="runPath">
             <property name="text">
-             <string>Run Path</string>
+             <string>Pfad ausführen</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -290,7 +302,7 @@
           <item>
            <widget class="QPushButton" name="cyclePath">
             <property name="text">
-             <string>cycle Path</string>
+             <string>Pfad Endlosschleife aktivieren</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -300,7 +312,7 @@
           <item>
            <widget class="QPushButton" name="includeGP">
             <property name="text">
-             <string>include gripping Point</string>
+             <string>Greifroutine aktivieren</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -310,7 +322,7 @@
           <item>
            <widget class="QPushButton" name="resetPath">
             <property name="text">
-             <string>Reset Path</string>
+             <string>Pfad WP 0 setzen / Reset</string>
             </property>
            </widget>
           </item>
@@ -382,7 +394,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QPushButton" name="uebernehmePfad">
+       <widget class="QPushButton" name="acceptPath">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -395,7 +407,7 @@
          <string>Tabelle als Pfad übernehmen</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="writeCsv">
+       <widget class="QPushButton" name="saveCsv">
         <property name="geometry">
          <rect>
           <x>490</x>
@@ -413,7 +425,7 @@
        <attribute name="title">
         <string>Laserscanner</string>
        </attribute>
-       <widget class="QPushButton" name="speicherortFestlegen">
+       <widget class="QPushButton" name="saveAs">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -502,7 +514,7 @@
          </rect>
         </property>
         <property name="title">
-         <string>Scanbereich</string>
+         <string>Scanbereich [cm]</string>
         </property>
         <widget class="QLabel" name="label_22">
          <property name="geometry">
@@ -579,7 +591,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>letzter Scan tatsächlich ab</string>
+         <string>letzter Scan tatsächlich ab [cm]</string>
         </property>
        </widget>
        <widget class="QSpinBox" name="scanFromReal">
@@ -607,7 +619,7 @@
          <number>0</number>
         </property>
        </widget>
-       <widget class="QCheckBox" name="noPositionCheck">
+       <widget class="QCheckBox" name="noPoseCheck">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -617,7 +629,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Scan ohne Positionsprüfung</string>
+         <string>Scan ohne Posenprüfung</string>
         </property>
        </widget>
       </widget>
@@ -843,7 +855,7 @@
           <bool>false</bool>
          </property>
         </widget>
-        <widget class="QCheckBox" name="enUserSettings">
+        <widget class="QCheckBox" name="enUserParameter">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -1110,7 +1122,7 @@
         <property name="geometry">
          <rect>
           <x>310</x>
-          <y>39</y>
+          <y>69</y>
           <width>113</width>
           <height>28</height>
          </rect>
@@ -1120,7 +1132,7 @@
         <property name="geometry">
          <rect>
           <x>320</x>
-          <y>20</y>
+          <y>50</y>
           <width>80</width>
           <height>20</height>
          </rect>
@@ -1133,7 +1145,7 @@
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>39</y>
+          <y>69</y>
           <width>113</width>
           <height>28</height>
          </rect>
@@ -1146,7 +1158,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>110</y>
+          <y>180</y>
           <width>330</width>
           <height>250</height>
          </rect>
@@ -1388,7 +1400,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>77</y>
+          <y>140</y>
           <width>241</width>
           <height>25</height>
          </rect>
@@ -1401,7 +1413,7 @@
         <property name="geometry">
          <rect>
           <x>40</x>
-          <y>20</y>
+          <y>50</y>
           <width>80</width>
           <height>20</height>
          </rect>
@@ -1414,7 +1426,7 @@
         <property name="geometry">
          <rect>
           <x>180</x>
-          <y>20</y>
+          <y>50</y>
           <width>80</width>
           <height>20</height>
          </rect>
@@ -1427,7 +1439,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>39</y>
+          <y>69</y>
           <width>113</width>
           <height>28</height>
          </rect>
@@ -1437,7 +1449,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>0</y>
+          <y>30</y>
           <width>251</width>
           <height>20</height>
          </rect>
@@ -1457,7 +1469,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>380</y>
+          <y>440</y>
           <width>321</width>
           <height>29</height>
          </rect>
@@ -1472,11 +1484,11 @@
          <string>Übernehme berechnete Soll Position</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="setGrippingPoint">
+       <widget class="QPushButton" name="setGrippingPointInv">
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>420</y>
+          <y>480</y>
           <width>256</width>
           <height>29</height>
          </rect>
@@ -1717,7 +1729,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>Drehung</string>
+              <string>Schwenken</string>
              </property>
             </widget>
            </item>
@@ -1849,13 +1861,16 @@
               </size>
              </property>
              <property name="minimum">
-              <number>346</number>
+              <number>282</number>
              </property>
              <property name="maximum">
-              <number>1500</number>
+              <number>600</number>
              </property>
              <property name="singleStep">
-              <number>10</number>
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>282</number>
              </property>
             </widget>
            </item>
@@ -1875,6 +1890,101 @@
              </property>
              <property name="readOnly">
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_32">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Hochsteller</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="sollHochsteller">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximum">
+              <number>120</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="istHochsteller">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_33">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Rotator</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="sollRotator">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="minimum">
+              <number>-360</number>
+             </property>
+             <property name="maximum">
+              <number>360</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="istRotator">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -2082,25 +2192,6 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="moveJoints">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>330</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Steuerung aktivieren</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -2125,7 +2216,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
+     <width>1053</width>
      <height>25</height>
     </rect>
    </property>
@@ -2133,23 +2224,30 @@
     <property name="title">
      <string>Verbindungen</string>
     </property>
-    <addaction name="actionVerbinde_mit_SPS"/>
-    <addaction name="actionVerbindung_trennen"/>
+    <addaction name="connectSPS"/>
+    <addaction name="disconnectSPS"/>
     <addaction name="separator"/>
-    <addaction name="actionVerbinde_mit_Laserscanner"/>
+    <addaction name="connectLMS"/>
    </widget>
    <widget class="QMenu" name="menuopenFile">
     <property name="title">
      <string>Pfad anzeigen</string>
     </property>
-    <addaction name="actionchooseFile"/>
-    <addaction name="actionPfad_des_Arrays_anzeigen"/>
+    <addaction name="chooseFile"/>
+    <addaction name="showArrayPath"/>
+   </widget>
+   <widget class="QMenu" name="menuHilfe">
+    <property name="title">
+     <string>Hilfe</string>
+    </property>
+    <addaction name="openReadme"/>
    </widget>
    <addaction name="menuVerbindungen"/>
    <addaction name="menuopenFile"/>
+   <addaction name="menuHilfe"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionVerbinde_mit_SPS">
+  <action name="connectSPS">
    <property name="checkable">
     <bool>false</bool>
    </property>
@@ -2157,24 +2255,29 @@
     <string>Verbinde mit SPS</string>
    </property>
   </action>
-  <action name="actionVerbindung_trennen">
+  <action name="disconnectSPS">
    <property name="text">
     <string>Verbindung trennen</string>
    </property>
   </action>
-  <action name="actionchooseFile">
+  <action name="chooseFile">
    <property name="text">
-    <string>CSV File auswählen</string>
+    <string>CSV Datei auswählen</string>
    </property>
   </action>
-  <action name="actionVerbinde_mit_Laserscanner">
+  <action name="connectLMS">
    <property name="text">
     <string>Verbinde mit Laserscanner</string>
    </property>
   </action>
-  <action name="actionPfad_des_Arrays_anzeigen">
+  <action name="showArrayPath">
    <property name="text">
-    <string>Pfad des Arrays anzeigen</string>
+    <string>Pfad des Arrays</string>
+   </property>
+  </action>
+  <action name="openReadme">
+   <property name="text">
+    <string>Liesmich Datei öffnen</string>
    </property>
   </action>
  </widget>

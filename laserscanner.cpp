@@ -1,28 +1,29 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-void MainWindow::on_actionVerbinde_mit_Laserscanner_triggered()
+
+//Verbindung zu LMS herstellen, IP im HEADER "mainwindow.h" festgelegt
+void MainWindow::on_connectLMS_triggered()
 {
-
-        IP_LMS = "169.254.0.3";
-        qDebug() << "Connecting to Laserscanner IP:" <<IP_LMS;
-
+        qDebug() << "Verbinde mit Laserscanner, IP: " << IP_LMS;
         LMS_111->connectToHost(IP_LMS, 2111);
 
 //        warten bis Verbingung steht und Ausgabe falls Error auftritt
-        if(!LMS_111->waitForConnected(2000))
+        if(!LMS_111->waitForConnected(3000))
         {
-             qDebug() << "Connection failed.";
+             qDebug() << "Verbindung fehlgeschlagen! Laserscanner eingeschaltet? IP richtig?";
         }
 }
 
+//Slot für SIGNAL "Connected" von LMS_111 Objekt
 void MainWindow::connected()
 {
     LMS_connected = 1;
-    statusBar()->showMessage(tr("Connected to LMS"),5000);
-    qDebug() << "Connected!";   //ausgabe der erfolgreichen Herstellung der Verbindung
+    statusBar()->showMessage(tr("Verbunden mit Laserscanner LMS110."),5000);
+    qDebug() << "Laserscanner verbunden!";   //ausgabe der erfolgreichen Herstellung der Verbindung
 }
 
-void MainWindow::on_speicherortFestlegen_clicked()
+//Datei für Laserscandaten auswählen
+void MainWindow::on_saveAs_clicked()
 {
     datadirectory = QFileDialog::getSaveFileName(this, tr("Speicherort festlegen..."),
                                                  "/home/iltuser/Schreibtisch/QT_Sources/",tr("Text Files (*.txt);;log Files (*.log)"));
@@ -33,9 +34,9 @@ void MainWindow::on_speicherortFestlegen_clicked()
     if (laserdata.exists()) {
         laserdata.remove();
     }
-
 }
 
+//Einzelnen Scanfächer in Datei speichern. Überschreiben, falls Datei bereits vorhanden.
 void MainWindow::on_singleScan_clicked()
 {
     if(!datadirectory.isEmpty())
@@ -51,14 +52,15 @@ void MainWindow::on_singleScan_clicked()
             statusBar()->showMessage(tr("Messfächer gespeichert"), 5000);
         }
         else
-            statusBar()->showMessage(tr("LMS not connected"), 5000);
+            statusBar()->showMessage(tr("LMS nicht verbunden."), 5000);
     }
 
     else
         statusBar()->showMessage(tr("Speicherort nicht ausgewählt"), 5000);
 }
 
-void MainWindow::readyRead()  //einlesen der Daten vom LMS und Übergabe an Datei
+//Slot für SIGNAL "readyRead" von LMS_111 Objekt. Einlesen der Daten vom LMS und Übergabe an Datei
+void MainWindow::readyRead()
 {
     //Öffnen der Datei
     laserdata.open(QIODevice::WriteOnly|QIODevice::Append|QIODevice::Text);
@@ -79,18 +81,15 @@ void MainWindow::readyRead()  //einlesen der Daten vom LMS und Übergabe an Date
 
     if(scan_inProcess)
     {
-//        int barValue = ui->progressBar->value();
-//        barValue += 1;
         int barValue = 100 - int(100 * ((posIstValue[0]-scanTo)/(scanFrom - scanTo) )); //Fortschritt berechnen
 
         ui->progressBar->setValue(barValue);
     }
 }
 
+//Schalter-Funktion für Aktivierung/Deaktivierung der Scanfahrt und speichern der Start-/Endposition der Scanfahrt
 void MainWindow::on_scanSequence_toggled(bool checked)
 {
-
-
     if(!datadirectory.isEmpty())
     {
         laserdata.setFileName(datadirectory);
@@ -105,18 +104,9 @@ void MainWindow::on_scanSequence_toggled(bool checked)
                 if (ret == QMessageBox::AcceptRole) {
                     scanFrom    = ui->scanFrom->value(); //Werte von Feldern in der Gui übernehmen
                     scanTo      = ui->scanTo->value();
-
-//                    if (scanFrom == posIstValue[0]) {           //Prüfung für definierte Kranstellung einfügen, die sicher für die Scanfahrt ist.
-
-                            scan_inProcess = 1; sequenceCounter = 0;
-                            ui->progressBar->setValue(10);
-//                        }
-//                    else
-//                    {
-//                        ui->scanSequence->setChecked(false); //ScanSequence beenden, darin wird Laserscanner gestoppt.
-//                            msgBox_invalidPose.exec();
-
-//                     }
+                    scan_inProcess = 1;
+                    sequenceCounter = 0;
+                    ui->progressBar->setValue(10);
                 }
                 else              ui->scanSequence->setChecked(0);
 
@@ -133,68 +123,69 @@ void MainWindow::on_scanSequence_toggled(bool checked)
         }
         else
         {
-            statusBar()->showMessage(tr("LMS not connected"), 5000);
+            statusBar()->showMessage(tr("LMS nicht verbunden."), 5000);
             ui->scanSequence->setChecked(0);
         }
     }
 
     else
     {
-        statusBar()->showMessage(tr("Speicherort nicht ausgewählt"), 5000);
+        statusBar()->showMessage(tr("Speicherort nicht ausgewählt."), 5000);
         ui->scanSequence->setChecked(0);
     }
 }
 
+//tatsächeliches Switch_case für die Scanfahrt. Mit/ohne Posenprüfung.
 void MainWindow::scanSequence()
 {if (scan_inProcess) {
-        //Prüfen ob Position vor dem Scan überprüft werden soll (schnelle Scanfahrt)
-        if (ui->noPositionCheck->isChecked()) {
-//Schnelle Scanfahrt ohne Positionsüberprüfung aller Achsen
+        //Prüfen ob Pose vor dem Scan überprüft werden soll (nein --> schnelle Scanfahrt || ja --> Kran wird in Scanpose gebracht, vor der Scanfahrt)
+        if (ui->noPoseCheck->isChecked()) {
+//Schnelle Scanfahrt ohne Posenprüfung vor der Scanfahrt
         switch (sequenceCounter) {
         case 0:
                 statusBar()->showMessage(tr("Fahre zur Startposition"));
                 on_enableJoints_clicked(true);
                 ui->sollLFahrt->setValue(scanFrom);
                 sendSollLFahrt();
-                counterlaserscan = 0;
+                counterLaserscan = 0;
                 sequenceCounter++;
             break;
         case 1:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && counterlaserscan > (caseBrakeLaserscan + 180))
-                        /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                        && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                        && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
-                    )
-        {
-            qDebug() << "Startposition erreicht";
-            qDebug() << "Scanner starten";
-            qDebug() << "tatsächliche Scanposition einlesen";
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterLaserscan > caseBrakeLaserscan))
+            {   if (counterLaserscan > 160 && flankeLaser == true) {
+                    qDebug() << "Startposition erreicht";
+                    qDebug() << "Scanner starten";
+                    qDebug() << "tatsächliche Scanposition einlesen";
 
-            //posIst[0] einlesen
-            retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
-            if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
-                    scanFromReal =(int)*(UA_Float*)posIst.data;
+                    //posIst[0] einlesen
+                    retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
+                    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+                            scanFromReal =(int)*(UA_Float*)posIst.data;
+                        }
+                    ui->scanFromReal->setEnabled(true);
+                    ui->scanFromReal->setValue(scanFromReal);
+                    LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
+                    qDebug() << "Zielposition anfahren";
+                    ui->sollLFahrt->setValue(scanTo);
+                    sendSollLFahrt();
+                    statusBar()->showMessage(tr("Scanne..."));
+                    counterLaserscan = 0;
+                    sequenceCounter ++;
+                 }
+                else if (flankeLaser == false)
+               {
+                    statusBar()->showMessage(tr("Warte 3 Sekunden, damit nur in eine Richtung gescannt wird."));
+                    counterLaserscan = 100;
+                    flankeLaser = true;
                 }
-            ui->scanFromReal->setEnabled(true);
-            ui->scanFromReal->setValue(scanFromReal);
-            LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
-            qDebug() << "Zielposition anfahren";
-            ui->sollLFahrt->setValue(scanTo);
-            sendSollLFahrt();
-            statusBar()->showMessage(tr("Scanne..."));
-            counterlaserscan = 0;
-            sequenceCounter ++;
+
             }
 
             break;
         case 2:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && counterlaserscan > caseBrakeLaserscan)
-                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
-                )
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && counterLaserscan > caseBrakeLaserscan))
             {
             qDebug() << "Zielposition erreicht";
             qDebug() << "Scanner stoppen";
@@ -213,7 +204,7 @@ void MainWindow::scanSequence()
         }
 
  else {
-        //komplette Positionsüberprüfung aller Achsen
+        //Kran wird in Scanpose gebracht, bevor er die Startposition anfährt.
         switch (sequenceCounter) {
         //Ausschub vor dem Scannen einziehen
         case 0:
@@ -227,93 +218,85 @@ void MainWindow::scanSequence()
         // wenn Ausschub < "scanFromAusschub2" dann auch heben.
         case 1:
             if (posIstValue[4] < scanFromAusschub2)
-        {qDebug() << "posIst4= " << posIstValue[4];
+        {
                 statusBar()->showMessage(tr("Arm und Ausschub in Position bringen."));
                 ui->sollHub->setValue(scanFromHub);
                 sendSollHub();
                 qDebug() << "Mindestausschub erreicht. Hubsteuerung aktivieren.";
-                counterlaserscan = 0;
+                counterLaserscan = 0;
                 sequenceCounter++;
             }
             break;
-        //wenn Position erreicht, dann 0° ausrichten.
+        //wenn Ausschub und Hub erreicht, dann 0° ausrichten.
         case 2:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && (counterlaserscan > caseBrakeLaserscan))
-                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
-                )
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7] && counterLaserscan > caseBrakeLaserscan))
             {
                 statusBar()->showMessage(tr("0° ausrichten."));
                 ui->sollDrehen->setValue(scanFromDrehung);
                 sendSollDrehung();
                 qDebug() << "Hub und Ausschubposition erreicht. Drehe auf 0 Grad.";
-                counterlaserscan = 0;
+                counterLaserscan = 0;
                 sequenceCounter++;
             }
             break;
         //wenn Position erreicht, dann zur Startposition fahren.
         case 3:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterlaserscan > caseBrakeLaserscan)
-                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
-                )
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterLaserscan > caseBrakeLaserscan))
             {
                 statusBar()->showMessage(tr("Fahre zur Startposition."));
                 ui->sollLFahrt->setValue(scanFrom);
                 sendSollLFahrt();
                 qDebug() << "Scanstellung erreicht. Fahre zur Startposition.";
-                counterlaserscan = 0;
+                counterLaserscan = 0;
                 sequenceCounter++;
             }
             break;
         //Scannen starten und tatsächliche Scannposition in "scanFromReal" speichern
         case 4:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterlaserscan > (caseBrakeLaserscan + 80))
-                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
-                )
-            {
-            qDebug() << "Startposition erreicht";
-            qDebug() << "Scanner starten";
-            qDebug() << "tatsächliche Scanposition einlesen";
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterLaserscan > caseBrakeLaserscan))
+            {   if (counterLaserscan > 160 && flankeLaser == true) {
+                    qDebug() << "Startposition erreicht";
+                    qDebug() << "Scanner starten";
+                    qDebug() << "tatsächliche Scanposition einlesen";
 
-            //posIst[0] einlesen
-            retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
-            if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
-                    scanFromReal =(int)*(UA_Float*)posIst.data;
+                    //posIst[0] einlesen
+                    retval = UA_Client_readValueAttribute(client, nodePosIst,&posIst);
+                    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasArrayType(&posIst,&UA_TYPES[UA_TYPES_FLOAT]) ) {
+                            scanFromReal =(int)*(UA_Float*)posIst.data;
+                        }
+                    ui->scanFromReal->setEnabled(true);
+                    ui->scanFromReal->setValue(scanFromReal);
+                    LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
+                    qDebug() << "Zielposition anfahren";
+                    ui->sollLFahrt->setValue(scanTo);
+                    sendSollLFahrt();
+                    statusBar()->showMessage(tr("Scanne..."));
+                    counterLaserscan = 0;
+                    sequenceCounter ++;
+                 }
+                else if (flankeLaser == false)
+               {
+                    statusBar()->showMessage(tr("Warte 3 Sekunden, damit nur in eine Richtung gescannt wird."));
+                    counterLaserscan = 100;
+                    flankeLaser = true;
                 }
-            ui->scanFromReal->setEnabled(true);
-            ui->scanFromReal->setValue(scanFromReal);
-            LMS_111->write("\02sEN LMDscandata 1\03");  //starte Scanner
-            qDebug() << "Zielposition anfahren";
-            ui->sollLFahrt->setValue(scanTo);
-            sendSollLFahrt();
-            statusBar()->showMessage(tr("Scanne..."));
-            counterlaserscan = 0;
-            sequenceCounter ++;
+
             }
 
             break;
         case 5:
             if ((posOkValue[0]&&posOkValue[1]&&posOkValue[2]&&posOkValue[3]&&
-                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterlaserscan > caseBrakeLaserscan)
-                    /*&& posIstValue[0] == posSollValue[0] && posIstValue[1] == posSollValue[1] && posIstValue[2] == posSollValue[2]
-                    && posIstValue[3] == posSollValue[3] && posIstValue[4] == posSollValue[4]  && posIstValue[5] == posSollValue[5]
-                    && posIstValue[6] == posSollValue[6] && posIstValue[7] == posSollValue[7]*///nur im Labor wichtig!!!!!, in Pöndorf letzte 3 Zeilen deaktivieren!!!)
-                )
+                    posOkValue[4]&&posOkValue[5]&&posOkValue[6]&&posOkValue[7]&& counterLaserscan > caseBrakeLaserscan))
             {
             qDebug() << "Zielposition erreicht";
             qDebug() << "Scanner stoppen";
-            process.start("gedit", QStringList() << datadirectory);
+            process.start("gedit", QStringList() << datadirectory); // Scanfile wird geöffnet
             ui->scanSequence->setChecked(false); //ScanSequence beenden, darin wird Laserscanner gestoppt.
             statusBar()->showMessage(tr("Scan abgeschlossen!"));
-            counterlaserscan = 0;
+            counterLaserscan = 0;
             sequenceCounter = -1;
             }
             break;
